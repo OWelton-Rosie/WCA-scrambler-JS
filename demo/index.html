@@ -1,0 +1,136 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A development interface for the WCA Scrambler JavaScript library."
+    />
+    <meta name="theme-color" content="#101114" />
+    <title>WCA Scrambler</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="WCA Scrambler home">
+          <span class="brand-mark" aria-hidden="true">W</span>
+          <span>WCA <span class="brand-muted">SCRAMBLER</span></span>
+        </a>
+
+        <span class="dev-badge">
+          <span class="status-dot"></span>
+          DEVELOPMENT BUILD
+        </span>
+      </header>
+
+      <main>
+        <section class="intro">
+          <p class="eyebrow">PUZZLE TOOLKIT / 001</p>
+          <h1>Ready, set, <span>scramble.</span></h1>
+          <p class="intro-copy">
+            Generate random-state scrambles and inspect the output of the
+            library as it develops.
+          </p>
+        </section>
+
+        <section class="generator panel" aria-labelledby="generator-title">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">SCRAMBLE GENERATOR</p>
+              <h2 id="generator-title">Your next scramble</h2>
+            </div>
+
+            <label class="event-picker">
+              <span>EVENT</span>
+              <select id="event-select">
+                <option value="333">3×3×3</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="scramble-area" aria-live="polite" aria-atomic="true">
+            <p class="scramble-placeholder" id="scramble-placeholder">
+              Your scramble will appear here.
+            </p>
+            <p class="scramble-notation" id="scramble-notation" hidden></p>
+            <p class="scramble-notation" id="scramble-notation"></p>
+          </div>
+
+          <div class="scramble-meta">
+            <span id="move-count">— moves</span>
+            <span id="generation-time">Waiting to generate</span>
+          </div>
+
+          <div class="actions">
+            <button class="button button-primary" id="generate-button">
+              <span aria-hidden="true">↻</span>
+              Generate scramble
+            </button>
+
+            <button class="button button-secondary" id="copy-button" disabled>
+              <span aria-hidden="true">▢</span>
+              Copy
+            </button>
+          </div>
+
+          <p class="status-message" id="status-message" role="status">
+            Initialising…
+          </p>
+        </section>
+
+        <section class="panel history-panel" aria-labelledby="history-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">SESSION</p>
+              <h2 id="history-title">Recent scrambles</h2>
+            </div>
+            <button class="text-button" id="clear-history-button" disabled>
+              Clear history
+            </button>
+          </div>
+
+          <p class="empty-state" id="history-empty">
+            No scrambles yet. Generate one to get started.
+          </p>
+          <ol class="history-list" id="history-list"></ol>
+        </section>
+
+        <details class="panel debug-panel">
+          <summary>
+            <span>
+              <span class="eyebrow">DEVELOPER TOOLS</span>
+              <strong>Inspect cube state</strong>
+            </span>
+            <span class="details-indicator" aria-hidden="true">＋</span>
+          </summary>
+
+          <p class="debug-description">
+            Raw state returned by the generator. Arrays use the library's
+            corner and edge permutation and orientation representation.
+          </p>
+
+          <pre id="state-output">Generate a scramble to inspect its state.</pre>
+        </details>
+
+        <section class="notice">
+          <span class="notice-icon" aria-hidden="true">i</span>
+          <p>
+            <strong>Development use only.</strong>
+            This independent project is not an official WCA scrambling
+            program and must not be used to generate scrambles for official
+            competitions.
+          </p>
+        </section>
+      </main>
+
+      <footer>
+        <span>WCA SCRAMBLER</span>
+        <span>Built for experimentation.</span>
+      </footer>
+    </div>
+
+   <script type="module" src="./main.js"></script>
+</body>
+</html>
