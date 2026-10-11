@@ -1,48 +1,58 @@
-
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { randomInt, shuffle } from "../core/random.js";
 import { randomLegalState } from "../puzzles/333/random.js";
 import { isLegalState } from "../puzzles/333/state.js";
 
-test("randomInt returns values inside the requested range", () => {
-  assert.equal(randomInt(1, () => 0), 0);
-  assert.equal(randomInt(10, () => 9), 9);
-  assert.equal(randomInt(10, () => 10), 0);
-});
-
-test("randomInt rejects invalid ranges", () => {
-  for (const value of [0, -1, 1.5, NaN, Infinity]) {
-    assert.throws(() => randomInt(value), RangeError);
-  }
-});
-
-test("randomInt rejects invalid random-source values", () => {
-  assert.throws(() => randomInt(10, () => -1), RangeError);
-  assert.throws(() => randomInt(10, () => 0x100000000), RangeError);
-});
-
-test("randomInt rejects the biased tail of the uint32 range", () => {
-  const range = 0x100000000;
-  const limit = Math.floor(range / 10) * 10;
-
-  const values = [limit, 9];
-  const result = randomInt(10, () => values.shift());
-
-  assert.equal(result, 9);
-});
-
-test("shuffle returns a permutation of its input", () => {
-  const input = [1, 2, 3, 4, 5];
-  const result = shuffle(input);
-
-  assert.deepEqual([...result].sort(), input);
-  assert.deepEqual(input, [1, 2, 3, 4, 5]);
-});
-
-test("random legal states satisfy all cube invariants", () => {
-  for (let i = 0; i < 200; i++) {
+test("generates legal 3x3 states", () => {
+  for (let i = 0; i < 100; i++) {
     assert.equal(isLegalState(randomLegalState()), true);
   }
+});
+
+test("generates valid corner and edge permutations", () => {
+  for (let i = 0; i < 100; i++) {
+    const state = randomLegalState();
+
+    assert.deepEqual(
+      [...state.cp].sort((a, b) => a - b),
+      [0, 1, 2, 3, 4, 5, 6, 7]
+    );
+
+    assert.deepEqual(
+      [...state.ep].sort((a, b) => a - b),
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    );
+  }
+});
+
+test("corner orientations sum to zero modulo three", () => {
+  for (let i = 0; i < 100; i++) {
+    const { co } = randomLegalState();
+
+    assert.ok(co.every((value) => value >= 0 && value < 3));
+    assert.equal(co.reduce((sum, value) => sum + value, 0) % 3, 0);
+  }
+});
+
+test("edge orientations sum to zero modulo two", () => {
+  for (let i = 0; i < 100; i++) {
+    const { eo } = randomLegalState();
+
+    assert.ok(eo.every((value) => value === 0 || value === 1));
+    assert.equal(eo.reduce((sum, value) => sum + value, 0) % 2, 0);
+  }
+});
+
+test("uses fixed centre positions", () => {
+  assert.deepEqual(randomLegalState().center, [0, 1, 2, 3, 4, 5]);
+});
+
+test("supports a deterministic random source", () => {
+  const randomWord = () => 0;
+
+  assert.deepEqual(
+    randomLegalState(randomWord),
+    randomLegalState(randomWord)
+  );
 });

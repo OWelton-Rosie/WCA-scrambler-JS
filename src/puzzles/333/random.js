@@ -1,48 +1,43 @@
-
 import {
   randomInt,
   randomPermutation
 } from "../../core/random.js";
 
-import {
-  assertLegalState,
-  identityState,
-  permutationParity
-} from "./state.js";
+import { permutationParity } from "./state.js";
 
-function randomOrientations(size, modulus, randomWord) {
-  const result = [];
+function randomOrientation(size, modulus, randomWord) {
+  const orientations = [];
   let sum = 0;
 
+  // Sample all but the final orientation independently.
   for (let i = 0; i < size - 1; i++) {
-    const value = randomInt(modulus, randomWord);
-    result.push(value);
-    sum += value;
+    const orientation = randomInt(modulus, randomWord);
+
+    orientations.push(orientation);
+    sum += orientation;
   }
 
-  result.push((modulus - (sum % modulus)) % modulus);
+  // The final orientation enforces the orientation constraint.
+  orientations.push((modulus - (sum % modulus)) % modulus);
 
-  return result;
+  return orientations;
 }
 
 export function randomLegalState(randomWord) {
   let cp;
   let ep;
 
+  // A legal cube requires matching corner and edge permutation parity.
   do {
     cp = randomPermutation(8, randomWord);
     ep = randomPermutation(12, randomWord);
-  } while (
-    permutationParity(cp) !== permutationParity(ep)
-  );
+  } while (permutationParity(cp) !== permutationParity(ep));
 
-  const state = {
-    ...identityState(),
+  return {
+    center: [0, 1, 2, 3, 4, 5],
     cp,
+    co: randomOrientation(8, 3, randomWord),
     ep,
-    co: randomOrientations(8, 3, randomWord),
-    eo: randomOrientations(12, 2, randomWord)
+    eo: randomOrientation(12, 2, randomWord)
   };
-
-  return assertLegalState(state);
 }

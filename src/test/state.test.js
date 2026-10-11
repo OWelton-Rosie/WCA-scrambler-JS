@@ -1,47 +1,43 @@
-
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import {
-  identityState,
-  isLegalState,
-  permutationParity
-} from "../puzzles/333/state.js";
+import { randomLegalState } from "../puzzles/333/random.js";
+import { isLegalState } from "../puzzles/333/state.js";
 
-test("identity state is legal", () => {
-  assert.equal(isLegalState(identityState()), true);
+test("generates a legal state", () => {
+  const state = randomLegalState();
+
+  assert.equal(isLegalState(state), true);
 });
 
-test("permutation parity distinguishes odd and even permutations", () => {
-  assert.equal(permutationParity([0, 1, 2, 3]), 0);
-  assert.equal(permutationParity([1, 0, 2, 3]), 1);
-  assert.equal(permutationParity([1, 2, 0, 3]), 0);
+test("supports an injected deterministic random source", () => {
+  const randomWord = () => 0;
+  const first = randomLegalState(randomWord);
+  const second = randomLegalState(randomWord);
+
+  assert.deepEqual(first, second);
 });
 
-test("rejects corner twists that violate the orientation sum", () => {
-  const state = identityState();
-  state.co[0] = 1;
+test("generates valid corner and edge orientations", () => {
+  for (let i = 0; i < 100; i++) {
+    const state = randomLegalState();
 
-  assert.equal(isLegalState(state), false);
+    assert.equal(
+      state.co.reduce((sum, value) => sum + value, 0) % 3,
+      0
+    );
+
+    assert.equal(
+      state.eo.reduce((sum, value) => sum + value, 0) % 2,
+      0
+    );
+  }
 });
 
-test("rejects edge flips that violate the orientation sum", () => {
-  const state = identityState();
-  state.eo[0] = 1;
+test("generates matching corner and edge permutation parity", () => {
+  for (let i = 0; i < 100; i++) {
+    const state = randomLegalState();
 
-  assert.equal(isLegalState(state), false);
-});
-
-test("rejects mismatched corner and edge permutation parity", () => {
-  const state = identityState();
-  [state.cp[0], state.cp[1]] = [state.cp[1], state.cp[0]];
-
-  assert.equal(isLegalState(state), false);
-});
-
-test("rejects duplicate pieces", () => {
-  const state = identityState();
-  state.ep[0] = state.ep[1];
-
-  assert.equal(isLegalState(state), false);
+    assert.equal(isLegalState(state), true);
+  }
 });

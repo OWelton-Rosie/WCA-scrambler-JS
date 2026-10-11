@@ -1,10 +1,13 @@
+function identityPermutation(size) {
+  return Array.from({ length: size }, (_, i) => i);
+}
 
 export function identityState() {
   return {
-    center: Array.from({ length: 6 }, (_, i) => i),
-    cp: Array.from({ length: 8 }, (_, i) => i),
+    center: identityPermutation(6),
+    cp: identityPermutation(8),
     co: Array(8).fill(0),
-    ep: Array.from({ length: 12 }, (_, i) => i),
+    ep: identityPermutation(12),
     eo: Array(12).fill(0)
   };
 }
@@ -41,6 +44,14 @@ function isPermutation(values, size) {
   );
 }
 
+function hasFixedCenters(center) {
+  return (
+    Array.isArray(center) &&
+    center.length === 6 &&
+    center.every((value, index) => value === index)
+  );
+}
+
 function validOrientations(values, size, modulus) {
   if (
     !Array.isArray(values) ||
@@ -63,7 +74,13 @@ export function isLegalState(state) {
     return false;
   }
 
-  const { cp, co, ep, eo } = state;
+  const { center, cp, co, ep, eo } = state;
+
+  // Centres are optional for backwards compatibility, but if supplied,
+  // they must be in their fixed positions.
+  if (center !== undefined && !hasFixedCenters(center)) {
+    return false;
+  }
 
   if (
     !isPermutation(cp, 8) ||

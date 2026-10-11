@@ -1,8 +1,14 @@
-
 import Cube from "cubejs";
+import { assertLegalState } from "./state.js";
 
 let initialisation;
 
+/**
+ * Initialise cubejs's solver tables once.
+ *
+ * Concurrent callers share the same initialisation promise. If initialisation
+ * fails, clear the cached promise so a later call can retry.
+ */
 export async function initialiseSolver() {
   if (!initialisation) {
     initialisation = Promise.resolve().then(() => {
@@ -18,7 +24,15 @@ export async function initialiseSolver() {
   }
 }
 
+/**
+ * Convert a legal cubie state into a cubejs Cube.
+ *
+ * States may omit `center`; when omitted, the fixed identity centre
+ * arrangement is used.
+ */
 export function cubeFromState(state) {
+  assertLegalState(state);
+
   return new Cube({
     center: state.center ?? [0, 1, 2, 3, 4, 5],
     cp: state.cp,
@@ -28,6 +42,11 @@ export function cubeFromState(state) {
   });
 }
 
+/**
+ * Solve a legal cube state and verify the returned solution.
+ *
+ * Call initialiseSolver() before calling this function.
+ */
 export function solveState(state) {
   const cube = cubeFromState(state);
   const solution = cube.solve();
@@ -43,6 +62,9 @@ export function solveState(state) {
   return solution.trim();
 }
 
+/**
+ * Invert a move sequence, producing the sequence that undoes it.
+ */
 export function invertSolution(solution) {
   return Cube.inverse(solution).trim();
 }
