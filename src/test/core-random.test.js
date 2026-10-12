@@ -91,3 +91,26 @@ test("randomPermutation rejects invalid sizes", () => {
     );
   }
 });
+
+
+test("Fisher-Yates maps every equally likely choice pair to a unique 3-item permutation", () => {
+  const outcomes = new Set();
+
+  // A 3-item Fisher-Yates shuffle makes choices from ranges 3 and 2.
+  // Enumerate all 3 × 2 possible pairs of choices.
+  for (let firstChoice = 0; firstChoice < 3; firstChoice++) {
+    for (let secondChoice = 0; secondChoice < 2; secondChoice++) {
+      const words = [firstChoice, secondChoice];
+      let index = 0;
+
+      const result = shuffle(
+        [0, 1, 2],
+        () => words[index++]
+      );
+
+      outcomes.add(result.join(","));
+    }
+  }
+
+  assert.equal(outcomes.size, 6);
+});

@@ -56,3 +56,33 @@ test("supports a deterministic random source", () => {
     randomLegalState(randomWord)
   );
 });
+
+
+test("rejects a mismatched permutation-parity pair and resamples", () => {
+  const identityCorners = [7, 6, 5, 4, 3, 2, 1];
+
+  // This first edge permutation is odd: the first shuffle choice
+  // swaps the final edge with edge zero; the remaining choices
+  // preserve the order of the other edges.
+  const oddEdges = [0, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+  const identityEdges = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+
+  const words = [
+    ...identityCorners,
+    ...oddEdges,
+    ...identityCorners,
+    ...identityEdges,
+    ...Array(18).fill(0)
+  ];
+
+  let calls = 0;
+  const randomWord = () => words[calls++];
+
+  const state = randomLegalState(randomWord);
+
+  // The first pair had different parity, so a second pair was sampled.
+  assert.equal(calls, 54);
+  assert.deepEqual(state.cp, [0, 1, 2, 3, 4, 5, 6, 7]);
+  assert.deepEqual(state.ep, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+  assert.equal(isLegalState(state), true);
+});
