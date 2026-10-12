@@ -4,7 +4,11 @@
 
 ## Scope
 
-This audit covers the random-state sampler used by the 3×3 generator. It considers the permutation and orientation sampling, parity constraint, rejection sampling, and excluded states.
+This audit covers the random-state sampler used by the 3×3×3 (`333`) generator.
+
+It considers bounded random-number generation, permutation sampling, piece orientations, permutation parity and the exclusion of specified states.
+
+The 2×2×2 (`222`) implementation is outside the scope of this audit. Its state sampling and dedicated solver require a separate event-specific analysis before any equivalent uniformity claim can be made.
 
 ## 1. Bounded random integers
 
@@ -44,7 +48,7 @@ The rejection step can reduce efficiency, but does not introduce bias among acce
 
 ## 5. Excluded states
 
-The generator rejects 19 states: the solved state and the 18 states obtainable by one face turn, including quarter turns, half turns, and inverse quarter turns for each of the six faces.
+The generator rejects 19 states: the solved state and the 18 states obtainable by a single face turn, including quarter turns, half turns and inverse quarter turns for each of the six faces.
 
 The rejection step preserves equal probability among all legal states that remain eligible, assuming the input sampler is uniform.
 
@@ -59,12 +63,20 @@ The number of legal 3×3 states under the usual fixed-centre model is
 =43,252,003,274,489,856,000.
 \]
 
-Excluding the 19 states above leaves 43,252,003,274,489,855,981 eligible states.
+Excluding the 19 states above leaves
+
+\[
+43,252,003,274,489,855,981
+\]
+
+eligible states.
 
 ## 7. Verification and limitations
 
-The automated tests check state legality, permutation and orientation constraints, parity, the excluded-state set, deterministic random sources, scramble replay, and solver correctness. A small exhaustive test also verifies the six outcomes of a three-item Fisher–Yates shuffle.
+The automated tests check state legality, permutation and orientation constraints, parity, the excluded-state set, deterministic random sources, scramble replay and solver correctness. A small exhaustive test also verifies the six outcomes of a three-item Fisher–Yates shuffle.
 
 These tests do not enumerate the full 3×3 state space or prove the behaviour of every possible random-word source. The uniformity conclusion is conditional on the mathematical argument and the implementation satisfying the stated assumptions.
+
+This audit does not establish uniformity for the 2×2×2 implementation. That event requires its own analysis of the state representation, sampling procedure, supported move set and solver behaviour.
 
 This project is not an official WCA scrambling program, and this audit does not certify compliance with WCA regulations.

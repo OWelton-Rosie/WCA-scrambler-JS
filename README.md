@@ -2,23 +2,31 @@
 
 A JavaScript library for generating Rubik's Cube scrambles, with the long-term goal of supporting every World Cube Association (WCA) puzzle event.
 
-**Status:** Early development. Currently supports 3×3×3 (`333`).
+**Status:** Early development. Currently supports 2×2×2 (`222`) and 3×3×3 (`333`).
 
 ## Overview
 
-This project generates scrambles by sampling legal puzzle states and using a solver to calculate a sequence of moves that reaches each sampled state.
+This project generates scrambles by sampling eligible legal puzzle states and calculating move sequences that reach those states.
+
+The implementation uses event-specific state representations and solving algorithms, with shared utilities for randomness and event registration. The 2×2×2 implementation uses a dedicated solver operating on corner permutations and orientations, while the 3×3×3 implementation uses `cubejs`.
 
 The project is being developed with the WCA Regulations in mind, particularly Regulation 4b3, which specifies random-state requirements for scrambles.
 
-The long-term goal is to provide a modular, reusable library with a shared core for randomness and event registration, alongside individual implementations for each supported puzzle.
+The long-term goal is to provide a modular, reusable library with a shared core for randomness and event registration alongside individual implementations for each supported puzzle.
 
 ## WCA regulation status
 
 ### Regulation 4b3: Random-state requirements
 
-The 3×3×3 implementation is designed around the random-state approach described in Regulation 4b3. It samples legal cube states and rejects the solved state and the 18 states obtainable by a single face turn.
+The generators use random-state approaches designed to sample eligible puzzle states.
 
-The implementation has automated tests for state legality, permutation parity, orientation constraints, excluded states, scramble replay, and solver verification. However, these tests do not constitute a formal proof of uniformity or establish full compliance with the WCA's requirements.
+The 3×3×3 implementation samples legal states and rejects the solved state and the 18 states obtainable by a single face turn.
+
+The 2×2×2 implementation samples corner permutations and orientations subject to its state constraints and uses a dedicated solver to generate scrambles in the supported move set.
+
+Automated tests cover state legality, relevant permutation and orientation constraints, excluded states, scramble replay, solver verification and random-number generation. The exact checks vary by event.
+
+These tests do not constitute a formal proof of uniformity for every event or establish full compliance with the WCA's requirements. See [`docs/uniformity-audit.md`](docs/uniformity-audit.md) for the mathematical audit of the 3×3×3 sampler.
 
 ### Regulation 4b: Official competition use
 
@@ -26,29 +34,30 @@ The implementation has automated tests for state legality, permutation parity, o
 
 Generating random states in accordance with Regulation 4b3 does not, by itself, satisfy Regulation 4b. Competition scrambles must be generated using a current official version of an official WCA scrambling program.
 
-This project is intended for development, experimentation, learning, and non-official use.
+This project is intended for development, experimentation, learning and non-official use.
 
 ## Features
 
-- Random legal 3×3×3 state sampling.
-- Cryptographically backed random-number generation using Web Crypto.
+- Random-state scramble generation for 2×2×2 and 3×3×3.
+- Cryptographically backed random-number generation using Web Crypto by default.
 - Unbiased bounded integer sampling using rejection sampling.
 - Fisher–Yates permutation shuffling.
-- Cube-state legality checks, including orientation and permutation-parity constraints.
-- Solver-backed scramble generation using `cubejs`.
-- Verification that generated scrambles reproduce their sampled target states.
-- Verification that solver solutions return sampled states to solved.
-- Exclusion of the solved state and all 18 single-face-turn states.
+- Puzzle-state legality checks and event-specific state constraints.
+- Dedicated 2×2×2 solving implementation using corner permutation and orientation coordinates.
+- Solver-backed 3×3×3 scramble generation using `cubejs`.
+- Verification that generated scrambles reproduce their target states.
+- Verification of solver solutions and sampled-state constraints.
+- Exclusion of the solved state and all 18 single-face-turn states for 3×3×3.
 - Injectable random sources for reproducible testing.
 - Automated tests using Node.js's built-in test runner.
 - Production builds using Vite.
-- A browser-based demo for generating, viewing, and copying scrambles.
+- A browser-based demo for generating, viewing and copying scrambles.
 
 ## Installation
 
 The project is under active development and is not yet published as a stable npm package.
 
-To clone the repository and install its dependencies:
+Clone the repository and install its dependencies:
 
 ```bash
 git clone https://github.com/OWelton-Rosie/WCA-scrambler-JS.git
@@ -63,15 +72,17 @@ Generate a 3×3×3 scramble from the source code:
 ```javascript
 import { generate } from "./src/index.js";
 
-const scramble = await generate();
+const scramble = await generate("333");
 
 console.log(scramble.notation);
 ```
 
-You can also specify the event explicitly:
+Generate a 2×2×2 scramble:
 
 ```javascript
-const scramble = await generate("333");
+import { generate } from "./src/index.js";
+
+const scramble = await generate("222");
 
 console.log(scramble.notation);
 console.log(scramble.moves);
@@ -82,12 +93,14 @@ The `generate()` function returns a promise that resolves to an object containin
 
 | Property | Description |
 |---|---|
-| `event` | Event identifier, currently `"333"` |
+| `event` | Event identifier, currently `"222"` or `"333"` |
 | `notation` | Scramble as a space-separated move sequence |
 | `moves` | Scramble represented as an array of moves |
-| `state` | Sampled cube state represented by cubie permutations and orientations |
+| `state` | Target puzzle state, represented using the state structure for the selected event |
 
-Only the `333` event is currently supported. Unsupported event identifiers throw a `RangeError`.
+The supported move notation is event-specific. The 2×2×2 generator uses the `U`, `R` and `F` face moves, including quarter turns, half turns and inverse quarter turns.
+
+Only `222` and `333` are currently supported. Unsupported event identifiers throw a `RangeError`.
 
 The generator accepts an optional random-word source for testing. See [Reproducible testing](#reproducible-testing).
 
@@ -101,9 +114,9 @@ Start the development server from the project root:
 npm run demo
 ```
 
-Open the local URL printed by Vite in your browser. 
+Open the local URL printed by Vite in your browser.
 
-The demo provides an interface for generating and viewing scrambles, copying notation, and reviewing recent results within the current session.
+The demo provides an interface for generating and viewing scrambles, copying notation and reviewing recent results within the current session.
 
 The demo is a development tool, not an official WCA scrambling application.
 
@@ -130,7 +143,7 @@ function seededRandomWord(seed) {
   };
 }
 
-const scramble = await generate("333", {
+const scramble = await generate("222", {
   randomWord: seededRandomWord(12345)
 });
 
@@ -159,28 +172,31 @@ Run the browser demo:
 npm run demo
 ```
 
-The tests cover random-number generation, permutation sampling, cube-state legality, excluded states, scramble replay, solver verification, and deterministic generation.
+The tests cover random-number generation, permutation sampling, event-specific state constraints, excluded states, scramble replay, solver verification and deterministic generation.
+
+The 2×2×2 tests also exercise the dedicated solver and its supported move set. The 3×3×3 tests cover corner and edge legality, orientation constraints, permutation parity and the excluded-state set.
 
 ## Roadmap
 
 - [x] Cryptographically backed random-number generation.
 - [x] Unbiased bounded integer sampling.
 - [x] Random legal 3×3×3 state sampling.
-- [x] Solver-backed scramble generation.
+- [x] Solver-backed 3×3×3 scramble generation.
+- [x] Dedicated 2×2×2 state sampling and solver.
 - [x] State and scramble verification.
 - [x] Deterministic random-source injection.
 - [x] Initial automated test suite.
 - [x] Browser-based development demo.
 - [ ] Strengthen edge-case and invalid-input testing.
-- [ ] Document and rigorously verify the sampling uniformity argument.
+- [ ] Document and rigorously verify the sampling uniformity argument for each event.
 - [ ] Review compliance with the current WCA Regulations.
 - [ ] Improve the shared event registry and move utilities.
 - [ ] Expand support to other WCA events.
-- [ ] Review dependencies, licensing, and release packaging.
+- [ ] Review dependencies, licensing and release packaging.
 - [ ] Prepare for a versioned npm release.
 
 ## Disclaimer
 
-This is an independent development project. It is not affiliated with, endorsed by, or approved by the World Cube Association.
+This is an independent development project. It is not affiliated with, endorsed by or approved by the World Cube Association.
 
 **Do not use this library to generate scrambles for official WCA competitions.** Consult the current WCA Regulations and use an official scrambling program for competition purposes.
