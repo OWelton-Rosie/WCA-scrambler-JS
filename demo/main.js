@@ -1,3 +1,4 @@
+
 import { generate, events } from "../src/index.js";
 import "./style.css";
 
@@ -15,12 +16,22 @@ const statusMessage = document.querySelector("#status-message");
 const historyList = document.querySelector("#history-list");
 const historyEmpty = document.querySelector("#history-empty");
 const stateOutput = document.querySelector("#state-output");
+const debugDescription = document.querySelector("#debug-description");
 
-const MAX_HISTORY = 10;
+const MAX_HISTORY = 100;
+
+const EVENT_NAMES = {
+  "333": "3×3×3",
+  "222": "2×2×2"
+};
 
 let currentScramble = null;
 let history = [];
 let generating = false;
+
+function eventName(event) {
+  return EVENT_NAMES[event] ?? event;
+}
 
 function setStatus(message, type = "normal") {
   statusMessage.textContent = message;
@@ -40,6 +51,9 @@ function setGenerating(value) {
 function renderScramble(result, elapsedMs) {
   currentScramble = result;
 
+  // Keep the selected event in sync when restoring history.
+  eventSelect.value = result.event;
+
   scramblePlaceholder.hidden = true;
   scrambleNotation.textContent = result.notation;
   scrambleNotation.hidden = false;
@@ -52,6 +66,11 @@ function renderScramble(result, elapsedMs) {
 
   copyButton.disabled = false;
   stateOutput.textContent = JSON.stringify(result.state, null, 2);
+
+  debugDescription.textContent =
+    result.event === "222"
+      ? "Raw 2×2 state: corner permutation (cp) and corner orientation (co)."
+      : "Raw 3×3 state: corner, edge and centre permutation/orientation data.";
 }
 
 function renderHistory() {
@@ -68,7 +87,8 @@ function renderHistory() {
 
     const label = document.createElement("span");
     label.className = "history-item-label";
-    label.textContent = `${entry.event} · ${entry.moves.length} moves`;
+    label.textContent =
+      `${eventName(entry.event)} · ${entry.moves.length} moves`;
 
     const notation = document.createElement("span");
     notation.className = "history-item-notation";
@@ -82,12 +102,16 @@ function renderHistory() {
     restoreButton.textContent = "View";
     restoreButton.setAttribute(
       "aria-label",
-      `View scramble ${entry.notation}`
+      `View ${eventName(entry.event)} scramble: ${entry.notation}`
     );
 
     restoreButton.addEventListener("click", () => {
       renderScramble(entry, entry.elapsedMs);
-      setStatus("Loaded a previous scramble from this session.");
+
+      setStatus(
+        `Loaded a previous ${eventName(entry.event)} scramble from this session.`
+      );
+
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
@@ -125,7 +149,7 @@ async function generateScramble() {
     history = [
       entry,
       ...history.filter(
-        (previous) =>
+        previous =>
           previous.notation !== entry.notation ||
           previous.event !== entry.event
       )
@@ -133,7 +157,10 @@ async function generateScramble() {
 
     renderHistory();
 
-    setStatus("Scramble generated and verified by the library.");
+    setStatus(
+      `${eventName(event)} scramble generated and verified by the library.`,
+      "success"
+    );
   } catch (error) {
     console.error("Scramble generation failed:", error);
 
@@ -175,10 +202,10 @@ copyButton.addEventListener("click", copyScramble);
 clearHistoryButton.addEventListener("click", clearHistory);
 
 eventSelect.addEventListener("change", () => {
-  setStatus(`Selected event: ${eventSelect.selectedOptions[0].textContent}`);
+  setStatus(`Selected event: ${eventName(eventSelect.value)}.`);
 });
 
-document.addEventListener("keydown", (event) => {
+document.addEventListener("keydown", event => {
   const target = event.target;
 
   if (

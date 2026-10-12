@@ -29,13 +29,13 @@ function seededRandomWord(seed) {
   };
 }
 
-test("only advertises the implemented event", () => {
-  assert.deepEqual(events, ["333"]);
+test("advertises both implemented events", () => {
+  assert.deepEqual(events, ["333", "222"]);
 });
 
 test("rejects unsupported events", async () => {
   await assert.rejects(
-    generate("222"),
+    generate("999"),
     {
       name: "RangeError",
       message: /Unsupported event/
