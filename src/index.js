@@ -1,6 +1,7 @@
 
 import { generate333 } from "./puzzles/333/scramble.js";
 import { generate222 } from "./puzzles/222/scramble.js";
+import { generatePyram } from "./puzzles/pyram/scramble.js";
 
 import {
   events,
@@ -14,6 +15,10 @@ registerEvent("333", ({ randomWord } = {}) =>
 
 registerEvent("222", ({ randomWord } = {}) =>
   generate222(randomWord)
+);
+
+registerEvent("pyram", ({ randomWord } = {}) =>
+  generatePyram(randomWord)
 );
 
 export { events, registerEvent };
