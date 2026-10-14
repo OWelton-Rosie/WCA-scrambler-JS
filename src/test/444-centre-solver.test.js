@@ -6,6 +6,7 @@ import { applyMoves } from "../puzzles/444/moves.js";
 import { solvedState } from "../puzzles/444/state.js";
 import {
   areCentresSolved,
+  estimateCentreDistance,
   solveCentresBounded
 } from "../puzzles/444/centre-solver.js";
 
@@ -70,4 +71,43 @@ test("reports when the search depth is insufficient", () => {
     () => solveCentresBounded(state, { maxDepth: 0 }),
     /No centre solution found/
   );
+});
+
+
+test("centre distance estimate is zero for solved centres", () => {
+  assert.equal(estimateCentreDistance(solvedState()), 0);
+});
+
+test("centre distance estimate never exceeds a known solving sequence length", () => {
+  const sequences = [
+    ["2R"],
+    ["2R", "2U"],
+    ["2F'", "2L2", "2D"],
+    ["2U'", "2B", "2D'", "2F2", "2B2", "2D2"],
+    ["2L", "2F2", "2R'", "2U", "2B2"]
+  ];
+
+  for (const sequence of sequences) {
+    const state = applyMoves(solvedState(), sequence);
+    assert.ok(
+      estimateCentreDistance(state) <= sequence.length,
+      `Estimate exceeded known solution length for ${sequence.join(" ")}`
+    );
+  }
+});
+
+test("improved heuristic still solves the benchmark's previously depth-limited case", () => {
+  const state = applyMoves(
+    solvedState(),
+    ["2U'", "2B", "2D'", "2F2", "2B2", "2D2"]
+  );
+
+  const result = solveCentresBounded(state, {
+    maxDepth: 7,
+    maxNodes: 25000
+  });
+
+  assert.ok(areCentresSolved(result.state));
+  assert.ok(result.depth <= 7);
+  assert.ok(result.nodesVisited <= 25000);
 });
