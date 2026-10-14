@@ -26,11 +26,13 @@ The 2×2×2 implementation samples corner permutations and orientations subject 
 
 Automated tests cover state legality, relevant permutation and orientation constraints, excluded states, scramble replay, solver verification and random-number generation. The exact checks vary by event.
 
-### 4×4×4 status: not compliant
+### 4×4×4 status: enabled through a JavaScript backend
 
-The 4×4 code under development is **not** a Regulation 4b3 random-state generator. Its current random-walk prototype samples move sequences rather than uniformly sampling eligible legal states. The centre solver is bounded, and a complete arbitrary-state reduction/solver (including wing pairing and parity handling) is not yet implemented. For those reasons, `444` is deliberately not registered by the public `generate()` API.
+The public `generate("444")` API now uses the MIT-licensed [`@cubesmith/scrambler`](https://github.com/cubesmithjs/cubesmith-scrambler) package's random-state 4×4 implementation. It samples a legal state, uses a centres → wing-pairing → parity → 3×3 reduction pipeline, and verifies the solve before returning the scramble. We replay the returned notation through this project's independent 4×4 facelet move model and return that resulting state.
 
-See [the 4×4 Regulation 4b3 acceptance audit](docs/444-4b3-audit.md) for the blockers and release checklist. Do not use this prototype for official competition scrambles or describe it as 4b3-compliant.
+The original local random-walk and bounded centre-search code remains experimental and is **not** the public generator. This is a pragmatic working backend, not a claim that this repository has independently implemented or formally proved the 4×4 sampler. The backend's own design record documents its state-count derivation, solver approach and remaining empirical coverage work; review that record before relying on it.
+
+For reproducible tests, `generate("444", { seed: "your-seed" })` accepts a seed. The custom `randomWord` injection used by the smaller local generators is intentionally not supported for 4×4: collapsing it to a 32-bit seed would not preserve the random-state distribution.
 
 These tests do not constitute a formal proof of uniformity for every event or establish full compliance with the WCA's requirements. See [`docs/uniformity-audit.md`](docs/uniformity-audit.md) for the mathematical audit of the 3×3×3 sampler.
 
@@ -44,13 +46,14 @@ This project is intended for development, experimentation, learning and non-offi
 
 ## Features
 
-- Random-state scramble generation for 2×2×2 and 3×3×3.
+- Random-state scramble generation for 2×2×2 and 3×3×3, plus 4×4×4 through `@cubesmith/scrambler`.
 - Cryptographically backed random-number generation using Web Crypto by default.
 - Unbiased bounded integer sampling using rejection sampling.
 - Fisher–Yates permutation shuffling.
 - Puzzle-state legality checks and event-specific state constraints.
 - Dedicated 2×2×2 solving implementation using corner permutation and orientation coordinates.
 - Solver-backed 3×3×3 scramble generation using `cubejs`.
+- 4×4×4 random-state generation using a reduction-based JavaScript backend, with replay through the local facelet model.
 - Verification that generated scrambles reproduce their target states.
 - Verification of solver solutions and sampled-state constraints.
 - Exclusion of the solved state and all 18 single-face-turn states for 3×3×3.
