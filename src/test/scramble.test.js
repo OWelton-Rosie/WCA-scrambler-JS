@@ -46,7 +46,7 @@ test("rejects unsupported events", async () => {
 });
 
 test("4x4 generates a random-state scramble and replays it with the local move model", async () => {
-  const result = await generate("444", { seed: "ci-444-smoke-test" });
+  const result = await generate("444", { seed: "cubesmith 444" });
 
   assert.equal(result.event, "444");
   assert.equal(result.method, "random-state");
