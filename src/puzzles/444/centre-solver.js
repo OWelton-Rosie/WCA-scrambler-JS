@@ -124,11 +124,6 @@ function buildCentreStickerDistances() {
   return { distancesByColour, distancesBetweenPositions };
 }
 
-const CENTRE_STICKER_DISTANCE_DATA = buildCentreStickerDistances();
-const CENTRE_STICKER_DISTANCES = CENTRE_STICKER_DISTANCE_DATA.distancesByColour;
-const DISTANCES_BETWEEN_CENTRE_POSITIONS =
-  CENTRE_STICKER_DISTANCE_DATA.distancesBetweenPositions;
-
 const CENTRE_ASSIGNMENTS = (() => {
   const assignments = new Map();
   const targetsByColour = new Map();
@@ -251,8 +246,10 @@ function sliceKey(move) {
 
 // Outer and wide turns do not provide additional centre-colour moves.
 const CENTRE_MOVES = MOVE_NAMES.filter((move) => move.startsWith("2"));
-
-const CENTRE_STICKER_DISTANCES = buildCentreStickerDistances();
+const CENTRE_STICKER_DISTANCE_DATA = buildCentreStickerDistances();
+const CENTRE_STICKER_DISTANCES = CENTRE_STICKER_DISTANCE_DATA.distancesByColour;
+const DISTANCES_BETWEEN_CENTRE_POSITIONS =
+  CENTRE_STICKER_DISTANCE_DATA.distancesBetweenPositions;
 
 /**
  * Search for a sequence that solves the centres of a 4x4 state.
