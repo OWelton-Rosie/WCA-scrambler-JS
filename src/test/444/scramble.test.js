@@ -74,3 +74,13 @@ function invertMove(move) {
   if (suffix === "2") return move;
   return suffix === "'" ? match[1] : `${match[1]}'`;
 }
+
+test("rejects local randomWord injection instead of weakening the backend RNG", async () => {
+  await assert.rejects(
+    generate444Scramble({ randomWord: () => 0 }),
+    {
+      name: "TypeError",
+      message: /does not support randomWord injection/
+    }
+  );
+});
