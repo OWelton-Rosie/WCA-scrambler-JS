@@ -1,16 +1,18 @@
 name: PR Quality Check
 
-# This tells GitHub to run the action on pull request events
 on:
+  push:
+    branches:
+      - main
   pull_request:
     types: [opened, synchronize, reopened]
-
+    
 jobs:
-  test-and-lint:
+  test:
+    name: Run tests
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the PR branch code onto the runner
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -18,11 +20,30 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '24'
+          cache: npm
 
-      # Step 3: Install project dependencies
       - name: Install dependencies
         run: npm ci
 
-      # Step 4: Run tests
       - name: Run tests
         run: npm test
+
+  build:
+    name: Build package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
