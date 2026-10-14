@@ -2,7 +2,7 @@
 
 A JavaScript library for generating Rubik's Cube scrambles, with the long-term goal of supporting every World Cube Association (WCA) puzzle event.
 
-**Status:** Early development. Currently supports 2×2×2 (`222`) and 3×3×3 (`333`).
+**Status:** Early development. Currently supports 2×2×2 (`222`), 3×3×3 (`333`), Pyraminx (`pyram`) and 4×4×4 (`444`).
 
 ## Overview
 
@@ -98,18 +98,18 @@ console.log(scramble.moves);
 console.log(scramble.state);
 ```
 
-The `generate()` function returns a promise that resolves to an object containing:
+Generate a 4×4×4 scramble through the JavaScript random-state backend:```javascriptimport { generate } from "./src/index.js";const scramble = await generate("444", { seed: "repeatable-test-seed" });console.log(scramble.notation);```The `generate()` function returns a promise that resolves to an object containing:
 
 | Property | Description |
 |---|---|
-| `event` | Event identifier, currently `"222"` or `"333"` |
+| `event` | Event identifier: `"222"`, `"333"`, `"pyram"` or `"444"` |
 | `notation` | Scramble as a space-separated move sequence |
 | `moves` | Scramble represented as an array of moves |
 | `state` | Target puzzle state, represented using the state structure for the selected event |
 
 The supported move notation is event-specific. The 2×2×2 generator uses the `U`, `R` and `F` face moves, including quarter turns, half turns and inverse quarter turns.
 
-Only `222` and `333` are currently supported. Unsupported event identifiers throw a `RangeError`.
+Only `222`, `333`, `pyram` and `444` are currently supported. Unsupported event identifiers throw a `RangeError`. The 4×4 backend accepts a `seed` option for reproducible tests; it does not accept the local `randomWord` injection.
 
 The generator accepts an optional random-word source for testing. See [Reproducible testing](#reproducible-testing).
 
@@ -159,7 +159,7 @@ const scramble = await generate("222", {
 console.log(scramble.notation);
 ```
 
-**This seeded source is intended for testing and reproducibility, not security or production randomness.** The default generator uses Web Crypto.
+**This seeded source is intended for testing and reproducibility, not security or production randomness.** The default local generators use Web Crypto. The 4×4 backend uses its own seeded interface when `seed` is provided.
 
 ## Development
 
@@ -183,7 +183,7 @@ npm run demo
 
 The tests cover random-number generation, permutation sampling, event-specific state constraints, excluded states, scramble replay, solver verification and deterministic generation.
 
-The 2×2×2 tests also exercise the dedicated solver and its supported move set. The 3×3×3 tests cover corner and edge legality, orientation constraints, permutation parity and the excluded-state set.
+The tests are organized by puzzle under `src/test/222/`, `src/test/333/`, `src/test/pyram/` and `src/test/444/`. Shared core tests live in `src/test/core/`, and public-API cross-event checks live in `src/test/integration/`.The 2×2×2 tests also exercise the dedicated solver and its supported move set. The 3×3×3 tests cover corner and edge legality, orientation constraints, permutation parity and the excluded-state set. The 4×4 tests cover facelet geometry, move application, piece extraction, parity and reduction helpers, as well as seeded backend generation and scramble replay.
 
 ## Roadmap
 
