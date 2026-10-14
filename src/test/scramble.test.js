@@ -43,6 +43,16 @@ test("rejects unsupported events", async () => {
   );
 });
 
+test("does not expose the experimental 4x4 random walk as a compliant event", async () => {
+  await assert.rejects(
+    generate("444"),
+    {
+      name: "RangeError",
+      message: /Unsupported event/
+    }
+  );
+});
+
 test("rejects an invalid injected random source", async () => {
   await assert.rejects(
     generate("333", { randomWord: 42 }),
