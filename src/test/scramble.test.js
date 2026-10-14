@@ -9,6 +9,8 @@ import {
   sampleEligibleState
 } from "../puzzles/333/scramble.js";
 import { solveState } from "../puzzles/333/solver.js";
+import { applyMoves } from "../puzzles/444/moves.js";
+import { isSolved as is444Solved, isValidState as isValid444State } from "../puzzles/444/state.js";
 
 const FACES = ["U", "R", "F", "D", "L", "B"];
 const SUFFIXES = ["", "2", "'"];
@@ -30,7 +32,7 @@ function seededRandomWord(seed) {
 }
 
 test("advertises all implemented events", () => {
-  assert.deepEqual(events, ["333", "222", "pyram"]);
+  assert.deepEqual(events, ["333", "222", "pyram", "444"]);
 });
 
 test("rejects unsupported events", async () => {
@@ -43,15 +45,29 @@ test("rejects unsupported events", async () => {
   );
 });
 
-test("does not expose the experimental 4x4 random walk as a compliant event", async () => {
-  await assert.rejects(
-    generate("444"),
-    {
-      name: "RangeError",
-      message: /Unsupported event/
-    }
+test("4x4 generates a random-state scramble and replays it with the local move model", async () => {
+  const result = await generate("444", { seed: "ci-444-smoke-test" });
+
+  assert.equal(result.event, "444");
+  assert.equal(result.method, "random-state");
+  assert.equal(result.backend, "@cubesmith/scrambler");
+  assert.ok(result.notation.length > 0);
+  assert.ok(result.moves.length > 1);
+  assert.equal(result.notation, result.moves.join(" "));
+  assert.equal(isValid444State(result.state), true);
+  assert.equal(is444Solved(result.state), false);
+  assert.deepEqual(
+    applyMoves(result.state, result.moves.slice().reverse().map(invert444Move)),
+    (await import("../puzzles/444/state.js")).solvedState()
   );
 });
+
+function invert444Move(move) {
+  const match = move.match(/^(.*?)(2|')?$/);
+  const suffix = match[2] ?? "";
+  if (suffix === "2") return move;
+  return suffix === "'" ? match[1] : `${match[1]}'`;
+}
 
 test("rejects an invalid injected random source", async () => {
   await assert.rejects(
