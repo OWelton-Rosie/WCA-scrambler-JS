@@ -6,20 +6,20 @@ import Cube from "cubejs";
 import {
   identityState,
   isLegalState
-} from "../puzzles/222/state.js";
+} from "../../puzzles/222/state.js";
 
-import { randomLegalState } from "../puzzles/222/random.js";
+import { randomLegalState } from "../../puzzles/222/random.js";
 
 import {
   cubeFromState,
   to333State
-} from "../puzzles/222/solver.js";
+} from "../../puzzles/222/solver.js";
 
 import {
   generate222,
   isEligibleState,
   sampleEligibleState
-} from "../puzzles/222/scramble.js";
+} from "../../puzzles/222/scramble.js";
 
 function seededRandomWord(seed = 123456789) {
   let value = seed >>> 0;

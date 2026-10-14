@@ -1,6 +1,6 @@
 
 import { FACELETS, assertValidState } from "./state.js";
-import { applyMove, MOVE_NAMES, parseMove } from "./moves.js";
+import { applyMove, getMovePermutation, MOVE_NAMES, parseMove } from "./moves.js";
 
 const NORMAL_TO_FACE = new Map([
   ["0,1,0", "U"],
@@ -55,21 +55,188 @@ export function areCentresSolved(state) {
   );
 }
 
-function misplacedCentreCount(state) {
-  let count = 0;
+const CENTRE_INDEX_SET = new Set(
+  CENTRE_FACELETS.map(({ index }) => index)
+);
 
-  for (const { index, face } of CENTRE_FACELETS) {
-    if (state[index] !== face) count++;
+function buildCentreStickerDistances() {
+  const neighbours = new Map(
+    CENTRE_FACELETS.map(({ index }) => [index, new Set()])
+  );
+
+  for (const move of CENTRE_MOVES) {
+    const permutation = getMovePermutation(move);
+
+    for (const { index } of CENTRE_FACELETS) {
+      const destination = permutation[index];
+
+      if (!CENTRE_INDEX_SET.has(destination)) {
+        throw new Error("Inner-slice move sent a centre sticker off-centres");
+      }
+
+      neighbours.get(index).add(destination);
+      neighbours.get(destination).add(index);
+    }
   }
 
-  return count;
+  const distancesBetweenPositions = new Map();
+
+  for (const { index: source } of CENTRE_FACELETS) {
+    const distances = new Map([[source, 0]]);
+    const queue = [source];
+
+    for (let head = 0; head < queue.length; head++) {
+      const current = queue[head];
+      const nextDistance = distances.get(current) + 1;
+
+      for (const neighbour of neighbours.get(current)) {
+        if (distances.has(neighbour)) continue;
+        distances.set(neighbour, nextDistance);
+        queue.push(neighbour);
+      }
+    }
+
+    distancesBetweenPositions.set(source, distances);
+  }
+
+  const distancesByColour = new Map();
+
+  for (const colour of ["U", "R", "F", "D", "L", "B"]) {
+    const distances = new Map();
+
+    for (const { index } of CENTRE_FACELETS) {
+      let nearest = Infinity;
+
+      for (const { index: target, face } of CENTRE_FACELETS) {
+        if (face !== colour) continue;
+        nearest = Math.min(
+          nearest,
+          distancesBetweenPositions.get(index).get(target)
+        );
+      }
+
+      distances.set(index, nearest);
+    }
+
+    distancesByColour.set(colour, distances);
+  }
+
+  return { distancesByColour, distancesBetweenPositions };
 }
 
+const CENTRE_ASSIGNMENTS = (() => {
+  const assignments = new Map();
+  const targetsByColour = new Map();
+
+  for (const colour of ["U", "R", "F", "D", "L", "B"]) {
+    targetsByColour.set(
+      colour,
+      CENTRE_FACELETS.filter(({ face }) => face === colour).map(({ index }) => index)
+    );
+  }
+
+  function permutations(values) {
+    if (values.length <= 1) return [values];
+
+    return values.flatMap((value, index) =>
+      permutations(values.filter((_, otherIndex) => otherIndex !== index))
+        .map((rest) => [value, ...rest])
+    );
+  }
+
+  for (const colour of ["U", "R", "F", "D", "L", "B"]) {
+    assignments.set(colour, permutations(targetsByColour.get(colour)));
+  }
+
+  return assignments;
+})();
+
+function minimumCentreAssignmentDistance(positions, colour) {
+  let minimum = Infinity;
+
+  for (const targets of CENTRE_ASSIGNMENTS.get(colour)) {
+    let total = 0;
+
+    for (let i = 0; i < positions.length; i++) {
+      total += DISTANCES_BETWEEN_CENTRE_POSITIONS
+        .get(positions[i])
+        .get(targets[i]);
+    }
+
+    minimum = Math.min(minimum, total);
+  }
+
+  return minimum;
+}
+
+const CENTRE_HEURISTIC_CACHE = new Map();
 
 function centreLowerBound(state) {
-  // An inner-slice quarter-turn affects at most eight centre stickers.
-  // This is an admissible lower bound for iterative-deepening search.
-  return Math.ceil(misplacedCentreCount(state) / 8);
+  const key = centreKey(state);
+  const cached = CENTRE_HEURISTIC_CACHE.get(key);
+  if (cached !== undefined) return cached;
+
+  let misplaced = 0;
+  let nearestDistanceSum = 0;
+  let farthestSticker = 0;
+  const positionsByColour = new Map(
+    ["U", "R", "F", "D", "L", "B"].map((colour) => [colour, []])
+  );
+
+  for (const { index, face } of CENTRE_FACELETS) {
+    const colour = state[index];
+
+    if (colour !== face) misplaced++;
+    positionsByColour.get(colour).push(index);
+
+    const distance = CENTRE_STICKER_DISTANCES.get(colour).get(index);
+
+    if (distance === undefined) {
+      throw new Error(
+        `No centre-position path found for sticker colour ${colour}`
+      );
+    }
+
+    nearestDistanceSum += distance;
+    farthestSticker = Math.max(farthestSticker, distance);
+  }
+
+  // The assignment abstraction assumes four centre stickers per colour.
+  // If given a colour-count-valid but impossible facelet state, avoid indexing
+  // beyond the four home slots; the search will fail cleanly rather than throw
+  // an incidental TypeError while evaluating the heuristic.
+  const hasFourCentresPerColour = [...positionsByColour.values()]
+    .every((positions) => positions.length === 4);
+
+  let assignmentDistanceSum = 0;
+
+  if (hasFourCentresPerColour) {
+    for (const [colour, positions] of positionsByColour) {
+      assignmentDistanceSum += minimumCentreAssignmentDistance(positions, colour);
+    }
+  }
+
+  // Assigning each colour's four stickers to four distinct home slots gives
+  // a stronger lower bound than letting every sticker choose its nearest
+  // home slot independently. A move can reduce total distance by at most 8.
+  // Keep the independent bounds combined with max, not addition.
+  const estimate = Math.max(
+    Math.ceil(misplaced / 8),
+    Math.ceil(nearestDistanceSum / 8),
+    Math.ceil(assignmentDistanceSum / 8),
+    farthestSticker
+  );
+
+  CENTRE_HEURISTIC_CACHE.set(key, estimate);
+  return estimate;
+}
+
+/**
+ * Expose the admissible estimate for testing and benchmark diagnostics.
+ */
+export function estimateCentreDistance(state) {
+  assertValidState(state);
+  return centreLowerBound(state);
 }
 
 function sliceKey(move) {
@@ -79,6 +246,10 @@ function sliceKey(move) {
 
 // Outer and wide turns do not provide additional centre-colour moves.
 const CENTRE_MOVES = MOVE_NAMES.filter((move) => move.startsWith("2"));
+const CENTRE_STICKER_DISTANCE_DATA = buildCentreStickerDistances();
+const CENTRE_STICKER_DISTANCES = CENTRE_STICKER_DISTANCE_DATA.distancesByColour;
+const DISTANCES_BETWEEN_CENTRE_POSITIONS =
+  CENTRE_STICKER_DISTANCE_DATA.distancesBetweenPositions;
 
 /**
  * Search for a sequence that solves the centres of a 4x4 state.

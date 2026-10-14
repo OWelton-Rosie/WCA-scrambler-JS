@@ -2,25 +2,25 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { generate, events } from "../index.js";
+import { generate, events } from "../../index.js";
 
 import {
   identityState,
   isLegalState,
   applyAlgorithm
-} from "../puzzles/pyram/state.js";
+} from "../../puzzles/pyram/state.js";
 
-import { randomLegalState } from "../puzzles/pyram/random.js";
+import { randomLegalState } from "../../puzzles/pyram/random.js";
 
 import {
   distanceToSolved,
   solveState
-} from "../puzzles/pyram/solver.js";
+} from "../../puzzles/pyram/solver.js";
 
 import {
   isEligibleState,
   sampleEligibleState
-} from "../puzzles/pyram/scramble.js";
+} from "../../puzzles/pyram/scramble.js";
 
 function seededRandomWord(seed = 123456789) {
   let value = seed >>> 0;
@@ -38,7 +38,7 @@ function assertSameState(actual, expected) {
 }
 
 test("advertises the Pyraminx event", () => {
-  assert.deepEqual(events, ["333", "222", "pyram"]);
+  assert.deepEqual(events, ["333", "222", "pyram", "444"]);
 });
 
 test("identity state is legal and solved", () => {

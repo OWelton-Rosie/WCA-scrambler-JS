@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { applyMoves } from "../puzzles/444/moves.js";
-import { solve444State } from "../puzzles/444/solver.js";
-import { isSolved, solvedState } from "../puzzles/444/state.js";
+import { applyMoves } from "../../puzzles/444/moves.js";
+import { solve444State } from "../../puzzles/444/solver.js";
+import { isSolved, solvedState } from "../../puzzles/444/state.js";
 
 test("solves a reduced 4x4 and verifies the full state", async () => {
   const state = applyMoves(

@@ -8,14 +8,14 @@ import {
   solvedState,
   isValidState,
   isSolved
-} from "../puzzles/444/state.js";
+} from "../../puzzles/444/state.js";
 
 import {
   parseMove,
   applyMove,
   applyMoves,
   invertMoves
-} from "../puzzles/444/moves.js";
+} from "../../puzzles/444/moves.js";
 
 test("the solved state has 96 facelets and 16 stickers per colour", () => {
   const state = solvedState();

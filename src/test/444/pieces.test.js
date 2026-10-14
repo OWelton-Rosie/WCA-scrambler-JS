@@ -5,11 +5,11 @@ import assert from "node:assert/strict";
 import {
   solvedState,
   isSolved
-} from "../puzzles/444/state.js";
+} from "../../puzzles/444/state.js";
 
 import {
   applyMoves
-} from "../puzzles/444/moves.js";
+} from "../../puzzles/444/moves.js";
 
 import {
   PIECE_LOCATIONS,
@@ -19,7 +19,7 @@ import {
   extractWings,
   pieceCounts,
   hasExpectedPieceCounts
-} from "../puzzles/444/pieces.js";
+} from "../../puzzles/444/pieces.js";
 
 test("the cube contains 8 corners, 24 centres and 24 wings", () => {
   const state = solvedState();

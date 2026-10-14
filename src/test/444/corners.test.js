@@ -2,8 +2,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { solvedState } from "../puzzles/444/state.js";
-import { applyMoves } from "../puzzles/444/moves.js";
+import { solvedState } from "../../puzzles/444/state.js";
+import { applyMoves } from "../../puzzles/444/moves.js";
 
 import {
   extractCornerState,
@@ -11,7 +11,7 @@ import {
   isLegalCornerState,
   assertLegalCornerState,
   cornerPermutationParity
-} from "../puzzles/444/corners.js";
+} from "../../puzzles/444/corners.js";
 
 test("identity corner state is legal and solved", () => {
   const corners = extractCornerState(solvedState());

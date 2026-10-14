@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { randomLegalState } from "../puzzles/333/random.js";
-import { isLegalState } from "../puzzles/333/state.js";
+import { randomLegalState } from "../../puzzles/333/random.js";
+import { isLegalState } from "../../puzzles/333/state.js";
 
 test("generates a legal state", () => {
   const state = randomLegalState();

@@ -3,12 +3,12 @@ import test from "node:test";
 
 import Cube from "cubejs";
 
-import { FACELETS, solvedState } from "../puzzles/444/state.js";
-import { applyMove } from "../puzzles/444/moves.js";
+import { FACELETS, solvedState } from "../../puzzles/444/state.js";
+import { applyMove } from "../../puzzles/444/moves.js";
 import {
   solvedReduced3x3Facelets,
   toReduced3x3Facelets
-} from "../puzzles/444/reduced.js";
+} from "../../puzzles/444/reduced.js";
 
 test("solved 4x4 converts to a solved 3x3 facelet string", () => {
   const expected =

@@ -2,22 +2,22 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { solvedState } from "../puzzles/444/state.js";
-import { applyMoves } from "../puzzles/444/moves.js";
+import { solvedState } from "../../puzzles/444/state.js";
+import { applyMoves } from "../../puzzles/444/moves.js";
 
 import {
   CENTRE_SLOTS,
   extractCentreState,
   centreColourCounts,
   hasValidCentreColourCounts
-} from "../puzzles/444/centres.js";
+} from "../../puzzles/444/centres.js";
 
 import {
   WING_SLOTS,
   extractWingState,
   wingPairCounts,
   hasValidWingPairCounts
-} from "../puzzles/444/wings.js";
+} from "../../puzzles/444/wings.js";
 
 const SEQUENCES = [
   "R U F' L2 D B",

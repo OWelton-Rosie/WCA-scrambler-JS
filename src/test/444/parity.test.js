@@ -2,16 +2,16 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { solvedState } from "../puzzles/444/state.js";
-import { applyMoves } from "../puzzles/444/moves.js";
+import { solvedState } from "../../puzzles/444/state.js";
+import { applyMoves } from "../../puzzles/444/moves.js";
 import {
   extractWingState,
   extractReducedEdges
-} from "../puzzles/444/wings.js";
+} from "../../puzzles/444/wings.js";
 import {
   analyzePLLParity,
   hasPLLParity
-} from "../puzzles/444/parity.js";
+} from "../../puzzles/444/parity.js";
 
 test("every wing has a defined orientation in the solved state", () => {
   const wings = extractWingState(solvedState());

@@ -5,7 +5,7 @@ import {
   randomInt,
   shuffle,
   randomPermutation
-} from "../core/random.js";
+} from "../../core/random.js";
 
 const UINT32_MAX = 0xFFFFFFFF;
 

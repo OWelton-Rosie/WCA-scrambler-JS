@@ -3,13 +3,13 @@ import test from "node:test";
 
 import Cube from "cubejs";
 
-import { applyMoves } from "../puzzles/444/moves.js";
-import { solvedState } from "../puzzles/444/state.js";
+import { applyMoves } from "../../puzzles/444/moves.js";
+import { solvedState } from "../../puzzles/444/state.js";
 import {
   analyzeReduced3x3Facelets,
   analyzeReduced444State,
   solveReduced3x3
-} from "../puzzles/444/reduced-solver.js";
+} from "../../puzzles/444/reduced-solver.js";
 
 test("solved 4x4 has a legal reduced 3x3 state", () => {
   const analysis = analyzeReduced444State(solvedState());

@@ -2,7 +2,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { createEventRegistry } from "../core/registry.js";
+import { createEventRegistry } from "../../core/registry.js";
 
 test("starts with no registered events", () => {
   const registry = createEventRegistry();
