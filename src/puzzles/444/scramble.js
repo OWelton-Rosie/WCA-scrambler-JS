@@ -58,7 +58,7 @@ export async function generate444Scramble(options = {}) {
 
   const result = await generateRandomStateScramble("444", backendOptions);
   const notation = result.moves.trim();
-  const moves = notation.split(/\\s+/);
+  const moves = notation.split(/\s+/);
   const state = applyMoves(solvedState(), moves);
 
   if (isSolved(state)) {
