@@ -9,6 +9,7 @@ import {
 
 import {
   MOVE_NAMES,
+  getMovePermutation,
   parseMove,
   applyMove,
   applyMoves,
@@ -21,6 +22,24 @@ test("all advertised move names parse successfully", () => {
       () => parseMove(move),
       `Failed to parse ${move}`
     );
+  }
+});
+
+test("every move exposes a bijective facelet permutation matching applyMove", () => {
+  const solved = solvedState();
+
+  for (const move of MOVE_NAMES) {
+    const permutation = getMovePermutation(move);
+
+    assert.equal(permutation.length, solved.length, `${move} permutation length`);
+    assert.equal(new Set(permutation).size, solved.length, `${move} permutation must be bijective`);
+
+    const expected = Array(solved.length);
+    for (let source = 0; source < permutation.length; source++) {
+      expected[permutation[source]] = solved[source];
+    }
+
+    assert.deepEqual(applyMove(solved, move), expected, `${move} permutation mismatch`);
   }
 });
 
