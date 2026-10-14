@@ -26,6 +26,12 @@ The 2×2×2 implementation samples corner permutations and orientations subject 
 
 Automated tests cover state legality, relevant permutation and orientation constraints, excluded states, scramble replay, solver verification and random-number generation. The exact checks vary by event.
 
+### 4×4×4 status: not compliant
+
+The 4×4 code under development is **not** a Regulation 4b3 random-state generator. Its current random-walk prototype samples move sequences rather than uniformly sampling eligible legal states. The centre solver is bounded, and a complete arbitrary-state reduction/solver (including wing pairing and parity handling) is not yet implemented. For those reasons, `444` is deliberately not registered by the public `generate()` API.
+
+See [the 4×4 Regulation 4b3 acceptance audit](docs/444-4b3-audit.md) for the blockers and release checklist. Do not use this prototype for official competition scrambles or describe it as 4b3-compliant.
+
 These tests do not constitute a formal proof of uniformity for every event or establish full compliance with the WCA's requirements. See [`docs/uniformity-audit.md`](docs/uniformity-audit.md) for the mathematical audit of the 3×3×3 sampler.
 
 ### Regulation 4b: Official competition use
