@@ -58,7 +58,7 @@ test("4x4 generates a random-state scramble and replays it with the local move m
   assert.equal(is444Solved(result.state), false);
   assert.deepEqual(
     applyMoves(result.state, result.moves.slice().reverse().map(invert444Move)),
-    (await import("../puzzles/444/state.js")).solvedState()
+    (await import("../../puzzles/444/state.js")).solvedState()
   );
 });
 
