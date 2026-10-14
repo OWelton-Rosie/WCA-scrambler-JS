@@ -1,6 +1,6 @@
 
 import { FACELETS, assertValidState } from "./state.js";
-import { applyMove, MOVE_NAMES, parseMove } from "./moves.js";
+import { applyMove, getMovePermutation, MOVE_NAMES, parseMove } from "./moves.js";
 
 const NORMAL_TO_FACE = new Map([
   ["0,1,0", "U"],
@@ -66,10 +66,106 @@ function misplacedCentreCount(state) {
 }
 
 
+const CENTRE_INDEX_SET = new Set(
+  CENTRE_FACELETS.map(({ index }) => index)
+);
+
+function buildCentreStickerDistances() {
+  // Treat each centre sticker as an individual token. A legal inner-slice
+  // turn moves a token between centre positions; stickers of the same colour
+  // may finish at any of the four centre positions on their home face.
+  const neighbours = new Map(
+    CENTRE_FACELETS.map(({ index }) => [index, new Set()])
+  );
+
+  for (const move of CENTRE_MOVES) {
+    const permutation = getMovePermutation(move);
+
+    for (const { index } of CENTRE_FACELETS) {
+      const destination = permutation[index];
+
+      if (!CENTRE_INDEX_SET.has(destination)) {
+        throw new Error("Inner-slice move sent a centre sticker off-centres");
+      }
+
+      // Moves are invertible, so an undirected graph is sufficient for
+      // shortest distances between centre positions.
+      neighbours.get(index).add(destination);
+      neighbours.get(destination).add(index);
+    }
+  }
+
+  const distancesByColour = new Map();
+
+  for (const colour of ["U", "R", "F", "D", "L", "B"]) {
+    const distances = new Map();
+    const queue = [];
+
+    for (const { index, face } of CENTRE_FACELETS) {
+      if (face === colour) {
+        distances.set(index, 0);
+        queue.push(index);
+      }
+    }
+
+    for (let head = 0; head < queue.length; head++) {
+      const current = queue[head];
+      const nextDistance = distances.get(current) + 1;
+
+      for (const neighbour of neighbours.get(current)) {
+        if (distances.has(neighbour)) continue;
+        distances.set(neighbour, nextDistance);
+        queue.push(neighbour);
+      }
+    }
+
+    distancesByColour.set(colour, distances);
+  }
+
+  return distancesByColour;
+}
+
+const CENTRE_STICKER_DISTANCES = buildCentreStickerDistances();
+
 function centreLowerBound(state) {
-  // An inner-slice quarter-turn affects at most eight centre stickers.
-  // This is an admissible lower bound for iterative-deepening search.
-  return Math.ceil(misplacedCentreCount(state) / 8);
+  let misplaced = 0;
+  let distanceSum = 0;
+  let farthestSticker = 0;
+
+  for (const { index, face } of CENTRE_FACELETS) {
+    const colour = state[index];
+
+    if (colour !== face) misplaced++;
+
+    const distance = CENTRE_STICKER_DISTANCES.get(colour).get(index);
+
+    if (distance === undefined) {
+      throw new Error(
+        `No centre-position path found for sticker colour ${colour}`
+      );
+    }
+
+    distanceSum += distance;
+    farthestSticker = Math.max(farthestSticker, distance);
+  }
+
+  // One inner-slice turn can move at most eight centre stickers, and each
+  // moved sticker's graph distance can decrease by at most one. The sum
+  // bound is therefore admissible. The maximum individual distance is also
+  // admissible; combine independent lower bounds with max, never addition.
+  return Math.max(
+    Math.ceil(misplaced / 8),
+    Math.ceil(distanceSum / 8),
+    farthestSticker
+  );
+}
+
+/**
+ * Expose the admissible estimate for testing and benchmark diagnostics.
+ */
+export function estimateCentreDistance(state) {
+  assertValidState(state);
+  return centreLowerBound(state);
 }
 
 function sliceKey(move) {
