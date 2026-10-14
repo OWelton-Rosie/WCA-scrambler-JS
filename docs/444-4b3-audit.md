@@ -1,19 +1,18 @@
 # 4×4×4 Regulation 4b3 conformance audit
 
-**Status: NOT COMPLIANT — experimental implementation only.**
+**Status: public API enabled through an external JavaScript backend; independent compliance has not been established by this repository.**
 
-This document is an acceptance gate, not a claim of compliance. Regulation 4b3 requires a random state sampled with equal probability from eligible states requiring at least two moves to solve. The exception allowing sufficiently many random moves instead of a random state applies to 5×5×5 and larger cubes and Megaminx, not 4×4×4. See the [current WCA Regulations, Article 4b3](https://www.worldcubeassociation.org/regulations/).
+Regulation 4b3 requires a random state sampled with equal probability from eligible states requiring at least two moves to solve. The random-moves exception does not include 4×4×4. See the [current WCA Regulations, Article 4b3](https://www.worldcubeassociation.org/regulations/).
 
-## Current implementation: blockers
+## Current implementation
 
-- `src/puzzles/444/random.js` generates a fixed-length random walk from solved. Its output distribution is a distribution over move sequences, not a uniform distribution over legal 4×4 states.
-- `src/puzzles/444/scramble.js` exposes that walk as an explicitly interim, non-random-state generator.
-- The centre search is bounded and does not solve arbitrary centre arrangements.
-- There is no complete arbitrary-state wing-pairing/reduction procedure that resolves all 4×4 parity cases.
-- A valid facelet colour count is not proof that a state is reachable.
-- Existing replay tests show that moves reproduce a state; they do not establish uniform sampling.
+The public `generate("444")` path delegates random-state sampling and reduction solving to the pinned MIT-licensed [`@cubesmith/scrambler`](https://github.com/cubesmithjs/cubesmith-scrambler) package (version 0.14.1). Its pipeline handles centres, wing pairing, parity and a reduced 3×3 hand-off. It verifies its solution, and this repository replays the returned notation through its separate facelet move model.
 
-**Therefore the 4×4 walk must not be registered as a 4×4 competition scramble generator, and the project must not claim 4×4 Regulation 4b3 compliance.** Keeping it out of the public event registry is intentional until the acceptance criteria below are met.
+The previous local prototype in `random.js` and `centre-solver.js` remains experimental. Its random walk is not a random-state sampler, and its bounded centre search is not a complete 4×4 solver. It is **not** used by the public `generate("444")` API.
+
+This is a pragmatic working implementation, not an independent proof of the dependency's sampler or solver. The dependency's own design record documents its state-count derivation and reduction architecture; it also notes that broad empirical solver-totality testing remains open. The integration smoke test checks notation replay and the local facelet representation, but finite tests alone cannot prove uniformity.
+
+**Do not use this project for official WCA competition scrambles.** Competition scrambles must be generated using a current official WCA scrambling program.
 
 ## Required architecture
 
