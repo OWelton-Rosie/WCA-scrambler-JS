@@ -60,9 +60,6 @@ const CENTRE_INDEX_SET = new Set(
 );
 
 function buildCentreStickerDistances() {
-  // Treat each centre sticker as an individual token. A legal inner-slice
-  // turn moves a token between centre positions; stickers of the same colour
-  // may finish at any of the four centre positions on their home face.
   const neighbours = new Map(
     CENTRE_FACELETS.map(({ index }) => [index, new Set()])
   );
@@ -77,25 +74,16 @@ function buildCentreStickerDistances() {
         throw new Error("Inner-slice move sent a centre sticker off-centres");
       }
 
-      // Moves are invertible, so an undirected graph is sufficient for
-      // shortest distances between centre positions.
       neighbours.get(index).add(destination);
       neighbours.get(destination).add(index);
     }
   }
 
-  const distancesByColour = new Map();
+  const distancesBetweenPositions = new Map();
 
-  for (const colour of ["U", "R", "F", "D", "L", "B"]) {
-    const distances = new Map();
-    const queue = [];
-
-    for (const { index, face } of CENTRE_FACELETS) {
-      if (face === colour) {
-        distances.set(index, 0);
-        queue.push(index);
-      }
-    }
+  for (const { index: source } of CENTRE_FACELETS) {
+    const distances = new Map([[source, 0]]);
+    const queue = [source];
 
     for (let head = 0; head < queue.length; head++) {
       const current = queue[head];
@@ -108,22 +96,103 @@ function buildCentreStickerDistances() {
       }
     }
 
+    distancesBetweenPositions.set(source, distances);
+  }
+
+  const distancesByColour = new Map();
+
+  for (const colour of ["U", "R", "F", "D", "L", "B"]) {
+    const distances = new Map();
+
+    for (const { index } of CENTRE_FACELETS) {
+      let nearest = Infinity;
+
+      for (const { index: target, face } of CENTRE_FACELETS) {
+        if (face !== colour) continue;
+        nearest = Math.min(
+          nearest,
+          distancesBetweenPositions.get(index).get(target)
+        );
+      }
+
+      distances.set(index, nearest);
+    }
+
     distancesByColour.set(colour, distances);
   }
 
-  return distancesByColour;
+  return { distancesByColour, distancesBetweenPositions };
 }
 
+const CENTRE_STICKER_DISTANCE_DATA = buildCentreStickerDistances();
+const CENTRE_STICKER_DISTANCES = CENTRE_STICKER_DISTANCE_DATA.distancesByColour;
+const DISTANCES_BETWEEN_CENTRE_POSITIONS =
+  CENTRE_STICKER_DISTANCE_DATA.distancesBetweenPositions;
+
+const CENTRE_ASSIGNMENTS = (() => {
+  const assignments = new Map();
+  const targetsByColour = new Map();
+
+  for (const colour of ["U", "R", "F", "D", "L", "B"]) {
+    targetsByColour.set(
+      colour,
+      CENTRE_FACELETS.filter(({ face }) => face === colour).map(({ index }) => index)
+    );
+  }
+
+  function permutations(values) {
+    if (values.length <= 1) return [values];
+
+    return values.flatMap((value, index) =>
+      permutations(values.filter((_, otherIndex) => otherIndex !== index))
+        .map((rest) => [value, ...rest])
+    );
+  }
+
+  for (const colour of ["U", "R", "F", "D", "L", "B"]) {
+    assignments.set(colour, permutations(targetsByColour.get(colour)));
+  }
+
+  return assignments;
+})();
+
+function minimumCentreAssignmentDistance(positions, colour) {
+  let minimum = Infinity;
+
+  for (const targets of CENTRE_ASSIGNMENTS.get(colour)) {
+    let total = 0;
+
+    for (let i = 0; i < positions.length; i++) {
+      total += DISTANCES_BETWEEN_CENTRE_POSITIONS
+        .get(positions[i])
+        .get(targets[i]);
+    }
+
+    minimum = Math.min(minimum, total);
+  }
+
+  return minimum;
+}
+
+const CENTRE_HEURISTIC_CACHE = new Map();
 
 function centreLowerBound(state) {
+  const key = centreKey(state);
+  const cached = CENTRE_HEURISTIC_CACHE.get(key);
+  if (cached !== undefined) return cached;
+
   let misplaced = 0;
-  let distanceSum = 0;
+  let nearestDistanceSum = 0;
   let farthestSticker = 0;
+  const positionsByColour = new Map(
+    ["U", "R", "F", "D", "L", "B"].map((colour) => [colour, []])
+  );
 
   for (const { index, face } of CENTRE_FACELETS) {
     const colour = state[index];
 
     if (colour !== face) misplaced++;
+    positionsByColour.get(colour).push(index);
 
     const distance = CENTRE_STICKER_DISTANCES.get(colour).get(index);
 
@@ -133,19 +202,29 @@ function centreLowerBound(state) {
       );
     }
 
-    distanceSum += distance;
+    nearestDistanceSum += distance;
     farthestSticker = Math.max(farthestSticker, distance);
   }
 
-  // One inner-slice turn can move at most eight centre stickers, and each
-  // moved sticker's graph distance can decrease by at most one. The sum
-  // bound is therefore admissible. The maximum individual distance is also
-  // admissible; combine independent lower bounds with max, never addition.
-  return Math.max(
+  let assignmentDistanceSum = 0;
+
+  for (const [colour, positions] of positionsByColour) {
+    assignmentDistanceSum += minimumCentreAssignmentDistance(positions, colour);
+  }
+
+  // Assigning each colour's four stickers to four distinct home slots gives
+  // a stronger lower bound than letting every sticker choose its nearest
+  // home slot independently. A move can reduce total distance by at most 8.
+  // Keep the independent bounds combined with max, not addition.
+  const estimate = Math.max(
     Math.ceil(misplaced / 8),
-    Math.ceil(distanceSum / 8),
+    Math.ceil(nearestDistanceSum / 8),
+    Math.ceil(assignmentDistanceSum / 8),
     farthestSticker
   );
+
+  CENTRE_HEURISTIC_CACHE.set(key, estimate);
+  return estimate;
 }
 
 /**
