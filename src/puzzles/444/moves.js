@@ -117,26 +117,28 @@ export function parseMove(move) {
   return normaliseMoveName(move);
 }
 
+const MOVE_PERMUTATIONS = new Map();
+
 /**
- * Apply one legal 4x4 layer turn to a facelet state.
- *
- * Returns a new array; the input state is not mutated.
+ * Return the source-to-destination facelet permutation for a legal move.
+ * The returned array is cached and frozen so callers cannot corrupt the cache.
  */
-export function applyMove(state, move) {
-  assertValidState(state);
+export function getMovePermutation(move) {
+  const cacheKey = move;
+  const cached = MOVE_PERMUTATIONS.get(cacheKey);
+
+  if (cached) return cached;
 
   const { axis, layers, quarterTurns } = parseMove(move);
-  const next = Array(state.length);
+  const permutation = Array(FACELETS.length);
 
   for (let sourceIndex = 0; sourceIndex < FACELETS.length; sourceIndex++) {
     const facelet = FACELETS[sourceIndex];
     const coordinate = facelet.position[axis];
-
     let destinationKey = facelet.key;
 
     if (layers.includes(coordinate)) {
       const rotated = rotateFacelet(facelet, axis, quarterTurns);
-
       destinationKey =
         `${rotated.position.join(",")}|${rotated.normal.join(",")}`;
     }
@@ -149,7 +151,27 @@ export function applyMove(state, move) {
       );
     }
 
-    next[destinationIndex] = state[sourceIndex];
+    permutation[sourceIndex] = destinationIndex;
+  }
+
+  const frozenPermutation = Object.freeze(permutation);
+  MOVE_PERMUTATIONS.set(cacheKey, frozenPermutation);
+  return frozenPermutation;
+}
+
+/**
+ * Apply one legal 4x4 layer turn to a facelet state.
+ *
+ * Returns a new array; the input state is not mutated.
+ */
+export function applyMove(state, move) {
+  assertValidState(state);
+
+  const permutation = getMovePermutation(move);
+  const next = Array(state.length);
+
+  for (let sourceIndex = 0; sourceIndex < permutation.length; sourceIndex++) {
+    next[permutation[sourceIndex]] = state[sourceIndex];
   }
 
   return next;
