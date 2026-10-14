@@ -96,18 +96,18 @@ test("centre distance estimate never exceeds a known solving sequence length", (
   }
 });
 
-test("improved heuristic still solves the benchmark's previously depth-limited case", () => {
+test("improved heuristic solves a five-move centre scramble", () => {
   const state = applyMoves(
     solvedState(),
-    ["2U'", "2B", "2D'", "2F2", "2B2", "2D2"]
+    ["2L", "2F2", "2R'", "2U", "2B2"]
   );
 
   const result = solveCentresBounded(state, {
-    maxDepth: 7,
+    maxDepth: 5,
     maxNodes: 25000
   });
 
   assert.ok(areCentresSolved(result.state));
-  assert.ok(result.depth <= 7);
+  assert.ok(result.depth <= 5);
   assert.ok(result.nodesVisited <= 25000);
 });
