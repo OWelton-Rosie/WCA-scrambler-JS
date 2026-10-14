@@ -1,6 +1,7 @@
 import { generate333 } from "./puzzles/333/scramble.js";
 import { generate222 } from "./puzzles/222/scramble.js";
 import { generatePyram } from "./puzzles/pyram/scramble.js";
+import { generate444Scramble } from "./puzzles/444/scramble.js";
 
 import {
   solvedState as solved444State,
@@ -29,6 +30,10 @@ registerEvent("222", ({ randomWord } = {}) =>
 
 registerEvent("pyram", ({ randomWord } = {}) =>
   generatePyram(randomWord)
+);
+
+registerEvent("444", (options = {}) =>
+  generate444Scramble(options)
 );
 
 export { events, registerEvent };
