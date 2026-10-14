@@ -1,4 +1,5 @@
 import { generateRandomWalkState } from "./random.js";
+import { applyMoves } from "./moves.js";
 
 /**
  * Generate a 4x4 scramble using a random walk from the solved state.
