@@ -55,17 +55,6 @@ export function areCentresSolved(state) {
   );
 }
 
-function misplacedCentreCount(state) {
-  let count = 0;
-
-  for (const { index, face } of CENTRE_FACELETS) {
-    if (state[index] !== face) count++;
-  }
-
-  return count;
-}
-
-
 const CENTRE_INDEX_SET = new Set(
   CENTRE_FACELETS.map(({ index }) => index)
 );
