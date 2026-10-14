@@ -1,15 +1,15 @@
-var Ef = Object.defineProperty;
-var yf = (e, n, t) => n in e ? Ef(e, n, { enumerable: !0, configurable: !0, writable: !0, value: t }) : e[n] = t;
-var Yn = (e, n, t) => yf(e, typeof n != "symbol" ? n + "" : n, t);
-function bf(e) {
+var bf = Object.defineProperty;
+var xf = (e, n, t) => n in e ? bf(e, n, { enumerable: !0, configurable: !0, writable: !0, value: t }) : e[n] = t;
+var Yn = (e, n, t) => xf(e, typeof n != "symbol" ? n + "" : n, t);
+function Of(e) {
   return e && e.__esModule && Object.prototype.hasOwnProperty.call(e, "default") ? e.default : e;
 }
-var Xt = { exports: {} }, xf = Xt.exports, Zi;
+var Xt = { exports: {} }, Tf = Xt.exports, Zi;
 function Tc() {
   return Zi || (Zi = 1, (function(e) {
     (function() {
-      var n, t, r, o, i, s, c, a, u, f, l, d, p, v, A, C, L, R, G, $, K, ee, Q, re, j, V, Y, ce, ae, he, J, le, ue;
-      [G, R, v, i, L, n] = [0, 1, 2, 3, 4, 5], [Y, Q, j, K, u, l, c, p] = [0, 1, 2, 3, 4, 5, 6, 7], [V, ee, re, $, d, a, f, s, C, A, t, r] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], [ae, J, ue] = (function() {
+      var n, t, r, o, i, s, c, a, u, f, l, d, p, v, M, C, L, R, G, $, K, ee, Q, re, j, V, Y, ce, ae, he, J, le, ue;
+      [G, R, v, i, L, n] = [0, 1, 2, 3, 4, 5], [Y, Q, j, K, u, l, c, p] = [0, 1, 2, 3, 4, 5, 6, 7], [V, ee, re, $, d, a, f, s, C, M, t, r] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], [ae, J, ue] = (function() {
         var se, oe, de, q, me, T;
         return T = function(x) {
           return x - 1;
@@ -404,7 +404,7 @@ function Tc() {
               f,
               s,
               C,
-              A,
+              M,
               t,
               r
             ],
@@ -456,7 +456,7 @@ function Tc() {
               f,
               s,
               d,
-              A,
+              M,
               t,
               V
             ],
@@ -500,7 +500,7 @@ function Tc() {
             ],
             ep: [
               V,
-              A,
+              M,
               re,
               $,
               d,
@@ -560,7 +560,7 @@ function Tc() {
               s,
               d,
               C,
-              A,
+              M,
               t,
               r
             ],
@@ -609,7 +609,7 @@ function Tc() {
               $,
               d,
               a,
-              A,
+              M,
               s,
               C,
               re,
@@ -664,7 +664,7 @@ function Tc() {
               f,
               t,
               C,
-              A,
+              M,
               $,
               s
             ],
@@ -722,7 +722,7 @@ function Tc() {
               a,
               f,
               s,
-              A,
+              M,
               t,
               r,
               C
@@ -782,7 +782,7 @@ function Tc() {
               f,
               a,
               C,
-              A,
+              M,
               t,
               r
             ],
@@ -841,7 +841,7 @@ function Tc() {
               d,
               s,
               C,
-              A,
+              M,
               t,
               r
             ],
@@ -921,13 +921,13 @@ function Tc() {
           } else return me.length != null ? me : [me];
         }, q.moves.push(new q().move("R M' L'").toJSON()), q.moves.push(new q().move("U E' D'").toJSON()), q.moves.push(new q().move("F S B'").toJSON()), q.moves.push(new q().move("U E'").toJSON()), q.moves.push(new q().move("R M'").toJSON()), q.moves.push(new q().move("F S").toJSON()), q.moves.push(new q().move("D E").toJSON()), q.moves.push(new q().move("L M").toJSON()), q.moves.push(new q().move("B S'").toJSON()), q;
       }).call(this), e !== null ? e.exports = o : this.Cube = o;
-    }).call(xf);
+    }).call(Tf);
   })(Xt)), Xt.exports;
 }
 var Yr = {}, es;
-function Of() {
+function Mf() {
   return es || (es = 1, (function() {
-    var e, n, t, r, o, i, s, c, a, u, f, l, d, p, v, A, C, L, R, G, $, K, ee, Q, re, j, V, Y, ce, ae, he, J, le, ue, se, oe, de, q, me, T, x, b, P, F, U, H, te, N, X, z, pe, be, xe = [].indexOf;
+    var e, n, t, r, o, i, s, c, a, u, f, l, d, p, v, M, C, L, R, G, $, K, ee, Q, re, j, V, Y, ce, ae, he, J, le, ue, se, oe, de, q, me, T, x, b, P, F, U, H, te, N, X, z, pe, be, xe = [].indexOf;
     r = this.Cube || Tc(), [le, ce, he, V, c, u, i, l] = [0, 1, 2, 3, 4, 5, 6, 7], [J, Y, ae, j, f, s, a, o, p, d, e, n] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], t = function(h, g) {
       var w, S, m;
       if (h < g)
@@ -943,30 +943,30 @@ function Of() {
     }, b = function(h, g) {
       return h > g ? h : g;
     }, z = function(h, g, w) {
-      var S, m, y, M, _;
-      for (_ = h[g], S = m = y = g, M = w - 1; y <= M ? m <= M : m >= M; S = y <= M ? ++m : --m)
+      var S, m, y, A, _;
+      for (_ = h[g], S = m = y = g, A = w - 1; y <= A ? m <= A : m >= A; S = y <= A ? ++m : --m)
         h[S] = h[S + 1];
       return h[w] = _;
     }, pe = function(h, g, w) {
-      var S, m, y, M, _;
-      for (_ = h[w], S = m = y = w, M = g + 1; y <= M ? m <= M : m >= M; S = y <= M ? ++m : --m)
+      var S, m, y, A, _;
+      for (_ = h[w], S = m = y = w, A = g + 1; y <= A ? m <= A : m >= A; S = y <= A ? ++m : --m)
         h[S] = h[S - 1];
       return h[g] = _;
     }, te = function(h, g, w, S = !1) {
-      var m, y, M, _, k, ie;
-      return _ = w - g, M = T(_ + 1), h === "corners" ? (y = 7, ie = "cp") : (y = 11, ie = "ep"), k = (function() {
+      var m, y, A, _, k, ie;
+      return _ = w - g, A = T(_ + 1), h === "corners" ? (y = 7, ie = "cp") : (y = 11, ie = "ep"), k = (function() {
         var B, E, O;
         for (O = [], m = B = 0, E = _; 0 <= E ? B <= E : B >= E; m = 0 <= E ? ++B : --B)
           O.push(0);
         return O;
       })(), function(B) {
-        var E, O, W, D, fe, ge, ve, Me, Ve, Nn, Ln, $n, Kr, kn, Bn, Xr, jn, Wr, Ji, Vn, Qi, qn, Gn, Kn, Oe, Xn, Wn;
+        var E, O, W, D, fe, ge, ve, Ae, Ve, Nn, Ln, $n, Kr, kn, Bn, Xr, jn, Wr, Ji, Vn, Qi, qn, Gn, Kn, Oe, Xn, Wn;
         if (B != null) {
           for (m = ge = 0, Ln = _; 0 <= Ln ? ge <= Ln : ge >= Ln; m = 0 <= Ln ? ++ge : --ge)
             k[m] = m + g;
-          for (O = B % M, E = B / M | 0, Ve = this[ie], m = ve = 0, $n = y; 0 <= $n ? ve <= $n : ve >= $n; m = 0 <= $n ? ++ve : --ve)
+          for (O = B % A, E = B / A | 0, Ve = this[ie], m = ve = 0, $n = y; 0 <= $n ? ve <= $n : ve >= $n; m = 0 <= $n ? ++ve : --ve)
             Ve[m] = -1;
-          for (D = Me = 1, kn = _; 1 <= kn ? Me <= kn : Me >= kn; D = 1 <= kn ? ++Me : --Me)
+          for (D = Ae = 1, kn = _; 1 <= kn ? Ae <= kn : Ae >= kn; D = 1 <= kn ? ++Ae : --Ae)
             for (fe = O % (D + 1), O = O / (D + 1) | 0; fe > 0; )
               pe(k, 0, D), fe--;
           if (Oe = _, S)
@@ -990,7 +990,7 @@ function Of() {
               z(k, 0, D), fe++;
             O = (D + 1) * O + fe;
           }
-          return E * M + O;
+          return E * A + O;
         }
       };
     }, v = {
@@ -998,45 +998,45 @@ function Of() {
       // the DRB corner is fully determined by the orientation of the other
       // corners.
       twist: function(h) {
-        var g, w, S, m, y, M;
+        var g, w, S, m, y, A;
         if (h != null) {
           for (y = 0, g = w = 6; w >= 0; g = --w)
             m = h % 3, h = h / 3 | 0, this.co[g] = m, y += m;
           return this.co[7] = (3 - y % 3) % 3, this;
         } else {
-          for (M = 0, g = S = 0; S <= 6; g = ++S)
-            M = 3 * M + this.co[g];
-          return M;
+          for (A = 0, g = S = 0; S <= 6; g = ++S)
+            A = 3 * A + this.co[g];
+          return A;
         }
       },
       // The flip of the 12 edges, 0 <= flip < 2^11. The orientation of the
       // BR edge is fully determined by the orientation of the other edges.
       flip: function(h) {
-        var g, w, S, m, y, M;
+        var g, w, S, m, y, A;
         if (h != null) {
           for (y = 0, g = w = 10; w >= 0; g = --w)
             m = h % 2, h = h / 2 | 0, this.eo[g] = m, y += m;
           return this.eo[11] = (2 - y % 2) % 2, this;
         } else {
-          for (M = 0, g = S = 0; S <= 10; g = ++S)
-            M = 2 * M + this.eo[g];
-          return M;
+          for (A = 0, g = S = 0; S <= 10; g = ++S)
+            A = 2 * A + this.eo[g];
+          return A;
         }
       },
       // Parity of the corner permutation
       cornerParity: function() {
-        var h, g, w, S, m, y, M, _, k;
+        var h, g, w, S, m, y, A, _, k;
         for (k = 0, h = w = m = l, y = le + 1; m <= y ? w <= y : w >= y; h = m <= y ? ++w : --w)
-          for (g = S = M = h - 1, _ = le; M <= _ ? S <= _ : S >= _; g = M <= _ ? ++S : --S)
+          for (g = S = A = h - 1, _ = le; A <= _ ? S <= _ : S >= _; g = A <= _ ? ++S : --S)
             this.cp[g] > this.cp[h] && k++;
         return k % 2;
       },
       // Parity of the edges permutation. Parity of corners and edges are
       // the same if the cube is solvable.
       edgeParity: function() {
-        var h, g, w, S, m, y, M, _, k;
+        var h, g, w, S, m, y, A, _, k;
         for (k = 0, h = w = m = n, y = J + 1; m <= y ? w <= y : w >= y; h = m <= y ? ++w : --w)
-          for (g = S = M = h - 1, _ = J; M <= _ ? S <= _ : S >= _; g = M <= _ ? ++S : --S)
+          for (g = S = A = h - 1, _ = J; A <= _ ? S <= _ : S >= _; g = A <= _ ? ++S : --S)
             this.ep[g] > this.ep[h] && k++;
         return k % 2;
       },
@@ -1054,14 +1054,14 @@ function Of() {
     for (x in v)
       be = v[x], r.prototype[x] = be;
     oe = function(h, g, w) {
-      var S, m, y, M, _, k, ie, B, E, O, W;
+      var S, m, y, A, _, k, ie, B, E, O, W;
       for (S = h === "corners" ? "cornerMultiply" : "edgeMultiply", m = new r(), W = [], y = k = 0, O = w - 1; 0 <= O ? k <= O : k >= O; y = 0 <= O ? ++k : --k) {
-        for (m[g](y), M = [], _ = B = 0; B <= 5; _ = ++B) {
+        for (m[g](y), A = [], _ = B = 0; B <= 5; _ = ++B) {
           for (ie = r.moves[_], E = 0; E <= 2; ++E)
-            m[S](ie), M.push(m[g]());
+            m[S](ie), A.push(m[g]());
           m[S](ie);
         }
-        W.push(M);
+        W.push(A);
       }
       return W;
     }, P = (function() {
@@ -1076,7 +1076,7 @@ function Of() {
           }
         return g.URtoDF();
       };
-    })(), $ = 2187, A = 2048, L = 2, C = 11880, R = 495, G = 24, ee = 20160, Q = 20160, re = 1320, K = 1320, r.moveTables = {
+    })(), $ = 2187, M = 2048, L = 2, C = 11880, R = 495, G = 24, ee = 20160, Q = 20160, re = 1320, K = 1320, r.moveTables = {
       parity: [[1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1], [0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0]],
       twist: null,
       flip: null,
@@ -1089,7 +1089,7 @@ function Of() {
     }, F = {
       // name: [scope, size]
       twist: ["corners", $],
-      flip: ["edges", A],
+      flip: ["edges", M],
       FRtoBR: ["edges", C],
       URFtoDLF: ["corners", ee],
       URtoDF: ["edges", Q],
@@ -1097,7 +1097,7 @@ function Of() {
       UBtoDF: ["edges", K],
       mergeURtoDF: []
     }, r.computeMoveTables = function(...h) {
-      var g, w, S, m, y, M;
+      var g, w, S, m, y, A;
       for (h.length === 0 && (h = (function() {
         var _;
         _ = [];
@@ -1105,7 +1105,7 @@ function Of() {
           _.push(S);
         return _;
       })()), w = 0, g = h.length; w < g; w++)
-        M = h[w], this.moveTables[M] === null && (M === "mergeURtoDF" ? this.moveTables.mergeURtoDF = (function() {
+        A = h[w], this.moveTables[A] === null && (A === "mergeURtoDF" ? this.moveTables.mergeURtoDF = (function() {
           var _, k, ie, B;
           for (B = [], k = ie = 0; ie <= 335; k = ++ie)
             B.push((function() {
@@ -1115,25 +1115,25 @@ function Of() {
               return O;
             })());
           return B;
-        })() : ([m, y] = F[M], this.moveTables[M] = oe(m, M, y)));
+        })() : ([m, y] = F[A], this.moveTables[A] = oe(m, A, y)));
       return this;
     }, ue = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], U = (function() {
-      var h, g, w, S, m, y, M, _;
+      var h, g, w, S, m, y, A, _;
       for (_ = [], g = w = 0; w <= 5; g = ++w) {
         for (S = [], h = m = 0; m <= 5; h = ++m)
           if (h !== g && h !== g - 3)
-            for (M = y = 0; y <= 2; M = ++y)
-              S.push(h * 3 + M);
+            for (A = y = 0; y <= 2; A = ++y)
+              S.push(h * 3 + A);
         _.push(S);
       }
       return _;
     })(), se = [0, 1, 2, 4, 7, 9, 10, 11, 13, 16], H = (function() {
-      var h, g, w, S, m, y, M, _, k, ie;
+      var h, g, w, S, m, y, A, _, k, ie;
       for (ie = [], g = S = 0; S <= 5; g = ++S) {
         for (m = [], h = y = 0; y <= 5; h = ++y)
           if (h !== g && h !== g - 3)
-            for (k = h === 0 || h === 3 ? [0, 1, 2] : [1], M = 0, w = k.length; M < w; M++)
-              _ = k[M], m.push(h * 3 + _);
+            for (k = h === 0 || h === 3 ? [0, 1, 2] : [1], A = 0, w = k.length; A < w; A++)
+              _ = k[A], m.push(h * 3 + _);
         ie.push(m);
       }
       return ie;
@@ -1141,17 +1141,17 @@ function Of() {
       var S, m, y;
       return S = g % 8, y = g >> 3, m = S << 2, w != null ? (h[y] &= ~(15 << m), h[y] |= w << m, w) : (h[y] & 15 << m) >>> m;
     }, de = function(h, g, w, S) {
-      var m, y, M, _, k, ie, B, E, O, W, D, fe;
+      var m, y, A, _, k, ie, B, E, O, W, D, fe;
       for (fe = (function() {
-        var ge, ve, Me;
-        for (Me = [], ge = 0, ve = Math.ceil(g / 8) - 1; 0 <= ve ? ge <= ve : ge >= ve; 0 <= ve ? ++ge : --ge)
-          Me.push(4294967295);
-        return Me;
-      })(), h === 1 ? E = ue : E = se, y = 0, N(fe, 0, y), M = 1; M !== g; ) {
+        var ge, ve, Ae;
+        for (Ae = [], ge = 0, ve = Math.ceil(g / 8) - 1; 0 <= ve ? ge <= ve : ge >= ve; 0 <= ve ? ++ge : --ge)
+          Ae.push(4294967295);
+        return Ae;
+      })(), h === 1 ? E = ue : E = se, y = 0, N(fe, 0, y), A = 1; A !== g; ) {
         for (_ = ie = 0, D = g - 1; 0 <= D ? ie <= D : ie >= D; _ = 0 <= D ? ++ie : --ie)
           if (N(fe, _) === y)
             for (m = w(_), W = 0, k = E.length; W < k; W++)
-              B = E[W], O = S(m, B), N(fe, O) === 15 && (N(fe, O, y + 1), M++);
+              B = E[W], O = S(m, B), N(fe, O) === 15 && (N(fe, O, y + 1), A++);
         y++;
       }
       return fe;
@@ -1181,7 +1181,7 @@ function Of() {
       ],
       sliceFlip: [
         1,
-        R * A,
+        R * M,
         function(h) {
           return [
             h % R,
@@ -1207,12 +1207,12 @@ function Of() {
           ];
         },
         function(h, g) {
-          var w, S, m, y, M, _;
+          var w, S, m, y, A, _;
           return [
-            M,
+            A,
             _,
             w
-          ] = h, S = r.moveTables.parity[M][g], m = r.moveTables.FRtoBR[_][g], y = r.moveTables.URFtoDLF[w][g], (y * G + m) * 2 + S;
+          ] = h, S = r.moveTables.parity[A][g], m = r.moveTables.FRtoBR[_][g], y = r.moveTables.URFtoDLF[w][g], (y * G + m) * 2 + S;
         }
       ],
       sliceURtoDFParity: [
@@ -1226,29 +1226,29 @@ function Of() {
           ];
         },
         function(h, g) {
-          var w, S, m, y, M, _;
+          var w, S, m, y, A, _;
           return [
-            M,
+            A,
             _,
             w
-          ] = h, S = r.moveTables.parity[M][g], m = r.moveTables.FRtoBR[_][g], y = r.moveTables.URtoDF[w][g], (y * G + m) * 2 + S;
+          ] = h, S = r.moveTables.parity[A][g], m = r.moveTables.FRtoBR[_][g], y = r.moveTables.URtoDF[w][g], (y * G + m) * 2 + S;
         }
       ]
     }, r.computePruningTables = function(...h) {
       var g, w, S, m, y;
       for (h.length === 0 && (h = (function() {
-        var M;
-        M = [];
+        var A;
+        A = [];
         for (S in X)
-          M.push(S);
-        return M;
+          A.push(S);
+        return A;
       })()), w = 0, g = h.length; w < g; w++)
         y = h[w], this.pruningTables[y] === null && (m = X[y], this.pruningTables[y] = de(...m));
       return this;
     }, r.initSolver = function() {
       return r.computeMoveTables(), r.computePruningTables();
     }, r.prototype.solveUpright = function(h = 22) {
-      var g, w, S, m, y, M, _, k, ie;
+      var g, w, S, m, y, A, _, k, ie;
       return S = (function() {
         var B, E, O, W, D, fe, ge;
         for (E = ["U", "R", "F", "D", "L", "B"], fe = ["", "2", "'"], ge = [], B = O = 0; O <= 5; B = ++O)
@@ -1313,27 +1313,27 @@ function Of() {
           D.push(E++);
         return D;
       }, m = function(B, E) {
-        var O, W, D, fe, ge, ve, Me;
+        var O, W, D, fe, ge, ve, Ae;
         if (E === 0) {
           if (B.minDist1() === 0 && (B.lastMove === null || (ge = B.lastMove, xe.call(se, ge) < 0)))
             return _(B);
         } else if (E > 0 && B.minDist1() <= E) {
-          for (ve = B.moves1(), Me = [], W = 0, O = ve.length; W < O && (D = ve[W], fe = B.next1(D), m(fe, E - 1), w.push(fe), k === null); W++)
-            Me.push(void 0);
-          return Me;
+          for (ve = B.moves1(), Ae = [], W = 0, O = ve.length; W < O && (D = ve[W], fe = B.next1(D), m(fe, E - 1), w.push(fe), k === null); W++)
+            Ae.push(void 0);
+          return Ae;
         }
       }, _ = function(B) {
         var E, O, W, D;
-        for (B.init2(), D = [], E = O = 1, W = h - B.depth; (1 <= W ? O <= W : O >= W) && (M(B, E), k === null); E = 1 <= W ? ++O : --O)
+        for (B.init2(), D = [], E = O = 1, W = h - B.depth; (1 <= W ? O <= W : O >= W) && (A(B, E), k === null); E = 1 <= W ? ++O : --O)
           D.push(E++);
         return D;
-      }, M = function(B, E) {
+      }, A = function(B, E) {
         var O, W, D, fe, ge, ve;
         if (E === 0) {
           if (B.minDist2() === 0)
             return k = B.solution();
         } else if (E > 0 && B.minDist2() <= E) {
-          for (ge = B.moves2(), ve = [], W = 0, O = ge.length; W < O && (D = ge[W], fe = B.next2(D), M(fe, E - 1), w.push(fe), k === null); W++)
+          for (ge = B.moves2(), ve = [], W = 0, O = ge.length; W < O && (D = ge[W], fe = B.next2(D), A(fe, E - 1), w.push(fe), k === null); W++)
             ve.push(void 0);
           return ve;
         }
@@ -1358,9 +1358,9 @@ function Of() {
       4: "L",
       5: "B"
     }, r.prototype.solve = function(h = 22) {
-      var g, w, S, m, y, M, _, k, ie;
-      for (g = this.clone(), k = g.upright(), g.move(k), M = new r().move(k).center, ie = g.solveUpright(h), _ = [], y = ie.split(" "), S = 0, w = y.length; S < w; S++)
-        m = y[S], _.push(q[M[me[m[0]]]]), m.length > 1 && (_[_.length - 1] += m[1]);
+      var g, w, S, m, y, A, _, k, ie;
+      for (g = this.clone(), k = g.upright(), g.move(k), A = new r().move(k).center, ie = g.solveUpright(h), _ = [], y = ie.split(" "), S = 0, w = y.length; S < w; S++)
+        m = y[S], _.push(q[A[me[m[0]]]]), m.length > 1 && (_[_.length - 1] += m[1]);
       return _.join(" ");
     }, r.scramble = function() {
       return r.inverse(r.random().solve());
@@ -1368,12 +1368,12 @@ function Of() {
   }).call(Yr)), Yr;
 }
 var Hr, ns;
-function Tf() {
-  return ns || (ns = 1, Hr = Tc(), Of()), Hr;
+function Af() {
+  return ns || (ns = 1, Hr = Tc(), Mf()), Hr;
 }
-var Af = Tf();
-const Be = /* @__PURE__ */ bf(Af), zr = 4294967296;
-function Ac() {
+var Rf = Af();
+const Be = /* @__PURE__ */ Of(Rf), zr = 4294967296;
+function Mc() {
   const e = globalThis.crypto;
   if (!(e != null && e.getRandomValues))
     throw new Error(
@@ -1382,7 +1382,7 @@ function Ac() {
   const n = new Uint32Array(1);
   return e.getRandomValues(n), n[0];
 }
-function vt(e, n = Ac) {
+function vt(e, n = Mc) {
   if (!Number.isSafeInteger(e) || e < 1 || e > zr)
     throw new RangeError("Invalid random integer range");
   const t = Math.floor(zr / e) * e;
@@ -1394,7 +1394,7 @@ function vt(e, n = Ac) {
       return r % e;
   }
 }
-function Mf(e, n = Ac) {
+function Pf(e, n = Mc) {
   const t = [...e];
   for (let r = t.length - 1; r > 0; r--) {
     const o = vt(r + 1, n);
@@ -1405,7 +1405,7 @@ function Mf(e, n = Ac) {
 function ir(e, n) {
   if (!Number.isSafeInteger(e) || e < 1)
     throw new RangeError("Permutation size must be a positive integer");
-  return Mf(
+  return Pf(
     Array.from({ length: e }, (t, r) => r),
     n
   );
@@ -1422,7 +1422,7 @@ function ts(e, n) {
     (r) => Number.isInteger(r) && r >= 0 && r < n
   );
 }
-function Rf(e) {
+function _f(e) {
   return Array.isArray(e) && e.length === 6 && e.every((n, t) => n === t);
 }
 function rs(e, n, t) {
@@ -1430,14 +1430,14 @@ function rs(e, n, t) {
     (r) => Number.isInteger(r) && r >= 0 && r < t
   ) ? !1 : e.reduce((r, o) => r + o, 0) % t === 0;
 }
-function Pf(e) {
+function Cf(e) {
   if (!e || typeof e != "object")
     return !1;
   const { center: n, cp: t, co: r, ep: o, eo: i } = e;
-  return n !== void 0 && !Rf(n) || !ts(t, 8) || !ts(o, 12) || !rs(r, 8, 3) || !rs(i, 12, 2) ? !1 : sr(t) === sr(o);
+  return n !== void 0 && !_f(n) || !ts(t, 8) || !ts(o, 12) || !rs(r, 8, 3) || !rs(i, 12, 2) ? !1 : sr(t) === sr(o);
 }
-function _f(e) {
-  if (!Pf(e))
+function Uf(e) {
+  if (!Cf(e))
     throw new Error("Invalid 3x3 cube state");
   return e;
 }
@@ -1450,7 +1450,7 @@ function os(e, n, t) {
   }
   return r.push((n - o % n) % n), r;
 }
-function Cf(e) {
+function If(e) {
   let n, t;
   do
     n = ir(8, e), t = ir(12, e);
@@ -1464,7 +1464,7 @@ function Cf(e) {
   };
 }
 let Pt;
-async function Uf() {
+async function Ff() {
   Pt || (Pt = Promise.resolve().then(() => {
     Be.initSolver();
   }));
@@ -1475,7 +1475,7 @@ async function Uf() {
   }
 }
 function jo(e) {
-  return _f(e), new Be({
+  return Uf(e), new Be({
     center: e.center ?? [0, 1, 2, 3, 4, 5],
     cp: e.cp,
     co: e.co,
@@ -1483,7 +1483,7 @@ function jo(e) {
     eo: e.eo
   });
 }
-function If(e) {
+function Df(e) {
   const n = jo(e), t = n.solve();
   if (typeof t != "string" || !t.trim())
     throw new Error("Solver did not return a valid solution");
@@ -1491,17 +1491,17 @@ function If(e) {
     throw new Error("Solver returned a solution that failed verification");
   return t.trim();
 }
-function Ff(e) {
+function Nf(e) {
   return Be.inverse(e).trim();
 }
-const Df = ["U", "R", "F", "D", "L", "B"], Nf = ["", "2", "'"];
+const Lf = ["U", "R", "F", "D", "L", "B"], $f = ["", "2", "'"];
 let Jr;
-function Lf() {
+function kf() {
   if (!Jr) {
     const e = /* @__PURE__ */ new Set();
     e.add(new Be().asString());
-    for (const n of Df)
-      for (const t of Nf)
+    for (const n of Lf)
+      for (const t of $f)
         e.add(
           new Be().move(n + t).asString()
         );
@@ -1509,23 +1509,23 @@ function Lf() {
   }
   return Jr;
 }
-function $f(e) {
+function Bf(e) {
   const n = jo(e);
-  return !Lf().has(n.asString());
+  return !kf().has(n.asString());
 }
-function kf(e) {
+function jf(e) {
   for (; ; ) {
-    const n = Cf(e);
-    if ($f(n))
+    const n = If(e);
+    if (Bf(n))
       return {
         stateData: n,
         cube: jo(n)
       };
   }
 }
-async function Bf(e) {
-  await Uf();
-  const { stateData: n, cube: t } = kf(e), r = If(n), o = Ff(r);
+async function Vf(e) {
+  await Ff();
+  const { stateData: n, cube: t } = jf(e), r = Df(n), o = Nf(r);
   if (new Be().move(o).asString() !== t.asString())
     throw new Error(
       "Scramble replay failed: generated state does not match target"
@@ -1541,51 +1541,51 @@ async function Bf(e) {
     state: n
   };
 }
-const Mc = 8, xo = 6;
-function jf(e) {
+const Ac = 8, xo = 6;
+function qf(e) {
   let n = 0;
   for (let t = 0; t < e.length; t++)
     for (let r = t + 1; r < e.length; r++)
       e[t] > e[r] && (n ^= 1);
   return n;
 }
-function Vf(e, n) {
+function Gf(e, n) {
   return !Array.isArray(e) || e.length !== n ? !1 : new Set(e).size === n && e.every(
     (r) => Number.isInteger(r) && r >= 0 && r < n
   );
 }
-function qf(e) {
-  return !Array.isArray(e) || e.length !== Mc || !e.every(
+function Kf(e) {
+  return !Array.isArray(e) || e.length !== Ac || !e.every(
     (n) => Number.isInteger(n) && n >= 0 && n < 3
   ) ? !1 : e[xo] === 0 && e.reduce((n, t) => n + t, 0) % 3 === 0;
 }
-function Gf(e) {
-  return !e || typeof e != "object" || !Vf(e.cp, Mc) || !qf(e.co) ? !1 : e.cp[xo] === xo;
+function Xf(e) {
+  return !e || typeof e != "object" || !Gf(e.cp, Ac) || !Kf(e.co) ? !1 : e.cp[xo] === xo;
 }
 function br(e) {
-  if (!Gf(e))
+  if (!Xf(e))
     throw new Error("Invalid 2x2 cube state");
   return e;
 }
-const Kf = [0, 1, 2, 3, 4, 5, 7], is = [0, 1, 2, 3, 4, 5, 7];
-function Xf(e) {
+const Wf = [0, 1, 2, 3, 4, 5, 7], is = [0, 1, 2, 3, 4, 5, 7];
+function Yf(e) {
   const n = ir(7, e), t = Array(8).fill(0);
   t[6] = 6;
   for (let r = 0; r < is.length; r++)
-    t[is[r]] = Kf[n[r]];
+    t[is[r]] = Wf[n[r]];
   return t;
 }
-function Wf(e) {
+function Hf(e) {
   const n = Array(8).fill(0);
   let t = 0;
   for (let r = 0; r < 6; r++)
     n[r] = vt(3, e), t += n[r];
   return n[6] = 0, n[7] = (3 - t % 3) % 3, n;
 }
-function Yf(e) {
+function zf(e) {
   return br({
-    cp: Xf(e),
-    co: Wf(e)
+    cp: Yf(e),
+    co: Hf(e)
   });
 }
 const ot = [
@@ -1598,9 +1598,9 @@ const ot = [
   "F",
   "F2",
   "F'"
-], Hf = [2, 1, 0, 5, 4, 3, 8, 7, 6], zf = [0, 0, 0, 1, 1, 1, 2, 2, 2], Rc = [0, 1, 2, 3, 4, 5, 7], Pc = [0, 1, 2, 3, 4, 5, 7], Qr = 5040, Zr = 729, Ce = ot.length, _c = [1, 1, 2, 6, 24, 120, 720, 5040];
+], Jf = [2, 1, 0, 5, 4, 3, 8, 7, 6], Qf = [0, 0, 0, 1, 1, 1, 2, 2, 2], Rc = [0, 1, 2, 3, 4, 5, 7], Pc = [0, 1, 2, 3, 4, 5, 7], Qr = 5040, Zr = 729, Ce = ot.length, _c = [1, 1, 2, 6, 24, 120, 720, 5040];
 let Oo = null;
-function Jf(e) {
+function Zf(e) {
   if (br(e), e.cp[6] !== 6 || e.co[6] !== 0)
     throw new Error(
       "2×2 state is not reachable using only U, R and F turns"
@@ -1623,7 +1623,7 @@ function Cc(e) {
   }
   return t;
 }
-function Qf(e) {
+function el(e) {
   const n = Array.from({ length: 7 }, (o, i) => i), t = [];
   for (let o = 0; o < 7; o++) {
     const i = _c[6 - o], s = Math.floor(e / i);
@@ -1641,17 +1641,17 @@ function Uc(e) {
     n = n * 3 + e[t];
   return n;
 }
-function Zf(e) {
+function nl(e) {
   const n = Array(8).fill(0);
   let t = 0;
   for (let r = 5; r >= 0; r--)
     n[r] = e % 3, t += n[r], e = Math.floor(e / 3);
   return n[6] = 0, n[7] = (3 - t % 3) % 3, n;
 }
-function el(e, n) {
+function tl(e, n) {
   return n.cp.map((t) => e[t]);
 }
-function nl(e, n) {
+function rl(e, n) {
   return n.cp.map(
     (t, r) => (e[t] + n.co[r]) % 3
   );
@@ -1687,9 +1687,9 @@ function Ic() {
     Qr * Ce
   );
   for (let r = 0; r < Qr; r++) {
-    const o = Qf(r);
+    const o = el(r);
     for (let i = 0; i < Ce; i++) {
-      const s = el(o, e[i]);
+      const s = tl(o, e[i]);
       n[r * Ce + i] = Cc(s);
     }
   }
@@ -1697,9 +1697,9 @@ function Ic() {
     Zr * Ce
   );
   for (let r = 0; r < Zr; r++) {
-    const o = Zf(r);
+    const o = nl(r);
     for (let i = 0; i < Ce; i++) {
-      const s = nl(o, e[i]);
+      const s = rl(o, e[i]);
       t[r * Ce + i] = Uc(s);
     }
   }
@@ -1718,13 +1718,13 @@ function Ic() {
     )
   };
 }
-function tl() {
+function ol() {
   Ic();
 }
-function rl(e) {
+function il(e) {
   br(e);
   const n = Array.from({ length: 12 }, (t, r) => r);
-  return jf(e.cp) !== 0 && ([n[0], n[1]] = [n[1], n[0]]), {
+  return qf(e.cp) !== 0 && ([n[0], n[1]] = [n[1], n[0]]), {
     center: [0, 1, 2, 3, 4, 5],
     cp: [...e.cp],
     co: [...e.co],
@@ -1732,21 +1732,21 @@ function rl(e) {
     eo: Array(12).fill(0)
   };
 }
-function ol(e) {
-  return new Be(rl(e));
+function sl(e) {
+  return new Be(il(e));
 }
-function il(e) {
+function cl(e) {
   if (typeof e != "string")
     throw new TypeError("Solution must be a string");
   return (e.trim() === "" ? [] : e.trim().split(/\s+/)).reverse().map((t) => {
     const r = ot.indexOf(t);
     if (r === -1)
       throw new RangeError(`Unsupported 2×2 move: "${t}"`);
-    return ot[Hf[r]];
+    return ot[Jf[r]];
   }).join(" ");
 }
-function sl(e) {
-  Jf(e), Ic();
+function al(e) {
+  Zf(e), Ic();
   const n = Cc(e.cp), t = Uc(e.co);
   if (n === 0 && t === 0)
     return "";
@@ -1765,7 +1765,7 @@ function sl(e) {
     ) > p || p === 0)
       return !1;
     for (let C = 0; C < Ce; C++) {
-      const L = zf[C];
+      const L = Qf[C];
       if (L === v)
         continue;
       const R = r[l * Ce + C], G = o[d * Ce + C];
@@ -1786,20 +1786,20 @@ function sl(e) {
     "Could not find a 2×2 solution within the search limit."
   );
 }
-const cl = ["U", "R", "F", "D", "L", "B"], al = ["", "2", "'"];
+const ul = ["U", "R", "F", "D", "L", "B"], fl = ["", "2", "'"];
 let eo;
 function To(e) {
   return `${Array.from(e.cp).join(",")}|${Array.from(e.co).join(",")}`;
 }
-function ul() {
+function ll() {
   if (!eo) {
     const e = /* @__PURE__ */ new Set();
     e.add(To({
       cp: [0, 1, 2, 3, 4, 5, 6, 7],
       co: Array(8).fill(0)
     }));
-    for (const n of cl)
-      for (const t of al) {
+    for (const n of ul)
+      for (const t of fl) {
         const r = new Be().move(n + t);
         e.add(To({
           cp: r.cp,
@@ -1810,26 +1810,26 @@ function ul() {
   }
   return eo;
 }
-function fl(e) {
-  return br(e), !ul().has(To(e));
+function dl(e) {
+  return br(e), !ll().has(To(e));
 }
-function ll(e) {
+function pl(e) {
   for (; ; ) {
-    const n = Yf(e);
-    if (fl(n))
+    const n = zf(e);
+    if (dl(n))
       return {
         state: n,
-        cube: ol(n)
+        cube: sl(n)
       };
   }
 }
-function dl(e, n) {
+function hl(e, n) {
   return Array.from(e.cp).every((t, r) => t === n.cp[r]) && Array.from(e.co).every((t, r) => t === n.co[r]);
 }
-async function pl(e) {
-  await tl();
-  const { state: n, cube: t } = ll(e), r = sl(n), o = il(r), i = new Be().move(o);
-  if (!dl(i, n))
+async function ml(e) {
+  await ol();
+  const { state: n, cube: t } = pl(e), r = al(n), o = cl(r), i = new Be().move(o);
+  if (!hl(i, n))
     throw new Error(
       "2×2 scramble replay failed: generated corner state does not match target"
     );
@@ -1848,7 +1848,7 @@ async function pl(e) {
 function Fc(e) {
   return Array.from({ length: e }, (n, t) => t);
 }
-const hl = {
+const gl = {
   U: 0,
   L: 1,
   R: 2,
@@ -1859,11 +1859,11 @@ const hl = {
   R: [1, 3, 5],
   B: [2, 4, 5]
 };
-function ml(e) {
+function vl(e) {
   const n = Fc(6), t = Array(6).fill(0), [r, o, i] = Dc[e];
   return n[r] = i, n[o] = r, n[i] = o, t[r] = 1, t[o] = 1, { src: n, flip: t };
 }
-function gl(e) {
+function wl(e) {
   const n = Array(6).fill(0);
   for (let r = 0; r < 6; r++)
     n[e.src[r]] = r;
@@ -1874,7 +1874,7 @@ function gl(e) {
 }
 const Wt = {};
 for (const e of Object.keys(Dc))
-  Wt[e] = ml(e), Wt[`${e}'`] = gl(Wt[e]);
+  Wt[e] = vl(e), Wt[`${e}'`] = wl(Wt[e]);
 function Vo() {
   return {
     ep: Fc(6),
@@ -1889,24 +1889,24 @@ function Nc(e) {
       e[t] > e[r] && (n ^= 1);
   return n;
 }
-function vl(e, n) {
+function Sl(e, n) {
   return !Array.isArray(e) || e.length !== n || !e.every(
     (t) => Number.isInteger(t) && t >= 0 && t < n
   ) ? !1 : new Set(e).size === n;
 }
-function wl(e) {
+function El(e) {
   return Array.isArray(e) && e.length === 6 && e.every((n) => n === 0 || n === 1) && e.reduce((n, t) => n + t, 0) % 2 === 0;
 }
-function Sl(e) {
+function yl(e) {
   return Array.isArray(e) && e.length === 4 && e.every(
     (n) => Number.isInteger(n) && n >= 0 && n < 3
   );
 }
-function El(e) {
-  return !e || typeof e != "object" ? !1 : vl(e.ep, 6) && Nc(e.ep) === 0 && wl(e.eo) && Sl(e.tips);
+function bl(e) {
+  return !e || typeof e != "object" ? !1 : Sl(e.ep, 6) && Nc(e.ep) === 0 && El(e.eo) && yl(e.tips);
 }
 function qo(e) {
-  if (!El(e))
+  if (!bl(e))
     throw new Error("Invalid Pyraminx state");
   return e;
 }
@@ -1914,7 +1914,7 @@ function Go(e, n) {
   const t = /^([ULRBulrb])('?)$/.exec(n);
   if (!t)
     throw new RangeError(`Unsupported Pyraminx move: "${n}"`);
-  const [, r, o] = t, i = r.toUpperCase(), s = hl[i], c = o ? 2 : 1, a = {
+  const [, r, o] = t, i = r.toUpperCase(), s = gl[i], c = o ? 2 : 1, a = {
     ep: [...e.ep],
     eo: [...e.eo],
     tips: [...e.tips]
@@ -1926,7 +1926,7 @@ function Go(e, n) {
     (f, l) => e.eo[f] ^ u.flip[l]
   ), a.tips[s] = (a.tips[s] + c) % 3, a;
 }
-function Ao(e, n) {
+function Mo(e, n) {
   return (n.trim() === "" ? [] : n.trim().split(/\s+/)).reduce(
     (r, o) => Go(r, o),
     {
@@ -1936,14 +1936,14 @@ function Ao(e, n) {
     }
   );
 }
-function yl(e) {
+function xl(e) {
   for (; ; ) {
     const n = ir(6, e);
     if (Nc(n) === 0)
       return n;
   }
 }
-function bl(e) {
+function Ol(e) {
   const n = [];
   let t = 0;
   for (let r = 0; r < 5; r++) {
@@ -1952,17 +1952,17 @@ function bl(e) {
   }
   return n.push(t % 2), n;
 }
-function xl(e) {
+function Tl(e) {
   return Array.from(
     { length: 4 },
     () => vt(3, e)
   );
 }
-function Ol(e) {
+function Ml(e) {
   return {
-    ep: yl(e),
-    eo: bl(e),
-    tips: xl(e)
+    ep: xl(e),
+    eo: Ol(e),
+    tips: Tl(e)
   };
 }
 const Lc = [
@@ -2005,7 +2005,7 @@ function Ko() {
     );
   cr = n;
 }
-async function Tl() {
+async function Al() {
   Ko();
 }
 function Xo(e) {
@@ -2015,7 +2015,7 @@ function Xo(e) {
     throw new Error("Pyraminx state is not reachable by face turns");
   return n;
 }
-function Al(e) {
+function Rl(e) {
   qo(e), Ko();
   let n = ar(e), t = Xo(e);
   const r = [];
@@ -2033,44 +2033,44 @@ function Al(e) {
   }
   return r.join(" ");
 }
-function Ml(e) {
+function Pl(e) {
   if (typeof e != "string")
     throw new TypeError("Solution must be a string");
   return e.trim() === "" ? "" : e.trim().split(/\s+/).reverse().map((n) => n.endsWith("'") ? n.slice(0, -1) : `${n}'`).join(" ");
 }
-const Rl = 6, as = ["u", "l", "r", "b"];
-function Pl(e, n) {
+const _l = 6, as = ["u", "l", "r", "b"];
+function Cl(e, n) {
   return e.ep.every((t, r) => t === n.ep[r]) && e.eo.every((t, r) => t === n.eo[r]) && e.tips.every((t, r) => t === n.tips[r]);
 }
-function _l(e) {
-  return qo(e), Xo(e) >= Rl;
+function Ul(e) {
+  return qo(e), Xo(e) >= _l;
 }
-function Cl(e) {
+function Il(e) {
   for (; ; ) {
-    const n = Ol(e);
-    if (_l(n))
+    const n = Ml(e);
+    if (Ul(n))
       return {
         state: n,
         distance: Xo(n)
       };
   }
 }
-function Ul(e, n) {
-  const t = Ao(Vo(), e), r = [];
+function Fl(e, n) {
+  const t = Mo(Vo(), e), r = [];
   for (let o = 0; o < 4; o++) {
     const i = (n.tips[o] - t.tips[o] + 3) % 3;
     i === 1 ? r.push(as[o]) : i === 2 && r.push(`${as[o]}'`);
   }
   return [e, ...r].filter(Boolean).join(" ");
 }
-async function Il(e) {
-  await Tl();
-  const { state: n } = Cl(e), t = Al(n), r = Ml(t), o = Ul(r, n), i = Ao(Vo(), o);
-  if (!Pl(i, n))
+async function Dl(e) {
+  await Al();
+  const { state: n } = Il(e), t = Rl(n), r = Pl(t), o = Fl(r, n), i = Mo(Vo(), o);
+  if (!Cl(i, n))
     throw new Error(
       "Pyraminx scramble replay failed: generated state does not match target"
     );
-  const s = Ao(
+  const s = Mo(
     { ...n, tips: [0, 0, 0, 0] },
     t
   );
@@ -2083,7 +2083,7 @@ async function Il(e) {
     state: n
   };
 }
-const us = [-3, -1, 1, 3], ur = ["U", "R", "F", "D", "L", "B"], Fl = Object.freeze({
+const us = [-3, -1, 1, 3], ur = ["U", "R", "F", "D", "L", "B"], Nl = Object.freeze({
   U: [0, 1, 0],
   R: [1, 0, 0],
   F: [0, 0, 1],
@@ -2091,13 +2091,13 @@ const us = [-3, -1, 1, 3], ur = ["U", "R", "F", "D", "L", "B"], Fl = Object.free
   L: [-1, 0, 0],
   B: [0, 0, -1]
 });
-function Dl(e, n) {
+function Ll(e, n) {
   return `${e.join(",")}|${n.join(",")}`;
 }
-function Nl() {
+function $l() {
   const e = [];
   for (const n of ur) {
-    const t = Fl[n];
+    const t = Nl[n];
     for (const r of us)
       for (const o of us) {
         let i;
@@ -2126,21 +2126,21 @@ function Nl() {
             position: Object.freeze(i),
             normal: Object.freeze([...t]),
             face: n,
-            key: Dl(i, t)
+            key: Ll(i, t)
           })
         );
       }
   }
   return Object.freeze(e);
 }
-const $e = Nl(), Ll = new Map(
+const $e = $l(), kl = new Map(
   $e.map((e, n) => [e.key, n])
-), $l = $e.length;
+), Bl = $e.length;
 function $c() {
   return $e.map((e) => e.face);
 }
 function kc(e) {
-  if (!Array.isArray(e) || e.length !== $l)
+  if (!Array.isArray(e) || e.length !== Bl)
     return !1;
   const n = Object.fromEntries(
     ur.map((t) => [t, 0])
@@ -2159,7 +2159,7 @@ function Bc(e) {
     );
   return e;
 }
-function kl(e) {
+function jl(e) {
   return kc(e) ? e.every(
     (n, t) => n === $e[t].face
   ) : !1;
@@ -2171,8 +2171,8 @@ const jc = Object.freeze({
   D: { axis: 1, layers: [-3], direction: 1 },
   F: { axis: 2, layers: [3], direction: -1 },
   B: { axis: 2, layers: [-3], direction: 1 }
-}), Bl = Object.keys(jc);
-function jl(e) {
+}), Vl = Object.keys(jc);
+function ql(e) {
   if (typeof e != "string")
     throw new TypeError("Move must be a string");
   const n = e.match(
@@ -2203,29 +2203,29 @@ function fs(e, n, t) {
   const [r, o, i] = e;
   return n === 0 ? t === 1 ? [r, -i, o] : [r, i, -o] : n === 1 ? t === 1 ? [i, o, -r] : [-i, o, r] : t === 1 ? [-o, r, i] : [o, -r, i];
 }
-function Vl(e, n, t) {
+function Gl(e, n, t) {
   let r = [...e.position], o = [...e.normal];
   const i = Math.sign(t), s = Math.abs(t) % 4;
   for (let c = 0; c < s; c++)
     r = fs(r, n, i), o = fs(o, n, i);
   return { position: r, normal: o };
 }
-function ql(e) {
-  return jl(e);
+function Kl(e) {
+  return ql(e);
 }
 const ls = /* @__PURE__ */ new Map();
-function Gl(e) {
+function Xl(e) {
   const n = e, t = ls.get(n);
   if (t) return t;
-  const { axis: r, layers: o, quarterTurns: i } = ql(e), s = Array($e.length);
+  const { axis: r, layers: o, quarterTurns: i } = Kl(e), s = Array($e.length);
   for (let a = 0; a < $e.length; a++) {
     const u = $e[a], f = u.position[r];
     let l = u.key;
     if (o.includes(f)) {
-      const p = Vl(u, r, i);
+      const p = Gl(u, r, i);
       l = `${p.position.join(",")}|${p.normal.join(",")}`;
     }
-    const d = Ll.get(l);
+    const d = kl.get(l);
     if (d === void 0)
       throw new Error(
         `Internal move error: no destination for facelet ${u.key}`
@@ -2235,24 +2235,24 @@ function Gl(e) {
   const c = Object.freeze(s);
   return ls.set(n, c), c;
 }
-function Kl(e, n) {
+function Wl(e, n) {
   Bc(e);
-  const t = Gl(n), r = Array(e.length);
+  const t = Xl(n), r = Array(e.length);
   for (let o = 0; o < t.length; o++)
     r[t[o]] = e[o];
   return r;
 }
-function Xl(e, n) {
+function Yl(e, n) {
   const t = typeof n == "string" ? n.trim().split(/\s+/).filter(Boolean) : n;
   if (!Array.isArray(t))
     throw new TypeError("Moves must be an array or a space-separated string");
   return t.reduce(
-    (r, o) => Kl(r, o),
+    (r, o) => Wl(r, o),
     e
   );
 }
 Object.freeze(
-  Bl.flatMap((e) => [
+  Vl.flatMap((e) => [
     e,
     `${e}'`,
     `${e}2`,
@@ -2264,19 +2264,19 @@ Object.freeze(
     `2${e}2`
   ])
 );
-function Wl(e, n) {
+function Hl(e, n) {
   return [e[0] + n[0], e[1] + n[1], e[2] + n[2]];
 }
 function ds(e) {
   return [-e[0], -e[1], -e[2]];
 }
-function Yl(e) {
+function zl(e) {
   return [e[0] / 2, e[1] / 2, e[2] / 2];
 }
-function Mo(e, n) {
+function Ao(e, n) {
   return e[0] * n[0] + e[1] * n[1] + e[2] * n[2];
 }
-function Hl(e, n) {
+function Jl(e, n) {
   return [
     e[1] * n[2] - e[2] * n[1],
     e[2] * n[0] - e[0] * n[2],
@@ -2286,7 +2286,7 @@ function Hl(e, n) {
 function fn(e, n) {
   return e[0] === n[0] && e[1] === n[1] && e[2] === n[2];
 }
-function zl(e, n) {
+function Ql(e, n) {
   return e[0] !== n[0] ? e[0] < n[0] : e[1] !== n[1] ? e[1] < n[1] : e[2] < n[2];
 }
 function tn(e) {
@@ -2317,7 +2317,7 @@ var Vc = {
   L: { index: 0, sign: -1 }
 };
 function rn(e, n, t) {
-  const r = Mo(e, n), o = Hl(e, n), i = [
+  const r = Ao(e, n), o = Jl(e, n), i = [
     (-n[0] + e[0] * r + t * o[0]) / 2,
     (-n[1] + e[1] * r + t * o[1]) / 2,
     (-n[2] + e[2] * r + t * o[2]) / 2
@@ -2377,7 +2377,7 @@ var Yt = [
   B: (e) => Ye("B", e),
   R: (e) => Ye("R", e),
   L: (e) => Ye("L", e)
-}, Jl = {
+}, Zl = {
   U: { axisIndex: 1, requiredValue: 1 },
   D: { axisIndex: 1, requiredValue: -1 },
   F: { axisIndex: 2, requiredValue: 1 },
@@ -2386,7 +2386,7 @@ var Yt = [
   L: { axisIndex: 0, requiredValue: -1 }
 };
 function Gc(e, n) {
-  const { axisIndex: t, requiredValue: r } = Jl[e];
+  const { axisIndex: t, requiredValue: r } = Zl[e];
   return n[t] === r;
 }
 function Kc(e, n) {
@@ -2401,7 +2401,7 @@ function ps(e) {
 function hs(e, n) {
   return n === "X" ? [e[0], 0, 0] : n === "Y" ? [0, e[1], 0] : [0, 0, e[2]];
 }
-function Ql(e) {
+function ed(e) {
   const n = qc[e], t = [], r = [];
   for (let o = 0; o < Yt.length; o += 1) {
     const i = Yt[o];
@@ -2428,7 +2428,7 @@ function Ql(e) {
   }
   return { destination: t, twist: r };
 }
-function Zl(e) {
+function nd(e) {
   const n = qc[e], t = [], r = [], o = e === "F" || e === "B";
   for (let i = 0; i < Ht.length; i += 1) {
     const s = Ht[i];
@@ -2442,7 +2442,7 @@ function Zl(e) {
   return { destination: t, flip: r };
 }
 function Xc(e) {
-  const n = Ql(e), t = Zl(e);
+  const n = ed(e), t = nd(e);
   return {
     face: e,
     cornerDestination: n.destination,
@@ -2455,7 +2455,7 @@ var He = 8, xr = {
   cornerPermutation: [0, 1, 2, 3, 4, 5, 6, 7],
   cornerOrientation: [0, 0, 0, 0, 0, 0, 0, 0]
 }, Wc = ["U", "R", "F"];
-function ed(e, n) {
+function td(e, n) {
   let t = Array.from({ length: He }, (o, i) => i), r = new Array(He).fill(0);
   for (let o = 0; o < n; o += 1) {
     const i = new Array(He), s = new Array(He);
@@ -2467,55 +2467,55 @@ function ed(e, n) {
   }
   return { cornerDestination: t, cornerTwist: r };
 }
-function nd() {
+function rd() {
   const e = /* @__PURE__ */ new Map();
   for (const n of Wc) {
     const t = Xc(n);
     for (const r of [1, 2, 3])
-      e.set(`${n}${r}`, ed(t, r));
+      e.set(`${n}${r}`, td(t, r));
   }
   return e;
 }
-var td = nd();
-function rd() {
+var od = rd();
+function id() {
   const e = [];
   for (const n of Wc)
     for (const t of [1, 2, 3]) e.push({ face: n, amount: t });
   return e;
 }
-function od(e) {
-  const n = td.get(`${e.face}${e.amount}`);
+function sd(e) {
+  const n = od.get(`${e.face}${e.amount}`);
   if (!n)
     throw new Error(`state-222: ${e.face}${e.amount} is not a valid 2x2x2 move (only U/R/F)`);
   return n;
 }
-function id(e, n) {
-  const t = od(n), r = new Array(He), o = new Array(He);
+function cd(e, n) {
+  const t = sd(n), r = new Array(He), o = new Array(He);
   for (let i = 0; i < He; i += 1) {
     const s = t.cornerDestination[i];
     r[s] = e.cornerPermutation[i], o[s] = (e.cornerOrientation[i] + t.cornerTwist[i]) % 3;
   }
   return { cornerPermutation: r, cornerOrientation: o };
 }
-var sd = 4294967296;
+var ad = 4294967296;
 function we(e, n) {
   if (!Number.isInteger(n) || n <= 0)
     throw new Error(`randomInt: maxExclusive must be a positive integer, got ${n}`);
-  const t = Math.floor(sd / n) * n;
+  const t = Math.floor(ad / n) * n;
   let r;
   do
     r = e.nextUint32();
   while (r >= t);
   return r % n;
 }
-var Mn = [0, 1, 2, 3, 4, 5, 7], Wo = Mn.length, Zn = Wo - 1;
-function cd(e) {
+var An = [0, 1, 2, 3, 4, 5, 7], Wo = An.length, Zn = Wo - 1;
+function ud(e) {
   return e === 7 ? 6 : e;
 }
-function ad(e) {
+function fd(e) {
   return e === 6 ? 7 : e;
 }
-function ud(e) {
+function ld(e) {
   const n = Array.from({ length: e }, (o, i) => i), t = [];
   function r(o, i) {
     if (i.length === 0) {
@@ -2529,11 +2529,11 @@ function ud(e) {
   }
   return r([], n), t;
 }
-var Yo = ud(Wo), Ho = Yo.length, fd = new Map(
+var Yo = ld(Wo), Ho = Yo.length, dd = new Map(
   Yo.map((e, n) => [e.join(","), n])
 );
 function zo(e) {
-  const t = Mn.map((o) => cd(e[o])).join(","), r = fd.get(t);
+  const t = An.map((o) => ud(e[o])).join(","), r = dd.get(t);
   if (r === void 0)
     throw new Error(`coordinates-222: "${t}" is not a valid permutation of the 7 movable corners`);
   return r;
@@ -2542,15 +2542,15 @@ function Yc(e) {
   const n = Yo[e];
   if (!n) throw new Error(`coordinates-222: cornerPerm222Coord ${e} out of range`);
   const t = new Array(8).fill(-1);
-  return t[6] = 6, Mn.forEach((r, o) => {
-    t[r] = ad(n[o]);
+  return t[6] = 6, An.forEach((r, o) => {
+    t[r] = fd(n[o]);
   }), t;
 }
 var Or = 3 ** Zn;
 function Jo(e) {
   let n = 0;
   for (let t = 0; t < Zn; t += 1)
-    n = n * 3 + e[Mn[t]];
+    n = n * 3 + e[An[t]];
   return n;
 }
 function Hc(e) {
@@ -2562,8 +2562,8 @@ function Hc(e) {
     o[i] = s, r += s, t = (t - s) / 3;
   }
   for (let i = 0; i < Zn; i += 1)
-    n[Mn[i]] = o[i];
-  return n[Mn[Wo - 1]] = (3 - r % 3) % 3, n;
+    n[An[i]] = o[i];
+  return n[An[Wo - 1]] = (3 - r % 3) % 3, n;
 }
 function zc(e) {
   return {
@@ -2574,47 +2574,47 @@ function zc(e) {
 var Jc = zo(xr.cornerPermutation), Qc = Jo(
   xr.cornerOrientation
 );
-function ld(e) {
+function pd(e) {
   return e.cornerPerm === Jc && e.cornerOrientation === Qc;
 }
-function dd(e) {
+function hd(e) {
   const n = we(e, Ho), t = we(e, Or);
   return {
     cornerPermutation: Yc(n),
     cornerOrientation: Hc(t)
   };
 }
-var ln = rd(), pd = ln.length;
+var ln = id(), md = ln.length;
 function Zc(e, n, t) {
   const r = [];
-  for (let o = 0; o < pd; o += 1) {
+  for (let o = 0; o < md; o += 1) {
     const i = new Array(e), s = ln[o];
     for (let c = 0; c < e; c += 1)
-      i[c] = t(id(n(c), s));
+      i[c] = t(cd(n(c), s));
     r.push(i);
   }
   return r;
 }
-var hd = null, md = null;
+var gd = null, vd = null;
 function ea() {
-  return hd ?? (hd = Zc(
+  return gd ?? (gd = Zc(
     Ho,
     (e) => ({ ...xr, cornerPermutation: Yc(e) }),
     (e) => zo(e.cornerPermutation)
   ));
 }
 function na() {
-  return md ?? (md = Zc(
+  return vd ?? (vd = Zc(
     Or,
     (e) => ({ ...xr, cornerOrientation: Hc(e) }),
     (e) => Jo(e.cornerOrientation)
   ));
 }
-var gd = new Map(
+var wd = new Map(
   ln.map((e, n) => [`${e.face}${e.amount}`, n])
 );
 function ta(e) {
-  const n = gd.get(`${e.face}${e.amount}`);
+  const n = wd.get(`${e.face}${e.amount}`);
   if (n === void 0)
     throw new Error(`tables-222: no move index for ${e.face}${e.amount}`);
   return n;
@@ -2625,11 +2625,11 @@ function ra(e, n) {
 function oa(e, n) {
   return na()[ta(n)][e];
 }
-function vd() {
+function Sd() {
   ea(), na();
 }
 var ms = 255;
-function wd() {
+function Ed() {
   const e = Or, n = new Uint8Array(Ho * e).fill(ms), t = Jc * e + Qc;
   n[t] = 0;
   let r = [t], o = 0, i = 1;
@@ -2647,27 +2647,27 @@ function wd() {
   }
   return n;
 }
-var Sd = null;
+var yd = null;
 function ia() {
-  return Sd ?? (Sd = wd());
+  return yd ?? (yd = Ed());
 }
 function sa(e, n) {
   return ia()[e * Or + n];
 }
-function Ed() {
+function bd() {
   ia();
 }
 function gs(e) {
   const n = zc(e);
   return sa(n.cornerPerm, n.cornerOrientation);
 }
-function yd(e, n, t = bd) {
+function xd(e, n, t = Od) {
   const r = zc(e);
-  if (n === 0) return ld(r) ? [] : null;
+  if (n === 0) return pd(r) ? [] : null;
   const o = [];
   return ca(r, 0, n, o, t) ? [...o] : null;
 }
-var bd = ln.map((e, n) => n);
+var Od = ln.map((e, n) => n);
 function ca(e, n, t, r, o) {
   const i = sa(e.cornerPerm, e.cornerOrientation);
   if (n + i > t) return !1;
@@ -2685,7 +2685,7 @@ function ca(e, n, t, r, o) {
   }
   return !1;
 }
-var Re = ["U", "D", "F", "B", "L", "R"], Qo = [1, 2, 3], xd = {
+var Re = ["U", "D", "F", "B", "L", "R"], Qo = [1, 2, 3], Td = {
   U: "UD",
   D: "UD",
   R: "RL",
@@ -2694,9 +2694,9 @@ var Re = ["U", "D", "F", "B", "L", "R"], Qo = [1, 2, 3], xd = {
   B: "FB"
 };
 function Tr(e) {
-  return xd[e];
+  return Td[e];
 }
-function Od(e) {
+function Md(e) {
   return e.amount === 1 ? e.face : e.amount === 2 ? `${e.face}2` : `${e.face}'`;
 }
 function aa(e) {
@@ -2707,23 +2707,23 @@ function aa(e) {
   return { face: t, amount: r === "2" ? 2 : r === "'" ? 3 : 1 };
 }
 function Zo(e) {
-  return e.map(Od).join(" ");
+  return e.map(Md).join(" ");
 }
-function Td(e) {
+function Ad(e) {
   const n = 4 - e.amount;
   return { face: e.face, amount: n };
 }
 function ei(e) {
-  return [...e].reverse().map(Td);
+  return [...e].reverse().map(Ad);
 }
 var ni = /* @__PURE__ */ new Map();
 function Te(e, n, t = "random-state", r) {
   ni.set(e, { scramble: n, quality: t, multiScramble: !1, prepare: r });
 }
-function Ad(e, n, t = "random-state", r) {
+function Rd(e, n, t = "random-state", r) {
   ni.set(e, { scramble: n, quality: t, multiScramble: !0, prepare: r });
 }
-function Md(e) {
+function ua(e) {
   return ni.get(e);
 }
 function ti(e, n, t, r) {
@@ -2751,7 +2751,7 @@ function je(e, n) {
   }
   return t;
 }
-function Rd(e) {
+function Pd(e) {
   const n = [], t = [], r = new Array(e).fill(!1);
   function o() {
     if (t.length === e) {
@@ -2775,32 +2775,32 @@ function it(e) {
   }
   return t % 2;
 }
-function ua(e) {
+function fa(e) {
   if (e.length < 2) return;
   const n = e[0];
   e[0] = e[1], e[1] = n;
 }
-var Pd = 4, _d = 11;
-function Cd(e) {
+var _d = 4, Cd = 11;
+function Ud(e) {
   const n = wt(
     e,
-    dd,
+    hd,
     gs,
-    Pd
+    _d
   ), t = je(e, ln.length), r = ri(
     gs(n),
-    _d,
-    (o) => yd(n, o, t)
+    Cd,
+    (o) => xd(n, o, t)
   );
   return Zo(ei(r));
 }
-function Ud() {
-  vd(), Ed();
-}
 function Id() {
-  Te("222", (e) => Cd(e), "random-state", Ud);
+  Sd(), bd();
 }
-function Fd(e, n) {
+function Fd() {
+  Te("222", (e) => Ud(e), "random-state", Id);
+}
+function Dd(e, n) {
   let t = [...e.cornerDestination], r = e.cornerDestination.map(() => 0), o = [...e.edgeDestination], i = e.edgeDestination.map(() => 0);
   for (let s = 0; s < e.cornerDestination.length; s += 1)
     t[s] = s;
@@ -2829,12 +2829,12 @@ function Fd(e, n) {
     edgeFlip: i
   };
 }
-function Dd() {
+function Nd() {
   const e = /* @__PURE__ */ new Map();
   for (const n of Re) {
     const t = Xc(n);
     for (const r of Qo) {
-      const o = Fd(t, r);
+      const o = Dd(t, r);
       e.set(We({ face: n, amount: r }), o);
     }
   }
@@ -2843,44 +2843,44 @@ function Dd() {
 function We(e) {
   return `${e.face}${e.amount}`;
 }
-var Nd = Dd();
-function Ld(e) {
-  const n = Nd.get(We(e));
+var Ld = Nd();
+function $d(e) {
+  const n = Ld.get(We(e));
   if (!n)
     throw new Error(`move-tables: no table for move ${We(e)}`);
   return n;
 }
-function fa() {
+function la() {
   const e = [];
   for (const n of Re)
     for (const t of Qo) e.push({ face: n, amount: t });
   return e;
 }
-var ke = 8, Ae = 12, Fe = {
+var ke = 8, Me = 12, Fe = {
   cornerPermutation: [0, 1, 2, 3, 4, 5, 6, 7],
   cornerOrientation: [0, 0, 0, 0, 0, 0, 0, 0],
   edgePermutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
   edgeOrientation: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 };
-function $d(e, n) {
-  const t = new Array(ke), r = new Array(ke), o = new Array(Ae), i = new Array(Ae);
+function kd(e, n) {
+  const t = new Array(ke), r = new Array(ke), o = new Array(Me), i = new Array(Me);
   for (let s = 0; s < ke; s += 1) {
     const c = n.cornerDestination[s];
     t[c] = e.cornerPermutation[s], r[c] = (e.cornerOrientation[s] + n.cornerTwist[s]) % 3;
   }
-  for (let s = 0; s < Ae; s += 1) {
+  for (let s = 0; s < Me; s += 1) {
     const c = n.edgeDestination[s];
     o[c] = e.edgePermutation[s], i[c] = (e.edgeOrientation[s] + n.edgeFlip[s]) % 2;
   }
   return { cornerPermutation: t, cornerOrientation: r, edgePermutation: o, edgeOrientation: i };
 }
 function oi(e, n) {
-  return $d(e, Ld(n));
+  return kd(e, $d(n));
 }
-function la(e, n) {
+function da(e, n) {
   return n.reduce(oi, e);
 }
-function kd(e) {
+function Bd(e) {
   const n = new Array(ke);
   let t = 0;
   for (let r = 0; r < ke - 1; r += 1) {
@@ -2889,37 +2889,37 @@ function kd(e) {
   }
   return n[ke - 1] = (3 - t % 3) % 3, n;
 }
-function Bd(e) {
-  const n = new Array(Ae);
+function jd(e) {
+  const n = new Array(Me);
   let t = 0;
-  for (let r = 0; r < Ae - 1; r += 1) {
+  for (let r = 0; r < Me - 1; r += 1) {
     const o = we(e, 2);
     n[r] = o, t += o;
   }
-  return n[Ae - 1] = t % 2, n;
-}
-function da(e) {
-  const n = je(e, ke), t = je(e, Ae);
-  return it(n) !== it(t) && ua(t), {
-    cornerPermutation: n,
-    cornerOrientation: kd(e),
-    edgePermutation: t,
-    edgeOrientation: Bd(e)
-  };
+  return n[Me - 1] = t % 2, n;
 }
 function pa(e) {
+  const n = je(e, ke), t = je(e, Me);
+  return it(n) !== it(t) && fa(t), {
+    cornerPermutation: n,
+    cornerOrientation: Bd(e),
+    edgePermutation: t,
+    edgeOrientation: jd(e)
+  };
+}
+function ha(e) {
   if (!Number.isInteger(e) || e < 2)
     throw new Error(`nxn-notation: cube size must be an integer of at least 2, got ${e}`);
   return Math.floor(e / 2);
 }
-function ha(e) {
+function ma(e) {
   const n = e.depth >= 3 ? String(e.depth) : "", t = e.depth >= 2 ? "w" : "", r = e.amount === 2 ? "2" : e.amount === 3 ? "'" : "";
   return `${n}${e.face}${t}${r}`;
 }
-function ma(e) {
-  return e.map(ha).join(" ");
+function ga(e) {
+  return e.map(ma).join(" ");
 }
-function jd(e) {
+function Vd(e) {
   const n = /^(\d+)?([UDFBLR])(w)?(2|')?$/.exec(e);
   if (!n)
     throw new Error(`nxn-notation: "${e}" is not a valid wide-move token`);
@@ -2936,14 +2936,14 @@ function jd(e) {
     amount: i === "2" ? 2 : i === "'" ? 3 : 1
   };
 }
-function Vd(e) {
+function qd(e) {
   return { ...e, amount: 4 - e.amount };
 }
-function qd(e) {
-  return [...e].reverse().map(Vd);
+function Gd(e) {
+  return [...e].reverse().map(qd);
 }
 function St(e) {
-  const n = pa(e), t = [];
+  const n = ha(e), t = [];
   for (const r of Re)
     for (let o = 1; o <= n; o += 1)
       for (const i of Qo) t.push({ face: r, depth: o, amount: i });
@@ -2955,13 +2955,13 @@ function st(e) {
 function cn(e) {
   return `${e.face}${e.depth}`;
 }
-var Gd = { R: "x", U: "y", F: "z" }, Kd = { x: "R", y: "U", z: "F" };
-function Xd(e, n) {
+var Kd = { R: "x", U: "y", F: "z" }, Xd = { x: "R", y: "U", z: "F" };
+function Wd(e, n) {
   return e.depth >= n;
 }
-function Wd(e, n) {
-  if (!Xd(e, n)) return ha(e);
-  const t = Gd[e.face];
+function Yd(e, n) {
+  if (!Wd(e, n)) return ma(e);
+  const t = Kd[e.face];
   if (t === void 0)
     throw new Error(
       `nxn-notation: a whole-cube rotation about ${e.face} has no WCA spelling — use R, U or F`
@@ -2969,15 +2969,15 @@ function Wd(e, n) {
   const r = e.amount === 2 ? "2" : e.amount === 3 ? "'" : "";
   return `${t}${r}`;
 }
-function Yd(e, n) {
-  return e.map((t) => Wd(t, n)).join(" ");
-}
 function Hd(e, n) {
+  return e.map((t) => Yd(t, n)).join(" ");
+}
+function zd(e, n) {
   const t = /^([xyz])(2|')?$/.exec(e);
-  if (!t) return jd(e);
+  if (!t) return Vd(e);
   const r = t[2];
   return {
-    face: Kd[t[1]],
+    face: Xd[t[1]],
     depth: n,
     amount: r === "2" ? 2 : r === "'" ? 3 : 1
   };
@@ -2993,12 +2993,12 @@ var fr = {
 new Map(
   Object.keys(fr).map((e) => [tn(fr[e]), e])
 );
-function zd(e) {
+function Jd(e) {
   return Array.from({ length: e }, (n, t) => 2 * t - e + 1);
 }
-function ga(e) {
-  pa(e);
-  const n = zd(e), t = [];
+function va(e) {
+  ha(e);
+  const n = Jd(e), t = [];
   for (const r of Object.keys(fr)) {
     const o = fr[r], { index: i } = Vc[r], s = [0, 1, 2].filter((c) => c !== i);
     for (const c of n)
@@ -3018,7 +3018,7 @@ function ga(e) {
 function vs(e) {
   return `${tn(e.position)}|${tn(e.normal)}`;
 }
-function Jd(e, n, t, r) {
+function Qd(e, n, t, r) {
   const { index: o, sign: i } = Vc[n], s = e.position[o] - e.normal[o];
   return i * s >= r - 2 * t + 1;
 }
@@ -3026,7 +3026,7 @@ function ii(e, n, t) {
   const r = new Map(e.map((i, s) => [vs(i), s])), o = new Array(e.length);
   for (let i = 0; i < e.length; i += 1) {
     const s = e[i];
-    if (!Jd(s, n.face, n.depth, t)) {
+    if (!Qd(s, n.face, n.depth, t)) {
       o[i] = i;
       continue;
     }
@@ -3042,11 +3042,11 @@ function ii(e, n, t) {
   }
   return o;
 }
-function Qd(e) {
+function Zd(e) {
   return e % 2 === 0 ? e : Math.ceil(e / 2);
 }
-function va(e) {
-  const n = Qd(e), t = e % 2 === 0 ? ["R", "U", "F"] : Re, r = [];
+function wa(e) {
+  const n = Zd(e), t = e % 2 === 0 ? ["R", "U", "F"] : Re, r = [];
   for (const o of t)
     for (const i of [1, 2, 3]) r.push({ face: o, depth: n, amount: i });
   return r;
@@ -3054,7 +3054,7 @@ function va(e) {
 function no(e) {
   const { facelets: n } = Et(e.size);
   if (e.size % 2 === 0) {
-    if (!Ea(e))
+    if (!ya(e))
       throw new Error(
         `nxn-orientation: an even cube (${e.size}) has no fixed centres, so its orientation is only readable while every face is one colour`
       );
@@ -3073,7 +3073,7 @@ function no(e) {
   return t.join("");
 }
 var Hn = 24, to = /* @__PURE__ */ new Map();
-function Zd(e) {
+function ep(e) {
   const n = e, t = [
     null,
     { face: "R", depth: n, amount: 1 },
@@ -3092,18 +3092,18 @@ function Zd(e) {
       o.push([i, s].filter((c) => c !== null));
   return o;
 }
-function e0(e) {
+function np(e) {
   const n = to.get(e);
   if (n) return n;
   if (e % 2 === 0) {
-    const c = Zd(e), a = Ro(e), u = new Set(c.map((f) => no(Po(a, f))));
+    const c = ep(e), a = Ro(e), u = new Set(c.map((f) => no(Po(a, f))));
     if (u.size !== Hn)
       throw new Error(
         `nxn-orientation: the size-${e} vocabulary reaches ${u.size} orientations, expected ${Hn}`
       );
     return to.set(e, c), c;
   }
-  const t = va(e), r = /* @__PURE__ */ new Map(), o = Ro(e);
+  const t = wa(e), r = /* @__PURE__ */ new Map(), o = Ro(e);
   r.set(no(o), []);
   let i = [[]];
   for (; i.length > 0 && r.size < Hn; ) {
@@ -3123,34 +3123,34 @@ function e0(e) {
   const s = [...r.values()];
   return to.set(e, s), s;
 }
-function n0(e, n) {
-  const t = e0(n);
-  return Yd(t[we(e, t.length)], n);
+function tp(e, n) {
+  const t = np(n);
+  return Hd(t[we(e, t.length)], n);
 }
 function si(e, n, t) {
-  const r = n0(n, t);
+  const r = tp(n, t);
   return r.length === 0 ? e : `${e} ${r}`;
 }
 var ws = /* @__PURE__ */ new Map();
 function Et(e) {
   let n = ws.get(e);
   if (n) return n;
-  const t = ga(e), r = St(e), o = /* @__PURE__ */ new Map();
-  for (const i of [...r, ...va(e)]) {
-    const s = wa(i);
+  const t = va(e), r = St(e), o = /* @__PURE__ */ new Map();
+  for (const i of [...r, ...wa(e)]) {
+    const s = Sa(i);
     o.has(s) || o.set(s, ii(t, i, e));
   }
   return n = { facelets: t, permutations: o, moves: r }, ws.set(e, n), n;
 }
-function wa(e) {
+function Sa(e) {
   return `${cn(e)}.${e.amount}`;
 }
 function Ro(e) {
   const { facelets: n } = Et(e);
   return { size: e, occupant: n.map((t, r) => r) };
 }
-function Sa(e, n) {
-  const { permutations: t } = Et(e.size), r = t.get(wa(n));
+function Ea(e, n) {
+  const { permutations: t } = Et(e.size), r = t.get(Sa(n));
   if (!r)
     throw new Error(
       `nxn-state: ${cn(n)} is not a legal move on a ${e.size}x${e.size}x${e.size}`
@@ -3161,9 +3161,9 @@ function Sa(e, n) {
   return { size: e.size, occupant: o };
 }
 function Po(e, n) {
-  return n.reduce(Sa, e);
+  return n.reduce(Ea, e);
 }
-function Ea(e) {
+function ya(e) {
   const { facelets: n } = Et(e.size), t = /* @__PURE__ */ new Map();
   for (let r = 0; r < e.occupant.length; r += 1) {
     const o = n[r].face, i = n[e.occupant[r]].face, s = t.get(o);
@@ -3172,32 +3172,32 @@ function Ea(e) {
   }
   return !0;
 }
-function t0(e, n) {
-  const t = e.trim().split(/\s+/).filter((o) => o.length > 0).map((o) => Hd(o, n)), r = Po(Ro(n), t);
+function rp(e, n) {
+  const t = e.trim().split(/\s+/).filter((o) => o.length > 0).map((o) => zd(o, n)), r = Po(Ro(n), t);
   return ti(
     r,
     St(n),
-    Sa,
-    Ea
+    Ea,
+    ya
   );
 }
 function Cn(e, n, t = 100) {
   for (let r = 0; r < t; r += 1) {
     const o = n();
-    if (t0(o, e)) return o;
+    if (rp(o, e)) return o;
   }
   throw new Error(
     `nxn-minimum: ${t} scrambles of a ${e}x${e}x${e} in a row were within one move of solved`
   );
 }
-var ci = ke - 1, ai = Ae - 1, ya = 3 ** ci, ba = 2 ** ai;
-function xa(e) {
+var ci = ke - 1, ai = Me - 1, ba = 3 ** ci, xa = 2 ** ai;
+function Oa(e) {
   let n = 0;
   for (let t = 0; t < ci; t += 1)
     n = n * 3 + e[t];
   return n;
 }
-function r0(e) {
+function op(e) {
   const n = new Array(ke).fill(0);
   let t = e, r = 0;
   for (let o = ci - 1; o >= 0; o -= 1) {
@@ -3206,23 +3206,23 @@ function r0(e) {
   }
   return n[ke - 1] = (3 - r % 3) % 3, n;
 }
-function Oa(e) {
+function Ta(e) {
   let n = 0;
   for (let t = 0; t < ai; t += 1)
     n = n * 2 + e[t];
   return n;
 }
-function o0(e) {
-  const n = new Array(Ae).fill(0);
+function ip(e) {
+  const n = new Array(Me).fill(0);
   let t = e, r = 0;
   for (let o = ai - 1; o >= 0; o -= 1) {
     const i = t % 2;
     n[o] = i, r += i, t = (t - i) / 2;
   }
-  return n[Ae - 1] = r % 2, n;
+  return n[Me - 1] = r % 2, n;
 }
-var i0 = /* @__PURE__ */ new Set([8, 9, 10, 11]);
-function s0(e, n) {
+var sp = /* @__PURE__ */ new Set([8, 9, 10, 11]);
+function cp(e, n) {
   const t = [], r = [];
   function o(i) {
     if (r.length === n) {
@@ -3234,61 +3234,61 @@ function s0(e, n) {
   }
   return o(0), t;
 }
-var ui = s0(Ae, 4), Un = ui.length, c0 = new Map(
+var ui = cp(Me, 4), Un = ui.length, ap = new Map(
   ui.map((e, n) => [e.join(","), n])
 );
 function fi(e) {
   const n = [];
-  for (let o = 0; o < Ae; o += 1)
-    i0.has(e[o]) && n.push(o);
-  const t = n.join(","), r = c0.get(t);
+  for (let o = 0; o < Me; o += 1)
+    sp.has(e[o]) && n.push(o);
+  const t = n.join(","), r = ap.get(t);
   if (r === void 0)
     throw new Error(`coordinates: "${t}" is not a valid 4-of-12 slice-edge combination`);
   return r;
 }
-function a0(e) {
+function up(e) {
   const n = ui[e];
   if (!n)
     throw new Error(`coordinates: udSliceCoord ${e} is out of range [0, ${Un})`);
   return n;
 }
-function u0(e) {
+function fp(e) {
   return {
-    twist: xa(e.cornerOrientation),
-    flip: Oa(e.edgeOrientation),
+    twist: Oa(e.cornerOrientation),
+    flip: Ta(e.edgeOrientation),
     udSlice: fi(e.edgePermutation)
   };
 }
 var li = fi(Fe.edgePermutation);
-function Ta(e) {
+function Ma(e) {
   return e.twist === 0 && e.flip === 0 && e.udSlice === li;
 }
-var yt = fa(), f0 = yt.length;
-function l0(e) {
-  return { ...Fe, cornerOrientation: r0(e) };
+var yt = la(), lp = yt.length;
+function dp(e) {
+  return { ...Fe, cornerOrientation: op(e) };
 }
-function d0(e) {
-  return { ...Fe, edgeOrientation: o0(e) };
+function pp(e) {
+  return { ...Fe, edgeOrientation: ip(e) };
 }
-function p0(e) {
-  const n = new Array(Ae).fill(-1), t = [8, 9, 10, 11];
+function hp(e) {
+  const n = new Array(Me).fill(-1), t = [8, 9, 10, 11];
   e.forEach((i, s) => {
     n[i] = t[s];
   });
-  const r = Array.from({ length: Ae }, (i, s) => s).filter(
+  const r = Array.from({ length: Me }, (i, s) => s).filter(
     (i) => !e.includes(i)
   ), o = [0, 1, 2, 3, 4, 5, 6, 7];
   return r.forEach((i, s) => {
     n[i] = o[s];
   }), n;
 }
-function h0(e) {
-  const n = a0(e);
-  return { ...Fe, edgePermutation: p0(n) };
+function mp(e) {
+  const n = up(e);
+  return { ...Fe, edgePermutation: hp(n) };
 }
 function di(e, n, t) {
   const r = [];
-  for (let o = 0; o < f0; o += 1) {
+  for (let o = 0; o < lp; o += 1) {
     const i = new Array(e), s = yt[o];
     for (let c = 0; c < e; c += 1) {
       const a = oi(n(c), s);
@@ -3298,49 +3298,49 @@ function di(e, n, t) {
   }
   return r;
 }
-var m0 = null, g0 = null, v0 = null;
+var gp = null, vp = null, wp = null;
 function Aa() {
-  return m0 ?? (m0 = di(
-    ya,
-    l0,
-    (e) => xa(e.cornerOrientation)
-  ));
-}
-function Ma() {
-  return g0 ?? (g0 = di(
+  return gp ?? (gp = di(
     ba,
-    d0,
-    (e) => Oa(e.edgeOrientation)
+    dp,
+    (e) => Oa(e.cornerOrientation)
   ));
 }
 function Ra() {
-  return v0 ?? (v0 = di(
+  return vp ?? (vp = di(
+    xa,
+    pp,
+    (e) => Ta(e.edgeOrientation)
+  ));
+}
+function Pa() {
+  return wp ?? (wp = di(
     Un,
-    h0,
+    mp,
     (e) => fi(e.edgePermutation)
   ));
 }
-var w0 = new Map(yt.map((e, n) => [We(e), n]));
+var Sp = new Map(yt.map((e, n) => [We(e), n]));
 function pi(e) {
-  const n = w0.get(We(e));
+  const n = Sp.get(We(e));
   if (n === void 0)
     throw new Error(`phase1-tables: no move index for ${We(e)}`);
   return n;
 }
-function Pa(e, n) {
+function _a(e, n) {
   return Aa()[pi(n)][e];
 }
-function _a(e, n) {
-  return Ma()[pi(n)][e];
-}
-function hi(e, n) {
+function Ca(e, n) {
   return Ra()[pi(n)][e];
 }
-function S0() {
-  Aa(), Ma(), Ra();
+function hi(e, n) {
+  return Pa()[pi(n)][e];
+}
+function Ep() {
+  Aa(), Ra(), Pa();
 }
 var Ss = 255;
-function Ca(e, n, t, r, o) {
+function Ua(e, n, t, r, o) {
   const i = new Uint8Array(e * n).fill(Ss), s = r * n + o;
   i[s] = 0;
   let c = [s], a = 0, u = 1;
@@ -3349,8 +3349,8 @@ function Ca(e, n, t, r, o) {
     const l = [];
     for (const d of c) {
       const p = Math.floor(d / n), v = d % n;
-      for (const A of yt) {
-        const [C, L] = t(p, v, A), R = C * n + L;
+      for (const M of yt) {
+        const [C, L] = t(p, v, M), R = C * n + L;
         i[R] === Ss && (i[R] = a + 1, l.push(R), u += 1);
       }
     }
@@ -3358,18 +3358,9 @@ function Ca(e, n, t, r, o) {
   }
   return i;
 }
-var E0 = null, y0 = null;
-function Ua() {
-  return E0 ?? (E0 = Ca(
-    ya,
-    Un,
-    (e, n, t) => [Pa(e, t), hi(n, t)],
-    0,
-    li
-  ));
-}
+var yp = null, bp = null;
 function Ia() {
-  return y0 ?? (y0 = Ca(
+  return yp ?? (yp = Ua(
     ba,
     Un,
     (e, n, t) => [_a(e, t), hi(n, t)],
@@ -3377,63 +3368,72 @@ function Ia() {
     li
   ));
 }
-function b0(e, n) {
-  return Ua()[e * Un + n];
+function Fa() {
+  return bp ?? (bp = Ua(
+    xa,
+    Un,
+    (e, n, t) => [Ca(e, t), hi(n, t)],
+    0,
+    li
+  ));
 }
-function x0(e, n) {
+function xp(e, n) {
   return Ia()[e * Un + n];
 }
-function Fa(e, n, t) {
-  return Math.max(b0(e, t), x0(n, t));
+function Op(e, n) {
+  return Fa()[e * Un + n];
 }
-function O0() {
-  Ua(), Ia();
+function Da(e, n, t) {
+  return Math.max(xp(e, t), Op(n, t));
+}
+function Tp() {
+  Ia(), Fa();
 }
 var mi = {};
 function Es(e, n) {
   const t = {};
   return e !== void 0 && (t.firstMoveAxis = e), n !== void 0 && (t.lastMoveAxis = n), t;
 }
-function Da(e, n) {
+function Na(e, n) {
   return n.firstMoveAxis !== void 0 && Tr(e.face) === n.firstMoveAxis;
 }
 function gi(e, n) {
   return e === void 0 ? !1 : n.lastMoveAxis !== void 0 && Tr(e.face) === n.lastMoveAxis;
 }
-function T0(e, n = mi) {
-  const t = u0(e);
-  if (Ta(t)) return [];
-  let r = Fa(t.twist, t.flip, t.udSlice);
+function Mp(e, n = mi) {
+  const t = fp(e);
+  if (Ma(t)) return [];
+  let r = Da(t.twist, t.flip, t.udSlice);
   const o = [];
   for (; ; ) {
-    const i = Na(t, 0, r, o, n);
+    const i = La(t, 0, r, o, n);
     if (i.found) return [...o];
     if (i.nextBound === 1 / 0)
       throw new Error("phase1Search: no path to G1 found — the input state may not be reachable");
     r = i.nextBound;
   }
 }
-function Na(e, n, t, r, o) {
-  const i = Fa(e.twist, e.flip, e.udSlice), s = n + i;
+function La(e, n, t, r, o) {
+  const i = Da(e.twist, e.flip, e.udSlice), s = n + i;
   if (s > t) return { found: !1, nextBound: s };
   let c = 1 / 0;
   const a = r[r.length - 1];
-  if (Ta(e) && !gi(a, o)) return { found: !0 };
+  if (Ma(e) && !gi(a, o)) return { found: !0 };
   for (const u of yt) {
-    if (a && a.face === u.face || n === 0 && Da(u, o)) continue;
+    if (a && a.face === u.face || n === 0 && Na(u, o)) continue;
     const f = {
-      twist: Pa(e.twist, u),
-      flip: _a(e.flip, u),
+      twist: _a(e.twist, u),
+      flip: Ca(e.flip, u),
       udSlice: hi(e.udSlice, u)
     };
     r.push(u);
-    const l = Na(f, n + 1, t, r, o);
+    const l = La(f, n + 1, t, r, o);
     if (l.found) return l;
     l.nextBound < c && (c = l.nextBound), r.pop();
   }
   return { found: !1, nextBound: c };
 }
-function La(e) {
+function $a(e) {
   const n = Array.from({ length: e }, (o, i) => i), t = [];
   function r(o, i) {
     if (i.length === 0) {
@@ -3447,58 +3447,58 @@ function La(e) {
   }
   return r([], n), t;
 }
-var Ar = La(8), Mr = Ar.length, A0 = new Map(
-  Ar.map((e, n) => [e.join(","), n])
-), vi = La(4), bt = vi.length, M0 = new Map(
+var Mr = $a(8), Ar = Mr.length, Ap = new Map(
+  Mr.map((e, n) => [e.join(","), n])
+), vi = $a(4), bt = vi.length, Rp = new Map(
   vi.map((e, n) => [e.join(","), n])
 );
-function $a(e) {
-  const n = e.join(","), t = A0.get(n);
+function ka(e) {
+  const n = e.join(","), t = Ap.get(n);
   if (t === void 0)
     throw new Error(`phase2-coordinates: "${n}" is not a permutation of [0..7]`);
   return t;
 }
-function R0(e) {
-  const n = e.join(","), t = M0.get(n);
+function Pp(e) {
+  const n = e.join(","), t = Rp.get(n);
   if (t === void 0)
     throw new Error(`phase2-coordinates: "${n}" is not a permutation of [0..3]`);
   return t;
 }
 function wi(e) {
-  return $a(e);
+  return ka(e);
 }
-function P0(e) {
-  const n = Ar[e];
+function _p(e) {
+  const n = Mr[e];
   if (!n) throw new Error(`phase2-coordinates: cornerPermCoord ${e} out of range`);
   return n;
 }
 function Si(e) {
-  return $a(e.slice(0, 8));
+  return ka(e.slice(0, 8));
 }
-function _0(e) {
-  const n = Ar[e];
+function Cp(e) {
+  const n = Mr[e];
   if (!n) throw new Error(`phase2-coordinates: edge8PermCoord ${e} out of range`);
   return n;
 }
 function Ei(e) {
   const n = e.slice(8, 12).map((t) => t - 8);
-  return R0(n);
+  return Pp(n);
 }
-function C0(e) {
+function Up(e) {
   const n = vi[e];
   if (!n) throw new Error(`phase2-coordinates: udSliceOrderCoord ${e} out of range`);
   return n.map((t) => t + 8);
 }
-function U0(e) {
+function Ip(e) {
   return {
     cornerPerm: wi(e.cornerPermutation),
     edge8Perm: Si(e.edgePermutation),
     udSliceOrder: Ei(e.edgePermutation)
   };
 }
-var ka = wi(Fe.cornerPermutation), Ba = Si(Fe.edgePermutation), yi = Ei(Fe.edgePermutation);
-function ja(e) {
-  return e.cornerPerm === ka && e.edge8Perm === Ba && e.udSliceOrder === yi;
+var Ba = wi(Fe.cornerPermutation), ja = Si(Fe.edgePermutation), yi = Ei(Fe.edgePermutation);
+function Va(e) {
+  return e.cornerPerm === Ba && e.edge8Perm === ja && e.udSliceOrder === yi;
 }
 var xt = [
   { face: "U", amount: 1 },
@@ -3511,21 +3511,21 @@ var xt = [
   { face: "R", amount: 2 },
   { face: "F", amount: 2 },
   { face: "B", amount: 2 }
-], I0 = xt.length;
-function F0(e) {
-  return { ...Fe, cornerPermutation: P0(e) };
+], Fp = xt.length;
+function Dp(e) {
+  return { ...Fe, cornerPermutation: _p(e) };
 }
-function D0(e) {
-  const n = _0(e);
+function Np(e) {
+  const n = Cp(e);
   return { ...Fe, edgePermutation: [...n, 8, 9, 10, 11] };
 }
-function N0(e) {
-  const n = C0(e);
+function Lp(e) {
+  const n = Up(e);
   return { ...Fe, edgePermutation: [0, 1, 2, 3, 4, 5, 6, 7, ...n] };
 }
 function bi(e, n, t) {
   const r = [];
-  for (let o = 0; o < I0; o += 1) {
+  for (let o = 0; o < Fp; o += 1) {
     const i = new Array(e), s = xt[o];
     for (let c = 0; c < e; c += 1)
       i[c] = t(oi(n(c), s));
@@ -3533,51 +3533,51 @@ function bi(e, n, t) {
   }
   return r;
 }
-var L0 = null, $0 = null, k0 = null;
-function Va() {
-  return L0 ?? (L0 = bi(
-    Mr,
-    F0,
+var $p = null, kp = null, Bp = null;
+function qa() {
+  return $p ?? ($p = bi(
+    Ar,
+    Dp,
     (e) => wi(e.cornerPermutation)
   ));
 }
-function qa() {
-  return $0 ?? ($0 = bi(
-    Mr,
-    D0,
+function Ga() {
+  return kp ?? (kp = bi(
+    Ar,
+    Np,
     (e) => Si(e.edgePermutation)
   ));
 }
-function Ga() {
-  return k0 ?? (k0 = bi(
+function Ka() {
+  return Bp ?? (Bp = bi(
     bt,
-    N0,
+    Lp,
     (e) => Ei(e.edgePermutation)
   ));
 }
-var B0 = new Map(
+var jp = new Map(
   xt.map((e, n) => [We(e), n])
 );
 function xi(e) {
-  const n = B0.get(We(e));
+  const n = jp.get(We(e));
   if (n === void 0)
     throw new Error(`phase2-tables: ${We(e)} is not a phase-2 (G1-preserving) move`);
   return n;
 }
-function Ka(e, n) {
-  return Va()[xi(n)][e];
-}
 function Xa(e, n) {
   return qa()[xi(n)][e];
 }
-function Oi(e, n) {
+function Wa(e, n) {
   return Ga()[xi(n)][e];
 }
-function j0() {
-  Va(), qa(), Ga();
+function Oi(e, n) {
+  return Ka()[xi(n)][e];
+}
+function Vp() {
+  qa(), Ga(), Ka();
 }
 var ys = 255;
-function Wa(e, n, t, r, o) {
+function Ya(e, n, t, r, o) {
   const i = new Uint8Array(e * n).fill(ys), s = r * n + o;
   i[s] = 0;
   let c = [s], a = 0, u = 1;
@@ -3586,8 +3586,8 @@ function Wa(e, n, t, r, o) {
     const l = [];
     for (const d of c) {
       const p = Math.floor(d / n), v = d % n;
-      for (const A of xt) {
-        const [C, L] = t(p, v, A), R = C * n + L;
+      for (const M of xt) {
+        const [C, L] = t(p, v, M), R = C * n + L;
         i[R] === ys && (i[R] = a + 1, l.push(R), u += 1);
       }
     }
@@ -3595,22 +3595,10 @@ function Wa(e, n, t, r, o) {
   }
   return i;
 }
-var V0 = null, q0 = null;
-function Ya() {
-  return V0 ?? (V0 = Wa(
-    Mr,
-    bt,
-    (e, n, t) => [
-      Ka(e, t),
-      Oi(n, t)
-    ],
-    ka,
-    yi
-  ));
-}
+var qp = null, Gp = null;
 function Ha() {
-  return q0 ?? (q0 = Wa(
-    Mr,
+  return qp ?? (qp = Ya(
+    Ar,
     bt,
     (e, n, t) => [
       Xa(e, t),
@@ -3620,49 +3608,61 @@ function Ha() {
     yi
   ));
 }
-function G0(e, n) {
-  return Ya()[e * bt + n];
+function za() {
+  return Gp ?? (Gp = Ya(
+    Ar,
+    bt,
+    (e, n, t) => [
+      Wa(e, t),
+      Oi(n, t)
+    ],
+    ja,
+    yi
+  ));
 }
-function K0(e, n) {
+function Kp(e, n) {
   return Ha()[e * bt + n];
 }
-function za(e, n, t) {
+function Xp(e, n) {
+  return za()[e * bt + n];
+}
+function Ja(e, n, t) {
   return Math.max(
-    G0(e, t),
-    K0(n, t)
+    Kp(e, t),
+    Xp(n, t)
   );
 }
-function X0() {
-  Ya(), Ha();
+function Wp() {
+  Ha(), za();
 }
-function W0(e, n = mi) {
-  const t = U0(e);
-  if (ja(t)) return [];
-  let r = za(t.cornerPerm, t.edge8Perm, t.udSliceOrder);
+function Yp(e, n = mi) {
+  const t = Ip(e);
+  if (Va(t)) return [];
+  let r = Ja(t.cornerPerm, t.edge8Perm, t.udSliceOrder);
   const o = [];
   for (; ; ) {
-    const i = Ja(t, 0, r, o, n);
+    const i = Qa(t, 0, r, o, n);
     if (i.found) return [...o];
     if (i.nextBound === 1 / 0)
       throw new Error("phase2Search: no path to solved found — the input state may not be in G1");
     r = i.nextBound;
   }
 }
-function Ja(e, n, t, r, o) {
-  const i = za(e.cornerPerm, e.edge8Perm, e.udSliceOrder), s = n + i;
+function Qa(e, n, t, r, o) {
+  const i = Ja(e.cornerPerm, e.edge8Perm, e.udSliceOrder), s = n + i;
   if (s > t) return { found: !1, nextBound: s };
   let c = 1 / 0;
   const a = r[r.length - 1];
-  if (ja(e) && !gi(a, o)) return { found: !0 };
+  if (Va(e) && !gi(a, o)) return { found: !0 };
   for (const u of xt) {
-    if (a && a.face === u.face || n === 0 && Da(u, o)) continue;
+    if (a && a.face === u.face || n === 0 && Na(u, o)) continue;
     const f = {
-      cornerPerm: Ka(e.cornerPerm, u),
-      edge8Perm: Xa(e.edge8Perm, u),
+      cornerPerm: Xa(e.cornerPerm, u),
+      edge8Perm: Wa(e.edge8Perm, u),
       udSliceOrder: Oi(e.udSliceOrder, u)
     };
     r.push(u);
-    const l = Ja(f, n + 1, t, r, o);
+    const l = Qa(f, n + 1, t, r, o);
     if (l.found) return l;
     l.nextBound < c && (c = l.nextBound), r.pop();
   }
@@ -3673,13 +3673,13 @@ function Ti(e, n = mi) {
   return gi(t[t.length - 1], n) ? bs(e, n, !0) : t;
 }
 function bs(e, n, t) {
-  const r = T0(
+  const r = Mp(
     e,
     Es(
       n.firstMoveAxis,
       t ? n.lastMoveAxis : void 0
     )
-  ), o = la(e, r), i = W0(
+  ), o = da(e, r), i = Yp(
     o,
     Es(
       r.length === 0 ? n.firstMoveAxis : void 0,
@@ -3688,45 +3688,45 @@ function bs(e, n, t) {
   );
   return [...r, ...i];
 }
-function Qa(e) {
-  const n = da(e), t = Ti(n);
+function Za(e) {
+  const n = pa(e), t = Ti(n);
   return Zo(ei(t));
 }
 var ct = 3;
-function Za(e) {
-  return Cn(ct, () => Qa(e));
+function eu(e) {
+  return Cn(ct, () => Za(e));
 }
-function Y0() {
+function Hp() {
   Te(
     "333",
-    (e) => Za(e),
+    (e) => eu(e),
     "random-state",
     Rr
   );
 }
 function Rr() {
-  S0(), O0(), j0(), X0();
+  Ep(), Tp(), Vp(), Wp();
 }
-var eu = "R' U' F", nu = "R' U' F", xs = eu.split(" ").map(aa), H0 = nu.split(" ").map(aa), z0 = Tr(xs[xs.length - 1].face), J0 = Tr(H0[0].face), Q0 = {
-  firstMoveAxis: J0,
-  lastMoveAxis: z0
+var nu = "R' U' F", tu = "R' U' F", xs = nu.split(" ").map(aa), zp = tu.split(" ").map(aa), Jp = Tr(xs[xs.length - 1].face), Qp = Tr(zp[0].face), Zp = {
+  firstMoveAxis: Qp,
+  lastMoveAxis: Jp
 };
-function Z0(e) {
-  const n = da(e), t = Zo(ei(Ti(n, Q0)));
-  return [eu, t, nu].filter((r) => r !== "").join(" ");
+function e0(e) {
+  const n = pa(e), t = Zo(ei(Ti(n, Zp)));
+  return [nu, t, tu].filter((r) => r !== "").join(" ");
 }
-function ep(e) {
-  return Cn(ct, () => Z0(e));
+function n0(e) {
+  return Cn(ct, () => e0(e));
 }
-function np() {
+function t0() {
   Te(
     "333fm",
-    (e) => ep(e),
+    (e) => n0(e),
     "random-state",
     Rr
   );
 }
-var Pr = ["UR", "DR", "DL", "UL"], tp = [
+var Pr = ["UR", "DR", "DL", "UL"], r0 = [
   "UR",
   "DR",
   "DL",
@@ -3736,7 +3736,7 @@ var Pr = ["UR", "DR", "DL", "UL"], tp = [
   "D",
   "L",
   "ALL"
-], rp = {
+], o0 = {
   UR: ["UR"],
   DR: ["DR"],
   DL: ["DL"],
@@ -3747,23 +3747,23 @@ var Pr = ["UR", "DR", "DL", "UL"], tp = [
   L: ["UL", "DL"],
   ALL: ["UL", "UR", "DL", "DR"]
 }, Ne = 12;
-function op(e) {
+function i0(e) {
   const n = (e % Ne + Ne) % Ne;
   return n <= 6 ? `${n}+` : `${Ne - n}-`;
 }
-function ip(e) {
-  return e.kind === "flip" ? "y2" : e.kind === "pins" ? e.up.join(" ") : `${e.pins}${op(e.amount)}`;
+function s0(e) {
+  return e.kind === "flip" ? "y2" : e.kind === "pins" ? e.up.join(" ") : `${e.pins}${i0(e.amount)}`;
 }
-function sp(e) {
-  return e.map(ip).filter((n) => n.length > 0).join(" ");
+function c0(e) {
+  return e.map(s0).filter((n) => n.length > 0).join(" ");
 }
-new Set(tp);
+new Set(r0);
 var zt = 9, at = {
   UL: 0,
   UR: 2,
   DL: 6,
   DR: 8
-}, cp = [0, 2, 6, 8], Ai = [1, 3, 4, 5, 7], lr = [2, 1, 0, 5, 4, 3, 8, 7, 6], ap = (() => {
+}, a0 = [0, 2, 6, 8], Mi = [1, 3, 4, 5, 7], lr = [2, 1, 0, 5, 4, 3, 8, 7, 6], u0 = (() => {
   const e = (n) => {
     const t = at[n], r = Math.floor(t / 3), o = t % 3, i = [];
     for (let s = 0; s < 3; s += 1)
@@ -3775,11 +3775,11 @@ var zt = 9, at = {
   };
   return { UL: e("UL"), UR: e("UR"), DL: e("DL"), DR: e("DR") };
 })();
-function up(e) {
+function f0(e) {
   const n = /* @__PURE__ */ new Set();
   for (const t of e) {
     n.add(at[t]);
-    for (const r of ap[t]) n.add(r);
+    for (const r of u0[t]) n.add(r);
   }
   return [...n].sort((t, r) => t - r);
 }
@@ -3791,9 +3791,9 @@ var _o = {
   back: [0, 0, 0, 0, 0, 0, 0, 0, 0],
   pinsUp: { UR: !1, DR: !1, DL: !1, UL: !1 }
 };
-function tu(e, n, t, r) {
+function ru(e, n, t, r) {
   const o = [...r ? e.back : e.front], i = [...r ? e.front : e.back];
-  for (const s of up(n))
+  for (const s of f0(n))
     o[s] = on(o[s] + t);
   for (const s of n) {
     const c = at[s];
@@ -3802,45 +3802,45 @@ function tu(e, n, t, r) {
   return {
     front: r ? i : o,
     back: r ? o : i,
-    pinsUp: fp(e.pinsUp, n, r)
+    pinsUp: l0(e.pinsUp, n, r)
   };
 }
 function Os(e, n, t, r) {
-  return tu(e, rp[n], t, r);
+  return ru(e, o0[n], t, r);
 }
-function fp(e, n, t) {
-  const r = new Set(t ? n.map(lp) : n), o = { ...e };
+function l0(e, n, t) {
+  const r = new Set(t ? n.map(d0) : n), o = { ...e };
   for (const i of Pr)
     o[i] = t ? !r.has(i) : r.has(i);
   return o;
 }
-function lp(e) {
+function d0(e) {
   const n = lr[at[e]], t = Pr.find((r) => at[r] === n);
   if (!t) throw new Error(`clock-state: no corner mirrors ${e}`);
   return t;
 }
-function dp(e) {
+function p0(e) {
   return e.front.every((n) => n === 0) && e.back.every((n) => n === 0);
 }
-var dr = zt + Ai.length;
+var dr = zt + Mi.length;
 function Co(e) {
-  return [...e.front, ...Ai.map((n) => e.back[n])];
+  return [...e.front, ...Mi.map((n) => e.back[n])];
 }
-function ru(e, n = _o.pinsUp) {
+function ou(e, n = _o.pinsUp) {
   if (e.length !== dr)
     throw new Error(`clock-state: expected ${dr} dial values, got ${e.length}`);
   const t = e.slice(0, zt).map(on), r = new Array(zt).fill(0);
-  Ai.forEach((o, i) => {
+  Mi.forEach((o, i) => {
     r[o] = on(e[zt + i]);
   });
-  for (const o of cp)
+  for (const o of a0)
     r[lr[o]] = on(-t[o]);
   return { front: t, back: r, pinsUp: n };
 }
 function vn(e, n) {
   return (e % n + n) % n;
 }
-function pp(e, n) {
+function h0(e, n) {
   let [t, r] = [e, n], [o, i] = [1, 0];
   for (; r !== 0; ) {
     const s = Math.floor(t / r);
@@ -3848,8 +3848,8 @@ function pp(e, n) {
   }
   return { g: t, x: o };
 }
-function hp(e, n) {
-  const t = vn(e, n), { g: r, x: o } = pp(t, n);
+function m0(e, n) {
+  const t = vn(e, n), { g: r, x: o } = h0(t, n);
   return r !== 1 ? null : vn(o, n);
 }
 function Ts(e, n) {
@@ -3860,7 +3860,7 @@ function Ts(e, n) {
   for (let i = 0; i < t; i += 1) {
     let s = -1, c = 0;
     for (let a = i; a < t; a += 1) {
-      const u = hp(r[a][i], n);
+      const u = m0(r[a][i], n);
       if (u !== null) {
         s = a, c = u;
         break;
@@ -3881,20 +3881,20 @@ function Ts(e, n) {
   }
   return o;
 }
-function mp(e) {
+function g0(e) {
   const n = Ts(e, 4), t = Ts(e, 3);
   return n.map(
     (r, o) => r.map((i, s) => (9 * i + 4 * t[o][s]) % 12)
   );
 }
-function gp(e, n, t) {
+function v0(e, n, t) {
   return e.map((r) => {
     let o = 0;
     for (let i = 0; i < r.length; i += 1) o += r[i] * n[i];
     return vn(o, t);
   });
 }
-function vp(e) {
+function w0(e) {
   const n = e.length, t = e.map((s) => [...s]);
   let r = 1, o = 1;
   for (let s = 0; s < n - 1; s += 1) {
@@ -3921,31 +3921,31 @@ var pr = [
   "D",
   "L",
   "ALL"
-], Mi = ["U", "R", "D", "L", "ALL"], As = pr.length + Mi.length, ou = [
+], Ai = ["U", "R", "D", "L", "ALL"], Ms = pr.length + Ai.length, iu = [
   ...pr.map((e) => Co(Os(_o, e, 1, !1))),
-  ...Mi.map((e) => Co(Os(_o, e, 1, !0)))
+  ...Ai.map((e) => Co(Os(_o, e, 1, !0)))
 ];
-vp(ou);
-var wp = null;
-function Sp() {
-  return wp ?? (wp = mp(ou));
+w0(iu);
+var S0 = null;
+function E0() {
+  return S0 ?? (S0 = g0(iu));
 }
-function Ep(e) {
-  const n = yp(Sp());
-  return gp(n, Co(e), Ne);
+function y0(e) {
+  const n = b0(E0());
+  return v0(n, Co(e), Ne);
 }
-function yp(e) {
+function b0(e) {
   return e[0].map((n, t) => e.map((r) => r[t]));
 }
-function bp(e) {
-  if (e.length !== As)
-    throw new Error(`clock-template: expected ${As} amounts, got ${e.length}`);
+function x0(e) {
+  if (e.length !== Ms)
+    throw new Error(`clock-template: expected ${Ms} amounts, got ${e.length}`);
   const n = pr.map((t, r) => ({
     kind: "dial",
     pins: t,
     amount: on(e[r])
   }));
-  return n.push({ kind: "flip" }), Mi.forEach((t, r) => {
+  return n.push({ kind: "flip" }), Ai.forEach((t, r) => {
     n.push({
       kind: "dial",
       pins: t,
@@ -3953,61 +3953,61 @@ function bp(e) {
     });
   }), n;
 }
-function xp(e) {
+function O0(e) {
   const n = Array.from({ length: dr }, () => we(e, Ne)), t = {};
   for (const r of Pr) t[r] = we(e, 2) === 1;
-  return ru(n, t);
+  return ou(n, t);
 }
-function Op() {
-  const e = /* @__PURE__ */ new Set(), n = Pr, t = ru(new Array(dr).fill(0));
+function T0() {
+  const e = /* @__PURE__ */ new Set(), n = Pr, t = ou(new Array(dr).fill(0));
   for (let r = 1; r < 1 << n.length; r += 1) {
     const o = n.filter((i, s) => (r & 1 << s) !== 0);
     for (const i of [!1, !0])
       for (let s = 1; s < Ne; s += 1)
-        e.add(iu(tu(t, o, s, i)));
+        e.add(su(ru(t, o, s, i)));
   }
   return e;
 }
-function iu(e) {
+function su(e) {
   return `${e.front.join(",")}|${e.back.join(",")}`;
 }
-var Ms = null;
-function Tp(e) {
-  return dp(e) ? 0 : (Ms ?? (Ms = Op()), Ms.has(iu(e)) ? 1 : 2);
+var As = null;
+function M0(e) {
+  return p0(e) ? 0 : (As ?? (As = T0()), As.has(su(e)) ? 1 : 2);
 }
-var Ap = 2;
-function Mp(e) {
-  return bp(Ep(e));
+var A0 = 2;
+function R0(e) {
+  return x0(y0(e));
 }
-function Rp(e) {
+function P0(e) {
   const n = wt(
     e,
-    xp,
-    Tp,
-    Ap
+    O0,
+    M0,
+    A0
   );
-  return sp(Mp(n));
+  return c0(R0(n));
 }
-function Pp() {
-  Te("clock", (e) => Rp(e));
+function _0() {
+  Te("clock", (e) => P0(e));
 }
-var _p = ["U", "R", "D"];
-function Cp(e) {
+var C0 = ["U", "R", "D"];
+function U0(e) {
   return e.kind === "U" ? e.direction === 1 ? "U" : "U'" : e.direction === 1 ? `${e.kind}++` : `${e.kind}--`;
 }
-function Up(e) {
-  return e.map(Cp).join(" ");
+function I0(e) {
+  return e.map(U0).join(" ");
 }
-function Ip() {
-  return _p.flatMap(
+function F0() {
+  return C0.flatMap(
     (e) => [1, 2].map((n) => ({ kind: e, direction: n }))
   );
 }
-var Ri = (1 + Math.sqrt(5)) / 2, su = Ri - 1, Je = 1e-6;
+var Ri = (1 + Math.sqrt(5)) / 2, cu = Ri - 1, Je = 1e-6;
 function In(e, n) {
   return e[0] * n[0] + e[1] * n[1] + e[2] * n[2];
 }
-function Fp(e, n) {
+function D0(e, n) {
   return [e[1] * n[2] - e[2] * n[1], e[2] * n[0] - e[0] * n[2], e[0] * n[1] - e[1] * n[0]];
 }
 function et(e, n) {
@@ -4016,14 +4016,14 @@ function et(e, n) {
 function Uo(e, n) {
   return [e[0] + n[0], e[1] + n[1], e[2] + n[2]];
 }
-function cu(e) {
+function au(e) {
   return Math.sqrt(In(e, e));
 }
-function Dp(e) {
-  return et(e, 1 / cu(e));
+function N0(e) {
+  return et(e, 1 / au(e));
 }
 function hr(e, n) {
-  return cu([e[0] - n[0], e[1] - n[1], e[2] - n[2]]);
+  return au([e[0] - n[0], e[1] - n[1], e[2] - n[2]]);
 }
 function an(e) {
   return e.map((n) => (Math.abs(n) < Je ? 0 : n).toFixed(9)).join(",");
@@ -4050,22 +4050,22 @@ function Fn(e) {
 }
 var Qe = Fn(Io([0, Ri, 1])), Ke = Fn([
   ...Io([1, 1, 1]),
-  ...Io([0, su, Ri])
-]), Np = 2 * su, Rn = (() => {
+  ...Io([0, cu, Ri])
+]), L0 = 2 * cu, Rn = (() => {
   const e = [], n = /* @__PURE__ */ new Set();
   for (let t = 0; t < Ke.length; t += 1)
     for (let r = t + 1; r < Ke.length; r += 1) {
       const o = Ke[t], i = Ke[r];
-      if (Math.abs(hr(o, i) - Np) > Je) continue;
+      if (Math.abs(hr(o, i) - L0) > Je) continue;
       const s = et(Uo(o, i), 0.5), c = an(s);
       n.has(c) || (n.add(c), e.push(s));
     }
   return Fn(e);
 })(), mr = Qe.length, wn = Ke.length, Sn = Rn.length;
 function nn(e, n, t) {
-  const r = Dp(e), o = t * 2 * Math.PI / 5, i = Math.cos(o), s = Math.sin(o);
+  const r = N0(e), o = t * 2 * Math.PI / 5, i = Math.cos(o), s = Math.sin(o);
   return Uo(
-    Uo(et(n, i), et(Fp(r, n), s)),
+    Uo(et(n, i), et(D0(r, n), s)),
     et(r, In(r, n) * (1 - i))
   );
 }
@@ -4094,49 +4094,49 @@ function Pi(e) {
     centers: oo(Qe, e)
   }, Rs.set(n, t)), t;
 }
-function au(e, n) {
+function uu(e, n) {
   return Math.abs(In(n, e) - Pi(e).corners) < Je;
 }
 function gr(e, n) {
   return Math.abs(In(n, e) - Pi(e).edges) < Je;
 }
-function Lp(e, n) {
+function $0(e, n) {
   return Math.abs(In(n, e) - Pi(e).centers) < Je;
 }
-function $p(e) {
-  return Qe.filter((n) => au(n, e));
+function k0(e) {
+  return Qe.filter((n) => uu(n, e));
 }
-function kp(e) {
+function B0(e) {
   return Qe.filter((n) => gr(n, e));
 }
-function Bp(e) {
-  const n = $p(e);
+function j0(e) {
+  const n = k0(e);
   if (n.length !== 3)
     throw new Error(`megaminx-geometry: corner [${e.join(",")}] touches ${n.length} faces, expected 3`);
   const t = Fn(n)[0], r = nn(e, t, 5 / 3), o = nn(e, r, 5 / 3);
   return [t, r, o];
 }
-function jp(e) {
-  const n = kp(e);
+function V0(e) {
+  const n = B0(e);
   if (n.length !== 2)
     throw new Error(`megaminx-geometry: edge [${e.join(",")}] touches ${n.length} faces, expected 2`);
   return Fn(n)[0];
 }
-var Ps = Ke.map(Bp), _s = Rn.map(jp);
+var Ps = Ke.map(j0), _s = Rn.map(V0);
 function hn(e, n, t) {
   const r = (u) => t === "on-layer" ? u : !u, o = [], i = [];
   for (let u = 0; u < wn; u += 1) {
     const f = Ke[u];
-    if (!r(au(e, f))) {
+    if (!r(uu(e, f))) {
       o[u] = u, i[u] = 0;
       continue;
     }
     const l = nn(e, f, n), d = ro(Ke, l);
     o[u] = d;
-    const p = nn(e, Ps[u][0], n), A = Ps[d].findIndex((C) => hr(C, p) < Je);
-    if (A === -1)
+    const p = nn(e, Ps[u][0], n), M = Ps[d].findIndex((C) => hr(C, p) < Je);
+    if (M === -1)
       throw new Error(`megaminx-geometry: corner ${u} lost track of its reference sticker`);
-    i[u] = A;
+    i[u] = M;
   }
   const s = [], c = [];
   for (let u = 0; u < Sn; u += 1) {
@@ -4153,36 +4153,36 @@ function hn(e, n, t) {
   const a = [];
   for (let u = 0; u < mr; u += 1) {
     const f = Qe[u];
-    a[u] = r(Lp(e, f)) ? ro(Qe, nn(e, f, n)) : u;
+    a[u] = r($0(e, f)) ? ro(Qe, nn(e, f, n)) : u;
   }
   return { cornerDestination: o, cornerTwist: i, edgeDestination: s, edgeFlip: c, centerDestination: a };
 }
 var gn = Qe[0], Cs = (() => {
   const e = Qe.filter(
-    (n) => an(n) !== an(gn) && Vp(gn, n)
+    (n) => an(n) !== an(gn) && q0(gn, n)
   );
   return Fn(e)[0];
 })();
-function Vp(e, n) {
+function q0(e, n) {
   return Rn.some((t) => gr(e, t) && gr(n, t));
 }
-var io = (e) => Array.from({ length: e }, (n, t) => t), Us = (e) => new Array(e).fill(0), qp = {
+var io = (e) => Array.from({ length: e }, (n, t) => t), Us = (e) => new Array(e).fill(0), G0 = {
   cornerPermutation: io(wn),
   cornerOrientation: Us(wn),
   edgePermutation: io(Sn),
   edgeOrientation: Us(Sn),
   centerPermutation: io(mr)
-}, Gp = (() => {
+}, K0 = (() => {
   const e = /* @__PURE__ */ new Map();
   return e.set("U1", hn(gn, -1, "on-layer")), e.set("U2", hn(gn, 1, "on-layer")), e.set("D1", hn(gn, 2, "off-layer")), e.set("D2", hn(gn, -2, "off-layer")), e.set("R1", hn(Cs, 2, "off-layer")), e.set("R2", hn(Cs, -2, "off-layer")), e;
 })();
-function Kp(e) {
-  const n = Gp.get(`${e.kind}${e.direction}`);
+function X0(e) {
+  const n = K0.get(`${e.kind}${e.direction}`);
   if (!n) throw new Error(`megaminx-state: no move table for ${e.kind}${e.direction}`);
   return n;
 }
-function uu(e, n) {
-  const t = Kp(n), r = new Array(wn), o = new Array(wn);
+function fu(e, n) {
+  const t = X0(n), r = new Array(wn), o = new Array(wn);
   for (let a = 0; a < wn; a += 1) {
     const u = t.cornerDestination[a];
     r[u] = e.cornerPermutation[a], o[u] = (e.cornerOrientation[a] + t.cornerTwist[a]) % 3;
@@ -4203,50 +4203,50 @@ function uu(e, n) {
     centerPermutation: c
   };
 }
-function Xp(e, n) {
-  return n.reduce(uu, e);
+function W0(e, n) {
+  return n.reduce(fu, e);
 }
 function so(e) {
   return e.every((n, t) => n === t);
 }
-function Wp(e) {
+function Y0(e) {
   return so(e.cornerPermutation) && so(e.edgePermutation) && so(e.centerPermutation) && e.cornerOrientation.every((n) => n === 0) && e.edgeOrientation.every((n) => n === 0);
 }
-var Yp = 7, Hp = 10;
+var H0 = 7, z0 = 10;
 function Is(e) {
   return we(e, 2) + 1;
 }
-function zp(e) {
+function J0(e) {
   const n = [];
-  for (let t = 0; t < Yp; t += 1) {
-    for (let r = 0; r < Hp; r += 1)
+  for (let t = 0; t < H0; t += 1) {
+    for (let r = 0; r < z0; r += 1)
       n.push({ kind: r % 2 === 0 ? "R" : "D", direction: Is(e) });
     n.push({ kind: "U", direction: Is(e) });
   }
   return n;
 }
-function Jp(e) {
+function Q0(e) {
   return ti(
-    Xp(qp, e),
-    Ip(),
-    uu,
-    Wp
+    W0(G0, e),
+    F0(),
+    fu,
+    Y0
   );
 }
 var Fs = 100;
-function Qp(e) {
+function Z0(e) {
   for (let n = 0; n < Fs; n += 1) {
-    const t = zp(e);
-    if (Jp(t)) return Up(t);
+    const t = J0(e);
+    if (Q0(t)) return I0(t);
   }
   throw new Error(
     `megaminx: ${Fs} scrambles in a row were within one move of solved`
   );
 }
-function Zp() {
-  Te("minx", (e) => Qp(e), "random-moves");
+function eh() {
+  Te("minx", (e) => Z0(e), "random-moves");
 }
-function eh(e, n) {
+function nh(e, n) {
   const t = st(n), r = cn(n);
   for (let o = e.length - 1; o >= 0; o -= 1) {
     const i = e[o];
@@ -4255,30 +4255,30 @@ function eh(e, n) {
   }
   return !1;
 }
-function nh(e, n, t) {
+function th(e, n, t) {
   const r = St(n), o = [];
   for (; o.length < t; ) {
     const i = r[we(e, r.length)];
-    eh(o, i) || o.push(i);
+    nh(o, i) || o.push(i);
   }
   return o;
 }
-var fu = [
+var lu = [
   { event: "555", size: 5, length: 60 },
   { event: "666", size: 6, length: 80 },
   { event: "777", size: 7, length: 100 }
 ];
-function lu(e, n, t) {
+function du(e, n, t) {
   return Cn(
     n,
-    () => ma(nh(e, n, t))
+    () => ga(th(e, n, t))
   );
 }
-function th() {
-  for (const { event: e, size: n, length: t } of fu)
+function rh() {
+  for (const { event: e, size: n, length: t } of lu)
     Te(
       e,
-      (r) => lu(r, n, t),
+      (r) => du(r, n, t),
       "random-moves",
       () => _r(n)
     );
@@ -4286,24 +4286,24 @@ function th() {
 function _r(e) {
   Et(e);
 }
-var Ue = ["U", "L", "R", "B"], rh = [1, 2];
-function oh(e) {
+var Ue = ["U", "L", "R", "B"], oh = [1, 2];
+function ih(e) {
   const n = e.tip ? e.vertex.toLowerCase() : e.vertex;
   return e.amount === 2 ? `${n}'` : n;
 }
-function ih(e) {
-  return e.map(oh).join(" ");
-}
 function sh(e) {
-  return { ...e, amount: 3 - e.amount };
+  return e.map(ih).join(" ");
 }
 function ch(e) {
-  return [...e].reverse().map(sh);
+  return { ...e, amount: 3 - e.amount };
 }
-function ah() {
+function ah(e) {
+  return [...e].reverse().map(ch);
+}
+function uh() {
   const e = [];
   for (const n of Ue)
-    for (const t of rh) e.push({ vertex: n, amount: t, tip: !1 });
+    for (const t of oh) e.push({ vertex: n, amount: t, tip: !1 });
   return e;
 }
 var ut = {
@@ -4320,24 +4320,24 @@ var ut = {
 })(), Se = Ot.length, un = Ue.length;
 Ot.map(([e, n]) => `${e}${n}`);
 var _i = Ot.map(
-  ([e, n]) => Yl(Wl(ut[e], ut[n]))
+  ([e, n]) => zl(Hl(ut[e], ut[n]))
 );
-function uh(e) {
+function fh(e) {
   const n = _i.findIndex((t) => fn(t, e));
   if (n === -1)
     throw new Error(`pyraminx-geometry: no edge slot at [${e.join(",")}]`);
   return n;
 }
-function fh(e) {
+function lh(e) {
   const [n, t] = Ot[e], r = Ue.filter((o) => o !== n && o !== t);
   return [ds(ut[r[0]]), ds(ut[r[1]])];
 }
-function lh(e) {
-  const [n, t] = fh(e);
-  return zl(n, t) ? n : t;
-}
-var Ds = _i.map((e, n) => lh(n));
 function dh(e) {
+  const [n, t] = lh(e);
+  return Ql(n, t) ? n : t;
+}
+var Ds = _i.map((e, n) => dh(n));
+function ph(e) {
   const n = ut[e], t = [], r = [];
   for (let i = 0; i < Se; i += 1) {
     const [s, c] = Ot[i];
@@ -4345,7 +4345,7 @@ function dh(e) {
       t[i] = i, r[i] = 0;
       continue;
     }
-    const a = uh(rn(n, _i[i], -1));
+    const a = fh(rn(n, _i[i], -1));
     t[i] = a;
     const u = rn(n, Ds[i], -1);
     r[i] = fn(u, Ds[a]) ? 0 : 1;
@@ -4359,12 +4359,12 @@ var Cr = {
   axialOrientation: [0, 0, 0, 0],
   tipOrientation: [0, 0, 0, 0]
 };
-function ph(e) {
+function hh(e) {
   const n = Ue.indexOf(e);
   if (n === -1) throw new Error(`pyraminx-state: unknown vertex "${e}"`);
   return n;
 }
-function hh(e, n) {
+function mh(e, n) {
   let t = Array.from({ length: Se }, (o, i) => i), r = new Array(Se).fill(0);
   for (let o = 0; o < n; o += 1) {
     const i = new Array(Se), s = new Array(Se);
@@ -4381,28 +4381,28 @@ function hh(e, n) {
     axialTwist: e.axialTwist.map((o) => o * n % 3)
   };
 }
-function mh() {
+function gh() {
   const e = /* @__PURE__ */ new Map();
   for (const n of Ue) {
-    const t = dh(n);
+    const t = ph(n);
     for (const r of [1, 2])
-      e.set(`${n}${r}`, hh(t, r));
+      e.set(`${n}${r}`, mh(t, r));
   }
   return e;
 }
-var gh = mh();
-function vh(e, n) {
-  const t = gh.get(`${e}${n}`);
+var vh = gh();
+function wh(e, n) {
+  const t = vh.get(`${e}${n}`);
   if (!t) throw new Error(`pyraminx-state: no turn table for ${e}${n}`);
   return t;
 }
-function du(e, n) {
-  const t = ph(n.vertex);
+function pu(e, n) {
+  const t = hh(n.vertex);
   if (n.tip) {
     const a = [...e.tipOrientation];
     return a[t] = (a[t] + n.amount) % 3, { ...e, tipOrientation: a };
   }
-  const r = vh(n.vertex, n.amount), o = new Array(Se), i = new Array(Se);
+  const r = wh(n.vertex, n.amount), o = new Array(Se), i = new Array(Se);
   for (let a = 0; a < Se; a += 1) {
     const u = r.edgeDestination[a];
     o[u] = e.edgePermutation[a], i[u] = (e.edgeOrientation[a] + r.edgeFlip[a]) % 2;
@@ -4412,12 +4412,12 @@ function du(e, n) {
   ), c = e.tipOrientation.map((a, u) => (a + r.axialTwist[u]) % 3);
   return { edgePermutation: o, edgeOrientation: i, axialOrientation: s, tipOrientation: c };
 }
-function wh(e, n) {
-  return n.reduce(du, e);
+function Sh(e, n) {
+  return n.reduce(pu, e);
 }
-function Sh(e) {
+function Eh(e) {
   const n = je(e, Se);
-  it(n) === 1 && ua(n);
+  it(n) === 1 && fa(n);
   const t = new Array(Se);
   let r = 0;
   for (let s = 0; s < Se - 1; s += 1) {
@@ -4428,120 +4428,120 @@ function Sh(e) {
   const o = Array.from({ length: un }, () => we(e, 3)), i = Array.from({ length: un }, () => we(e, 3));
   return { edgePermutation: n, edgeOrientation: t, axialOrientation: o, tipOrientation: i };
 }
-var Ci = Rd(Se), pu = Ci.length, En = 2 ** Se, yn = 3 ** un, Eh = new Map(
+var Ci = Pd(Se), hu = Ci.length, En = 2 ** Se, yn = 3 ** un, yh = new Map(
   Ci.map((e, n) => [e.join(","), n])
 );
 function Ui(e) {
-  const n = Eh.get(e.join(","));
+  const n = yh.get(e.join(","));
   if (n === void 0)
     throw new Error(
       `pyraminx-coordinates: [${e.join(",")}] is not a permutation of the 6 edges`
     );
   return n;
 }
-function yh(e) {
+function bh(e) {
   const n = Ci[e];
   if (!n) throw new Error(`pyraminx-coordinates: edge permutation coord ${e} out of range`);
   return [...n];
 }
-function hu(e) {
+function mu(e) {
   let n = 0;
   for (let t = 0; t < Se; t += 1)
     n = n * 2 + e[t];
   return n;
 }
-function bh(e) {
+function xh(e) {
   const n = new Array(Se);
   let t = e;
   for (let r = Se - 1; r >= 0; r -= 1)
     n[r] = t % 2, t = (t - n[r]) / 2;
   return n;
 }
-function mu(e) {
+function gu(e) {
   let n = 0;
   for (let t = 0; t < un; t += 1)
     n = n * 3 + e[t];
   return n;
 }
-function xh(e) {
+function Oh(e) {
   const n = new Array(un);
   let t = e;
   for (let r = un - 1; r >= 0; r -= 1)
     n[r] = t % 3, t = (t - n[r]) / 3;
   return n;
 }
-function gu(e) {
+function vu(e) {
   return {
     edgePerm: Ui(e.edgePermutation),
-    edgeOrientation: hu(e.edgeOrientation),
-    axial: mu(e.axialOrientation)
+    edgeOrientation: mu(e.edgeOrientation),
+    axial: gu(e.axialOrientation)
   };
 }
-function vu(e) {
+function wu(e) {
   return (e.edgePerm * En + e.edgeOrientation) * yn + e.axial;
 }
-var Oh = pu * En * yn, Jt = {
+var Th = hu * En * yn, Jt = {
   edgePerm: Ui([0, 1, 2, 3, 4, 5]),
   edgeOrientation: 0,
   axial: 0
 };
-function Th(e) {
+function Mh(e) {
   return e.edgePerm === Jt.edgePerm && e.edgeOrientation === Jt.edgeOrientation && e.axial === Jt.axial;
 }
-var dn = ah(), Ah = dn.length;
+var dn = uh(), Ah = dn.length;
 function Ii(e, n, t) {
   const r = [];
   for (let o = 0; o < Ah; o += 1) {
     const i = dn[o], s = new Array(e);
     for (let c = 0; c < e; c += 1)
-      s[c] = t(du(n(c), i));
+      s[c] = t(pu(n(c), i));
     r.push(s);
   }
   return r;
 }
-var Mh = null, Rh = null, Ph = null;
-function wu() {
-  return Mh ?? (Mh = Ii(
-    pu,
-    (e) => ({ ...Cr, edgePermutation: yh(e) }),
-    (e) => Ui(e.edgePermutation)
-  ));
-}
+var Rh = null, Ph = null, _h = null;
 function Su() {
   return Rh ?? (Rh = Ii(
-    En,
-    (e) => ({
-      ...Cr,
-      edgeOrientation: bh(e)
-    }),
-    (e) => hu(e.edgeOrientation)
+    hu,
+    (e) => ({ ...Cr, edgePermutation: bh(e) }),
+    (e) => Ui(e.edgePermutation)
   ));
 }
 function Eu() {
   return Ph ?? (Ph = Ii(
+    En,
+    (e) => ({
+      ...Cr,
+      edgeOrientation: xh(e)
+    }),
+    (e) => mu(e.edgeOrientation)
+  ));
+}
+function yu() {
+  return _h ?? (_h = Ii(
     yn,
-    (e) => ({ ...Cr, axialOrientation: xh(e) }),
-    (e) => mu(e.axialOrientation)
+    (e) => ({ ...Cr, axialOrientation: Oh(e) }),
+    (e) => gu(e.axialOrientation)
   ));
 }
 new Map(
   dn.map((e, n) => [`${e.vertex}${e.amount}`, n])
 );
-function yu(e, n) {
-  return wu()[n][e];
-}
 function bu(e, n) {
   return Su()[n][e];
 }
 function xu(e, n) {
   return Eu()[n][e];
 }
-function _h() {
-  wu(), Su(), Eu();
+function Ou(e, n) {
+  return yu()[n][e];
+}
+function Ch() {
+  Su(), Eu(), yu();
 }
 var vr = 255;
-function Ch() {
-  const e = new Uint8Array(Oh).fill(vr), n = vu(Jt);
+function Uh() {
+  const e = new Uint8Array(Th).fill(vr), n = wu(Jt);
   e[n] = 0;
   let t = [n], r = 0;
   for (; t.length > 0; ) {
@@ -4549,7 +4549,7 @@ function Ch() {
     for (const i of t) {
       const s = i % yn, c = (i - s) / yn, a = c % En, u = (c - a) / En;
       for (let f = 0; f < dn.length; f += 1) {
-        const l = (yu(u, f) * En + bu(a, f)) * yn + xu(s, f);
+        const l = (bu(u, f) * En + xu(a, f)) * yn + Ou(s, f);
         e[l] === vr && (e[l] = r + 1, o.push(l));
       }
     }
@@ -4557,32 +4557,32 @@ function Ch() {
   }
   return e;
 }
-var Uh = null;
-function Ou() {
-  return Uh ?? (Uh = Ch());
+var Ih = null;
+function Tu() {
+  return Ih ?? (Ih = Uh());
 }
 function Fi(e) {
-  return Ou()[vu(e)];
+  return Tu()[wu(e)];
 }
-function Ih() {
-  return Ou();
+function Fh() {
+  return Tu();
 }
-var Fh = dn.map((e, n) => n);
+var Dh = dn.map((e, n) => n);
 function Ns(e) {
-  const n = Fi(gu(e));
+  const n = Fi(vu(e));
   if (n === vr)
     throw new Error("pyraminxLayerSolveDistance: state is not reachable on a real Pyraminx");
   return n;
 }
-function Dh(e, n, t = Fh) {
-  const r = gu(e);
+function Nh(e, n, t = Dh) {
+  const r = vu(e);
   if (Fi(r) === vr)
     throw new Error("solvePyraminxLayersInExactly: state is not reachable on a real Pyraminx");
-  if (n === 0) return Th(r) ? [] : null;
+  if (n === 0) return Mh(r) ? [] : null;
   const o = [];
-  return Tu(r, 0, n, o, t) ? [...o] : null;
+  return Mu(r, 0, n, o, t) ? [...o] : null;
 }
-function Tu(e, n, t, r, o) {
+function Mu(e, n, t, r, o) {
   const i = Fi(e);
   if (n + i > t) return !1;
   if (n === t) return i === 0;
@@ -4591,16 +4591,16 @@ function Tu(e, n, t, r, o) {
     const a = dn[c];
     if (s && s.vertex === a.vertex) continue;
     const u = {
-      edgePerm: yu(e.edgePerm, c),
-      edgeOrientation: bu(e.edgeOrientation, c),
-      axial: xu(e.axial, c)
+      edgePerm: bu(e.edgePerm, c),
+      edgeOrientation: xu(e.edgeOrientation, c),
+      axial: Ou(e.axial, c)
     };
-    if (r.push(a), Tu(u, n + 1, t, r, o)) return !0;
+    if (r.push(a), Mu(u, n + 1, t, r, o)) return !0;
     r.pop();
   }
   return !1;
 }
-function Nh(e, n) {
+function Lh(e, n) {
   const t = [];
   for (let r = 0; r < un; r += 1) {
     const o = (n[r] - e[r] + 3) % 3;
@@ -4608,51 +4608,51 @@ function Nh(e, n) {
   }
   return t;
 }
-var Lh = 6, $h = 11;
-function kh(e) {
+var $h = 6, kh = 11;
+function Bh(e) {
   const n = wt(
     e,
-    Sh,
+    Eh,
     Ns,
-    Lh
+    $h
   ), t = je(e, dn.length), r = ri(
     Ns(n),
-    $h,
-    (s) => Dh(n, s, t)
-  ), o = ch(r), i = wh(Cr, o);
-  return ih([
+    kh,
+    (s) => Nh(n, s, t)
+  ), o = ah(r), i = Sh(Cr, o);
+  return sh([
     ...o,
-    ...Nh(i.tipOrientation, n.tipOrientation)
+    ...Lh(i.tipOrientation, n.tipOrientation)
   ]);
 }
-function Bh() {
-  _h(), Ih();
-}
 function jh() {
+  Ch(), Fh();
+}
+function Vh() {
   Te(
     "pyram",
-    (e) => kh(e),
+    (e) => Bh(e),
     "random-state",
-    Bh
+    jh
   );
 }
-var Di = ["U", "R", "L", "B"], Vh = [1, 2];
-function qh(e) {
+var Di = ["U", "R", "L", "B"], qh = [1, 2];
+function Gh(e) {
   return e.amount === 2 ? `${e.corner}'` : e.corner;
 }
-function Gh(e) {
-  return e.map(qh).join(" ");
-}
 function Kh(e) {
-  return { corner: e.corner, amount: 3 - e.amount };
+  return e.map(Gh).join(" ");
 }
 function Xh(e) {
-  return [...e].reverse().map(Kh);
+  return { corner: e.corner, amount: 3 - e.amount };
 }
-function Wh() {
+function Wh(e) {
+  return [...e].reverse().map(Xh);
+}
+function Yh() {
   const e = [];
   for (const n of Di)
-    for (const t of Vh) e.push({ corner: n, amount: t });
+    for (const t of qh) e.push({ corner: n, amount: t });
   return e;
 }
 var Ur = [
@@ -4685,36 +4685,36 @@ var Ur = [
   //  4 +z  (green / front-left)
   [0, 0, -1]
   // 5 -z
-], bn = Ni.length, Yh = {
+], bn = Ni.length, Hh = {
   U: [-1, 1, -1],
   R: [1, -1, -1],
   L: [-1, -1, 1],
   B: [-1, -1, -1]
 };
-function Hh(e) {
+function zh(e) {
   const n = Ur.findIndex((t) => fn(t, e));
   if (n === -1) throw new Error(`skewb-geometry: no corner at [${e.join(",")}]`);
   return n;
 }
-function zh(e) {
+function Jh(e) {
   const n = Ni.findIndex((t) => fn(t, e));
   if (n === -1) throw new Error(`skewb-geometry: no center at [${e.join(",")}]`);
   return n;
 }
-function Jh(e) {
+function Qh(e) {
   const n = [0, e[1], 0], t = rn(e, n, 1), r = rn(e, t, 1);
   return [n, t, r];
 }
-var Ls = Ur.map(Jh);
+var Ls = Ur.map(Qh);
 function Au(e) {
-  const n = Yh[e], t = [], r = [], o = [];
+  const n = Hh[e], t = [], r = [], o = [];
   for (let i = 0; i < Ge; i += 1) {
     const s = Ur[i];
-    if (Mo(s, n) < 0) {
+    if (Ao(s, n) < 0) {
       t[i] = i, r[i] = 0;
       continue;
     }
-    const c = rn(n, s, -1), a = Hh(c);
+    const c = rn(n, s, -1), a = zh(c);
     t[i] = a;
     const u = rn(n, Ls[i][0], -1), l = Ls[a].findIndex((d) => fn(d, u));
     if (l === -1)
@@ -4725,7 +4725,7 @@ function Au(e) {
   }
   for (let i = 0; i < bn; i += 1) {
     const s = Ni[i];
-    o[i] = Mo(s, n) < 0 ? i : zh(rn(n, s, -1));
+    o[i] = Ao(s, n) < 0 ? i : Jh(rn(n, s, -1));
   }
   return { corner: e, cornerDestination: t, cornerTwist: r, centerDestination: o };
 }
@@ -4737,7 +4737,7 @@ var ft = {
   cornerOrientation: [0, 0, 0, 0, 0, 0, 0, 0],
   centerPermutation: [0, 1, 2, 3, 4, 5]
 };
-function Qh(e, n) {
+function Zh(e, n) {
   let t = Array.from({ length: Ge }, (i, s) => s), r = new Array(Ge).fill(0), o = Array.from({ length: bn }, (i, s) => s);
   for (let i = 0; i < n; i += 1) {
     const s = new Array(Ge), c = new Array(Ge);
@@ -4752,22 +4752,22 @@ function Qh(e, n) {
   }
   return { corner: e.corner, cornerDestination: t, cornerTwist: r, centerDestination: o };
 }
-function Zh() {
+function e1() {
   const e = /* @__PURE__ */ new Map();
   for (const n of Di) {
     const t = Au(n);
-    for (const r of [1, 2]) e.set(`${n}${r}`, Qh(t, r));
+    for (const r of [1, 2]) e.set(`${n}${r}`, Zh(t, r));
   }
   return e;
 }
-var e1 = Zh();
-function n1(e, n) {
-  const t = e1.get(`${e}${n}`);
+var n1 = e1();
+function t1(e, n) {
+  const t = n1.get(`${e}${n}`);
   if (!t) throw new Error(`skewb-state: no turn table for ${e}${n}`);
   return t;
 }
-function Mu(e, n) {
-  const t = n1(n.corner, n.amount), r = new Array(Ge), o = new Array(Ge);
+function Ru(e, n) {
+  const t = t1(n.corner, n.amount), r = new Array(Ge), o = new Array(Ge);
   for (let s = 0; s < Ge; s += 1) {
     const c = t.cornerDestination[s];
     r[c] = e.cornerPermutation[s], o[c] = (e.cornerOrientation[s] + t.cornerTwist[s]) % 3;
@@ -4777,8 +4777,8 @@ function Mu(e, n) {
     i[t.centerDestination[s]] = e.centerPermutation[s];
   return { cornerPermutation: r, cornerOrientation: o, centerPermutation: i };
 }
-var lt = Wh(), Ru = lt.length;
-function Pu(e, n, t) {
+var lt = Yh(), Pu = lt.length;
+function _u(e, n, t) {
   const r = [e], o = /* @__PURE__ */ new Map([[n(e), 0]]);
   for (let s = 0; s < r.length; s += 1)
     for (const c of lt) {
@@ -4799,65 +4799,65 @@ function Pu(e, n, t) {
     }
   };
 }
-function t1(e) {
+function r1(e) {
   return `${e.cornerPermutation.join(",")}|${e.cornerOrientation.join("")}`;
 }
-function r1(e, n) {
-  const t = Mu({ ...ft, ...e }, n);
+function o1(e, n) {
+  const t = Ru({ ...ft, ...e }, n);
   return { cornerPermutation: t.cornerPermutation, cornerOrientation: t.cornerOrientation };
 }
-function o1(e) {
+function i1(e) {
   return e.join(",");
 }
-function i1(e, n) {
-  return Mu({ ...ft, centerPermutation: e }, n).centerPermutation;
+function s1(e, n) {
+  return Ru({ ...ft, centerPermutation: e }, n).centerPermutation;
 }
-var s1 = null, c1 = null;
+var c1 = null, a1 = null;
 function Ir() {
-  return s1 ?? (s1 = Pu(
+  return c1 ?? (c1 = _u(
     {
       cornerPermutation: ft.cornerPermutation,
       cornerOrientation: ft.cornerOrientation
     },
-    t1,
-    r1
+    r1,
+    o1
   ));
 }
 function Fr() {
-  return c1 ?? (c1 = Pu(
+  return a1 ?? (a1 = _u(
     ft.centerPermutation,
-    o1,
-    i1
+    i1,
+    s1
   ));
 }
-function a1() {
+function u1() {
   return Ir().values.length;
 }
 function Dr() {
   return Fr().values.length;
 }
-function u1(e) {
+function f1(e) {
   return Ir().indexOf(e);
 }
-function f1(e) {
+function l1(e) {
   return Fr().indexOf(e.centerPermutation);
 }
-function _u(e, n) {
+function Cu(e, n) {
   return Ir().transition[n][e];
 }
-function Cu(e, n) {
+function Uu(e, n) {
   return Fr().transition[n][e];
 }
-function Uu(e) {
-  return { corners: u1(e), centers: f1(e) };
-}
-function l1(e) {
-  return e.corners * Dr() + e.centers;
-}
-function Iu() {
-  return a1() * Dr();
+function Iu(e) {
+  return { corners: f1(e), centers: l1(e) };
 }
 function d1(e) {
+  return e.corners * Dr() + e.centers;
+}
+function Fu() {
+  return u1() * Dr();
+}
+function p1(e) {
   const n = Dr(), t = e % n, r = (e - t) / n, o = Ir().values[r], i = Fr().values[t];
   if (!o || !i)
     throw new Error(`skewb-coordinates: packed index ${e} out of range`);
@@ -4868,20 +4868,20 @@ function d1(e) {
   };
 }
 var $s = 0;
-function p1(e) {
+function h1(e) {
   return e.corners === 0 && e.centers === 0;
 }
 var dt = 255;
-function h1() {
-  const e = Dr(), n = new Uint8Array(Iu()).fill(dt);
+function m1() {
+  const e = Dr(), n = new Uint8Array(Fu()).fill(dt);
   n[$s] = 0;
   let t = [$s], r = 0;
   for (; t.length > 0; ) {
     const o = [];
     for (const i of t) {
       const s = i % e, c = (i - s) / e;
-      for (let a = 0; a < Ru; a += 1) {
-        const u = _u(c, a) * e + Cu(s, a);
+      for (let a = 0; a < Pu; a += 1) {
+        const u = Cu(c, a) * e + Uu(s, a);
         n[u] === dt && (n[u] = r + 1, o.push(u));
       }
     }
@@ -4889,43 +4889,43 @@ function h1() {
   }
   return n;
 }
-var m1 = null;
+var g1 = null;
 function Li() {
-  return m1 ?? (m1 = h1());
+  return g1 ?? (g1 = m1());
 }
 function $i(e) {
-  return Li()[l1(e)];
+  return Li()[d1(e)];
 }
-function g1(e) {
+function v1(e) {
   return Li()[e];
 }
-function v1() {
+function w1() {
   return Li();
 }
-function w1(e) {
-  const n = Iu();
+function S1(e) {
+  const n = Fu();
   for (; ; ) {
     const t = we(e, n);
-    if (g1(t) !== dt)
-      return d1(t);
+    if (v1(t) !== dt)
+      return p1(t);
   }
 }
-var S1 = lt.map((e, n) => n);
+var E1 = lt.map((e, n) => n);
 function ks(e) {
-  const n = $i(Uu(e));
+  const n = $i(Iu(e));
   if (n === dt)
     throw new Error("skewbSolveDistance: state is not reachable on a real Skewb");
   return n;
 }
-function E1(e, n, t = S1) {
-  const r = Uu(e);
+function y1(e, n, t = E1) {
+  const r = Iu(e);
   if ($i(r) === dt)
     throw new Error("solveSkewbInExactly: state is not reachable on a real Skewb");
-  if (n === 0) return p1(r) ? [] : null;
+  if (n === 0) return h1(r) ? [] : null;
   const o = [];
-  return Fu(r, 0, n, o, t) ? [...o] : null;
+  return Du(r, 0, n, o, t) ? [...o] : null;
 }
-function Fu(e, n, t, r, o) {
+function Du(e, n, t, r, o) {
   const i = $i(e);
   if (n + i > t) return !1;
   if (n === t) return i === 0;
@@ -4934,37 +4934,37 @@ function Fu(e, n, t, r, o) {
     const a = lt[c];
     if (s && s.corner === a.corner) continue;
     const u = {
-      corners: _u(e.corners, c),
-      centers: Cu(e.centers, c)
+      corners: Cu(e.corners, c),
+      centers: Uu(e.centers, c)
     };
-    if (r.push(a), Fu(u, n + 1, t, r, o)) return !0;
+    if (r.push(a), Du(u, n + 1, t, r, o)) return !0;
     r.pop();
   }
   return !1;
 }
-var y1 = 7, b1 = 11;
-function x1(e) {
+var b1 = 7, x1 = 11;
+function O1(e) {
   const n = wt(
     e,
-    w1,
+    S1,
     ks,
-    y1
-  ), t = je(e, Ru), r = ri(
+    b1
+  ), t = je(e, Pu), r = ri(
     ks(n),
-    b1,
-    (o) => E1(n, o, t)
+    x1,
+    (o) => y1(n, o, t)
   );
-  return Gh(Xh(r));
-}
-function O1() {
-  v1();
+  return Kh(Wh(r));
 }
 function T1() {
+  w1();
+}
+function M1() {
   Te(
     "skewb",
-    (e) => x1(e),
+    (e) => O1(e),
     "random-state",
-    O1
+    T1
   );
 }
 var sn = 12, nt = { kind: "slice" }, A1 = 6;
@@ -4987,11 +4987,11 @@ function Tt() {
       n === 0 && t === 0 || e.push({ kind: "turn", top: n, bottom: t });
   return e;
 }
-function M1(e) {
+function R1(e) {
   return e.kind === "slice" ? "/" : `(${Bs(e.top)},${Bs(e.bottom)})`;
 }
-function R1(e) {
-  return e.map(M1).join(" ");
+function P1(e) {
+  return e.map(R1).join(" ");
 }
 function js(e) {
   const n = [];
@@ -5011,13 +5011,13 @@ function js(e) {
   }
   return n;
 }
-function P1(e) {
+function _1(e) {
   return e.kind === "slice" ? nt : { kind: "turn", top: pt(-e.top), bottom: pt(-e.bottom) };
 }
-function _1(e) {
-  return [...e].reverse().map(P1);
+function C1(e) {
+  return [...e].reverse().map(_1);
 }
-var I = sn, Du = 2 * I, Ze = 0, en = I, Nr = [Ze, en], ye = 8;
+var I = sn, Nu = 2 * I, Ze = 0, en = I, Nr = [Ze, en], ye = 8;
 function Lr(e) {
   return e < ye;
 }
@@ -5049,21 +5049,21 @@ var xn = {
     15
   ],
   middleFlipped: !1
-}, C1 = [9, 10, 11, 0, 1, 2];
-function U1(e) {
+}, U1 = [9, 10, 11, 0, 1, 2];
+function I1(e) {
   return I - 1 - e;
 }
-var I1 = [
+var F1 = [
   [2, 3],
   [8, 9]
 ];
 function $r(e) {
   for (const n of Nr)
-    for (const [t, r] of I1)
+    for (const [t, r] of F1)
       if (e.slots[n + t] === e.slots[n + r]) return !1;
   return !0;
 }
-var F1 = class extends Error {
+var D1 = class extends Error {
   constructor() {
     super("@cubesmith/scrambler: this Square-1 state cannot be sliced — a corner straddles the cut"), this.name = "Square1IllegalSliceError";
   }
@@ -5074,34 +5074,34 @@ function kr(e, n) {
     t[Ze + (r + n.top) % I] = e.slots[Ze + r], t[en + (r - n.bottom + I) % I] = e.slots[en + r];
   return { slots: t, middleFlipped: e.middleFlipped };
 }
-function At(e) {
-  if (!$r(e)) throw new F1();
-  return D1(e);
+function Mt(e) {
+  if (!$r(e)) throw new D1();
+  return N1(e);
 }
-function D1(e) {
+function N1(e) {
   const n = e.slots.slice();
-  for (const t of C1) {
-    const r = U1(t);
+  for (const t of U1) {
+    const r = I1(t);
     n[Ze + r] = e.slots[en + t], n[en + r] = e.slots[Ze + t];
   }
   return { slots: n, middleFlipped: !e.middleFlipped };
 }
-function N1(e, n) {
-  return zn(n) ? kr(e, n) : At(e);
+function L1(e, n) {
+  return zn(n) ? kr(e, n) : Mt(e);
 }
 function Vs(e, n) {
   let t = e;
-  for (const r of n) t = N1(t, r);
+  for (const r of n) t = L1(t, r);
   return t;
 }
-function L1(e, n) {
+function $1(e, n) {
   if (e.middleFlipped !== n.middleFlipped) return !1;
-  for (let t = 0; t < Du; t += 1)
+  for (let t = 0; t < Nu; t += 1)
     if (e.slots[t] !== n.slots[t]) return !1;
   return !0;
 }
 function qs(e) {
-  return L1(e, xn);
+  return $1(e, xn);
 }
 function Pn(e) {
   let n = 0;
@@ -5113,7 +5113,7 @@ function Pn(e) {
     }
   return n;
 }
-function $1(e, n) {
+function k1(e, n) {
   const t = [];
   for (let r = 0; r < I; r += 1) {
     const o = e.slots[n + r], i = e.slots[n + (r + I - 1) % I];
@@ -5122,9 +5122,9 @@ function $1(e, n) {
   return t.length !== 8 ? !1 : t.every((r, o) => r !== t[(o + 1) % t.length]);
 }
 function ki(e) {
-  return Nr.every((n) => $1(e, n));
+  return Nr.every((n) => k1(e, n));
 }
-function k1(e) {
+function B1(e) {
   if (!ki(e)) return;
   const n = Nr.map((t) => {
     for (let r = 0; r < I; r += 1) {
@@ -5139,7 +5139,7 @@ var qe = 9, ne = 40320;
 function Br(e, n) {
   return e * 3 + n;
 }
-function Nu(e) {
+function Lu(e) {
   return [Math.floor(e / 3), e % 3];
 }
 var ht = Br(0, 0);
@@ -5150,14 +5150,14 @@ function wr(e, n, t) {
   return r.sort((o, i) => o - i);
 }
 function Bi(e) {
-  const [n, t] = Nu(e);
+  const [n, t] = Lu(e);
   return [
     ...wr(Ze, n, 0),
     ...wr(en, t, 0)
   ];
 }
 function ji(e) {
-  const [n, t] = Nu(e);
+  const [n, t] = Lu(e);
   return [
     ...wr(Ze, n, 2),
     ...wr(en, t, 2)
@@ -5183,18 +5183,18 @@ function Fo(e, n) {
   const o = Array.from({ length: n }, (i, s) => s);
   return t.map((i) => o.splice(i, 1)[0]);
 }
-var B1 = class extends Error {
+var j1 = class extends Error {
   constructor() {
     super("@cubesmith/scrambler: phase 2 needs both Square-1 layers square; phase 1 comes first"), this.name = "NotSquareLayersError";
   }
 };
-function Lu(e) {
-  const n = k1(e);
-  if (!n) throw new B1();
+function $u(e) {
+  const n = B1(e);
+  if (!n) throw new j1();
   return n;
 }
-function $u(e) {
-  const n = Lu(e), t = Br(n[0], n[1]), r = Bi(t).map((i) => e.slots[i]), o = ji(t).map(
+function ku(e) {
+  const n = $u(e), t = Br(n[0], n[1]), r = Bi(t).map((i) => e.slots[i]), o = ji(t).map(
     (i) => e.slots[i] - ye
   );
   return {
@@ -5204,8 +5204,8 @@ function $u(e) {
     edges: mt(o)
   };
 }
-function j1(e) {
-  const n = new Array(Du).fill(-1), t = Fo(e.corners, ye);
+function V1(e) {
+  const n = new Array(Nu).fill(-1), t = Fo(e.corners, ye);
   Bi(e.alignment).forEach((o, i) => {
     const s = o < I ? Ze : en;
     n[o] = t[i], n[s + (o - s + 1) % I] = t[i];
@@ -5215,8 +5215,8 @@ function j1(e) {
     n[o] = r[i] + ye;
   }), { slots: n, middleFlipped: e.middleFlipped };
 }
-function V1(e) {
-  return j1({
+function q1(e) {
+  return V1({
     alignment: e,
     middleFlipped: !1,
     corners: 0,
@@ -5225,7 +5225,7 @@ function V1(e) {
 }
 function Gs(e, n) {
   if (!ki(n)) return;
-  const t = Lu(n), r = Br(t[0], t[1]), o = new Array(ye).fill(-1), i = new Array(ye).fill(-1);
+  const t = $u(n), r = Br(t[0], t[1]), o = new Array(ye).fill(-1), i = new Array(ye).fill(-1);
   if (Bi(r).forEach((s, c) => {
     o[n.slots[s]] = c;
   }), ji(r).forEach((s, c) => {
@@ -5234,7 +5234,7 @@ function Gs(e, n) {
     throw new Error(`@cubesmith/scrambler: incoherent Square-1 phase-2 move from alignment ${e}`);
   return { alignment: r, cornerMap: o, edgeMap: i };
 }
-function q1(e, n) {
+function G1(e, n) {
   const t = new Array(e.length).fill(-1);
   for (let r = 0; r < e.length; r += 1)
     t[n[r]] = e[r];
@@ -5248,24 +5248,24 @@ function Dn() {
     return v !== void 0 ? v : (u.set(p, a.length), a.push([...d]), a.length - 1);
   };
   for (let d = 0; d < qe; d += 1) {
-    const p = V1(d);
-    for (const [A, C] of e.entries()) {
+    const p = q1(d);
+    for (const [M, C] of e.entries()) {
       const L = Gs(d, kr(p, C));
       if (!L)
         throw new Error("@cubesmith/scrambler: a Square-1 layer turn left the square-layers set");
-      const R = d * n + A;
+      const R = d * n + M;
       t[R] = L.alignment, r[R] = f(L.cornerMap), o[R] = f(L.edgeMap);
     }
     if (!$r(p)) continue;
-    const v = Gs(d, At(p));
+    const v = Gs(d, Mt(p));
     v && (i[d] = v.alignment, s[d] = f(v.cornerMap), c[d] = f(v.edgeMap));
   }
   const l = new Int32Array(a.length * ne);
   for (let d = 0; d < ne; d += 1) {
     const p = Fo(d, ye);
-    for (const [v, A] of a.entries())
+    for (const [v, M] of a.entries())
       l[v * ne + d] = mt(
-        q1(p, A)
+        G1(p, M)
       );
   }
   return _t = {
@@ -5281,10 +5281,10 @@ function Dn() {
   }, _t;
 }
 var Ks = qe * 2 * ne;
-function G1(e, n, t) {
+function K1(e, n, t) {
   return (e * 2 + 0) * ne + t;
 }
-function ku(e) {
+function Bu(e) {
   const {
     turns: n,
     turnAlignment: t,
@@ -5294,27 +5294,27 @@ function ku(e) {
     sliceCornerMap: s,
     sliceEdgeMap: c,
     permMove: a
-  } = Dn(), u = e ? r : o, f = e ? s : c, l = n.length, d = new Uint8Array(Ks).fill(255), p = new Int32Array(Ks), v = G1(ht, !1, 0);
+  } = Dn(), u = e ? r : o, f = e ? s : c, l = n.length, d = new Uint8Array(Ks).fill(255), p = new Int32Array(Ks), v = K1(ht, !1, 0);
   d[v] = 0, p[0] = v;
-  let A = 1;
-  for (let C = 0; C < A; C += 1) {
+  let M = 1;
+  for (let C = 0; C < M; C += 1) {
     const L = p[C], R = L % ne, G = (L - R) / ne, $ = G % 2, K = (G - $) / 2, ee = d[L] + 1;
     for (let V = 0; V < l; V += 1) {
       const Y = K * l + V, ce = a[u[Y] * ne + R], ae = (t[Y] * 2 + $) * ne + ce;
-      d[ae] === 255 && (d[ae] = ee, p[A] = ae, A += 1);
+      d[ae] === 255 && (d[ae] = ee, p[M] = ae, M += 1);
     }
     const Q = i[K];
     if (Q < 0) continue;
     const re = a[f[K] * ne + R], j = (Q * 2 + (1 - $)) * ne + re;
-    d[j] === 255 && (d[j] = ee, p[A] = j, A += 1);
+    d[j] === 255 && (d[j] = ee, p[M] = j, M += 1);
   }
   return d;
 }
-var K1 = qe * 2 * 2 * 2;
+var X1 = qe * 2 * 2 * 2;
 function tt(e, n, t, r) {
   return ((e * 2 + (n ? 1 : 0)) * 2 + t) * 2 + r;
 }
-function X1(e) {
+function W1(e) {
   const n = new Array(e.length).fill(!1);
   let t = 0;
   for (let r = 0; r < e.length; r += 1) {
@@ -5327,21 +5327,21 @@ function X1(e) {
   return t % 2;
 }
 var co;
-function Bu() {
+function ju() {
   if (co) return co;
-  const e = Dn(), n = e.turns.length, t = e.maps.map(X1), r = new Uint8Array(K1), o = tt(ht, !1, 0, 0);
+  const e = Dn(), n = e.turns.length, t = e.maps.map(W1), r = new Uint8Array(X1), o = tt(ht, !1, 0, 0);
   r[o] = 1;
   const i = [o];
   for (let s = 0; s < i.length; s += 1) {
     const c = i[s], a = c % 2, u = Math.floor(c / 2) % 2, f = Math.floor(c / 4) % 2, l = Math.floor(c / 8), d = [];
     for (let v = 0; v < n; v += 1) {
-      const A = l * n + v;
+      const M = l * n + v;
       d.push(
         tt(
-          e.turnAlignment[A],
+          e.turnAlignment[M],
           f === 1,
-          u ^ t[e.turnCornerMap[A]],
-          a ^ t[e.turnEdgeMap[A]]
+          u ^ t[e.turnCornerMap[M]],
+          a ^ t[e.turnEdgeMap[M]]
         )
       );
     }
@@ -5359,16 +5359,16 @@ function Bu() {
   }
   return co = r, r;
 }
-function ju(e, n, t, r) {
+function Vu(e, n, t, r) {
   return ((e * 2 + (n ? 1 : 0)) * ne + t) * ne + r;
 }
 var Do = 8, Ct;
-function Vu(e, n, t, r, o) {
+function qu(e, n, t, r, o) {
   return (Math.imul(t, 2654435761) ^ Math.imul(r, 40503) ^ Math.imul(e * 2 + n, 2246822519)) & o;
 }
 function ao(e, n, t, r, o) {
-  const i = ju(n, t === 1, r, o);
-  let s = Vu(n, t, r, o, e.mask);
+  const i = Vu(n, t === 1, r, o);
+  let s = qu(n, t, r, o, e.mask);
   for (; ; ) {
     const c = e.keys[s];
     if (c === i) return e.distances[s];
@@ -5376,7 +5376,7 @@ function ao(e, n, t, r, o) {
     s = s + 1 & e.mask;
   }
 }
-function qu() {
+function Gu() {
   if (Ct) return Ct;
   const {
     turns: e,
@@ -5393,8 +5393,8 @@ function qu() {
   const f = u - 1, l = new Float64Array(u).fill(-1), d = new Uint8Array(u);
   let p = 0;
   const v = (G, $, K, ee, Q) => {
-    const re = ju(G, $ === 1, K, ee);
-    let j = Vu(G, $, K, ee, f);
+    const re = Vu(G, $ === 1, K, ee);
+    let j = qu(G, $, K, ee, f);
     for (; ; ) {
       const V = l[j];
       if (V === re) return !1;
@@ -5403,16 +5403,16 @@ function qu() {
       j = j + 1 & f;
     }
   };
-  let A = Int32Array.of(ht), C = Int32Array.of(0), L = Int32Array.of(0), R = Int32Array.of(0);
+  let M = Int32Array.of(ht), C = Int32Array.of(0), L = Int32Array.of(0), R = Int32Array.of(0);
   v(ht, 0, 0, 0, 0);
   for (let G = 1; G <= Do; G += 1) {
-    const $ = A.length * (a + 1), K = new Int32Array($), ee = new Int32Array($), Q = new Int32Array($), re = new Int32Array($);
+    const $ = M.length * (a + 1), K = new Int32Array($), ee = new Int32Array($), Q = new Int32Array($), re = new Int32Array($);
     let j = 0;
     const V = (Y, ce, ae, he) => {
       v(Y, ce, ae, he, G) && (K[j] = Y, ee[j] = ce, Q[j] = ae, re[j] = he, j += 1);
     };
-    for (let Y = 0; Y < A.length; Y += 1) {
-      const ce = A[Y], ae = C[Y], he = L[Y], J = R[Y];
+    for (let Y = 0; Y < M.length; Y += 1) {
+      const ce = M[Y], ae = C[Y], he = L[Y], J = R[Y];
       for (let ue = 0; ue < a; ue += 1) {
         const se = ce * a + ue;
         V(
@@ -5430,18 +5430,18 @@ function qu() {
         c[s[ce] * ne + J]
       );
     }
-    A = K.subarray(0, j), C = ee.subarray(0, j), L = Q.subarray(0, j), R = re.subarray(0, j);
+    M = K.subarray(0, j), C = ee.subarray(0, j), L = Q.subarray(0, j), R = re.subarray(0, j);
   }
   return Ct = { keys: l, distances: d, mask: f, size: p }, Ct;
 }
 var Xs, Ws;
 function jr() {
-  return Xs ?? (Xs = ku(!0)), Xs;
+  return Xs ?? (Xs = Bu(!0)), Xs;
 }
-function Gu(e = !1) {
-  return e ? (Ws ?? (Ws = ku(!1)), Ws) : jr();
+function Ku(e = !1) {
+  return e ? (Ws ?? (Ws = Bu(!1)), Ws) : jr();
 }
-function W1() {
+function Y1() {
   const e = Array.from({ length: I }, () => []);
   for (let n = 0; n < 1 << I; n += 1) {
     let t = 0, r = !1;
@@ -5456,7 +5456,7 @@ function W1() {
 }
 var Ys;
 function Hs(e) {
-  return Ys ?? (Ys = W1()), Ys[e] ?? [];
+  return Ys ?? (Ys = Y1()), Ys[e] ?? [];
 }
 function Vi() {
   const e = [];
@@ -5466,11 +5466,11 @@ function Vi() {
         e.push(t | r << I);
   return e;
 }
-var Y1 = 260 | 1 << I + 2 | 1 << I + 8;
-function H1(e) {
-  return (e & Y1) === 0;
+var H1 = 260 | 1 << I + 2 | 1 << I + 8;
+function z1(e) {
+  return (e & H1) === 0;
 }
-function Ku(e) {
+function Xu(e) {
   const n = [], t = [];
   for (const r of [0, I]) {
     const o = e >>> r & (1 << I) - 1;
@@ -5485,8 +5485,8 @@ function Ku(e) {
   }
   return { corners: n, edges: t };
 }
-function Xu(e, n, t, r) {
-  const { corners: o, edges: i } = Ku(e);
+function Wu(e, n, t, r) {
+  const { corners: o, edges: i } = Xu(e);
   if (o.length !== n.length || i.length !== t.length)
     throw new Error("@cubesmith/scrambler: Square-1 shape does not have that many positions");
   const s = new Array(2 * I).fill(-1);
@@ -5498,14 +5498,14 @@ function Xu(e, n, t, r) {
   }), { slots: s, middleFlipped: r };
 }
 var Ut;
-function z1() {
+function J1() {
   if (Ut) return Ut;
   const e = Tt(), n = /* @__PURE__ */ new Map(), t = /* @__PURE__ */ new Map(), r = Pn(xn);
   n.set(r, xn), t.set(r, 0);
   const o = [r];
   for (let i = 0; i < o.length; i += 1) {
     const s = o[i], c = n.get(s), a = t.get(s) + 1, u = e.map((f) => kr(c, f));
-    $r(c) && u.push(At(c));
+    $r(c) && u.push(Mt(c));
     for (const f of u) {
       const l = Pn(f);
       t.has(l) || (t.set(l, a), n.set(l, f), o.push(l));
@@ -5514,7 +5514,7 @@ function z1() {
   return Ut = { representative: n, distance: t }, Ut;
 }
 var Le = (1 << I) - 1;
-function Mt(e) {
+function At(e) {
   return e & Le;
 }
 function Rt(e) {
@@ -5529,7 +5529,7 @@ function Sr(e, n) {
 }
 function Gi(e, n, t) {
   return qi(
-    Sr(Mt(e), n),
+    Sr(At(e), n),
     Sr(Rt(e), -t)
   );
 }
@@ -5540,22 +5540,22 @@ function Zs(e) {
     (e & 1 << t) !== 0 && (n |= 1 << (I + 10 - t) % I);
   return n;
 }
-function J1(e) {
-  return (Mt(e) & Qs) === 0 && (Rt(e) & Qs) === 0;
+function Q1(e) {
+  return (At(e) & Qs) === 0 && (Rt(e) & Qs) === 0;
 }
 function Ki(e) {
-  if (!J1(e)) return;
-  const n = Mt(e), t = Rt(e);
+  if (!Q1(e)) return;
+  const n = At(e), t = Rt(e);
   return qi(
     n & Js | Zs(t & zs),
     t & Js | Zs(n & zs)
   );
 }
-var Q1 = 585;
+var Z1 = 585;
 function ec(e) {
-  return Sr(Q1, e);
+  return Sr(Z1, e);
 }
-var Z1 = [0, 1, 2].flatMap(
+var em = [0, 1, 2].flatMap(
   (e) => [0, 1, 2].map((n) => qi(ec(e), ec(n)))
 );
 function nc(e, n) {
@@ -5564,7 +5564,7 @@ function nc(e, n) {
   for (; r !== 0; ) [t, r] = [r, t % r];
   return (e - t) % 2;
 }
-function em(e) {
+function nm(e) {
   return ~(e | Sr(e, 1)) & Le;
 }
 function It(e) {
@@ -5577,7 +5577,7 @@ function tc(e, n) {
   if (!Ft) {
     Ft = new Uint8Array((Le + 1) * I);
     for (let t = 0; t <= Le; t += 1) {
-      const r = em(t), o = It(t), i = It(r);
+      const r = nm(t), o = It(t), i = It(r);
       for (let s = 0; s < I; s += 1) {
         const c = s === 0 ? 0 : Le << I - s & Le;
         Ft[t * I + s] = nc(o, It(t & c)) ^ nc(i, It(r & c));
@@ -5587,13 +5587,13 @@ function tc(e, n) {
   return Ft[e * I + (n % I + I) % I];
 }
 function Xi(e, n, t) {
-  return tc(Mt(e), n) ^ tc(Rt(e), -t);
+  return tc(At(e), n) ^ tc(Rt(e), -t);
 }
 var rc = /* @__PURE__ */ new Map();
 function Wi(e) {
   const n = rc.get(e);
   if (n !== void 0) return n;
-  const t = Array.from({ length: ye }, (i, s) => s), r = Xu(e, t, t, !1), o = Vr(At(r));
+  const t = Array.from({ length: ye }, (i, s) => s), r = Wu(e, t, t, !1), o = Vr(Mt(r));
   return rc.set(e, o), o;
 }
 function Vr(e) {
@@ -5605,8 +5605,8 @@ function Vr(e) {
     }
   return it(n) ^ it(t);
 }
-function nm(e) {
-  const n = Bu();
+function tm(e) {
+  const n = ju();
   for (let t = 0; t < 2; t += 1) {
     const r = n[tt(e, !1, 0, t)] === 1, o = n[tt(e, !0, 0, t)] === 1;
     if (r !== o)
@@ -5616,14 +5616,14 @@ function nm(e) {
   throw new Error("@cubesmith/scrambler: no Square-1 phase-2 parity is reachable at this alignment");
 }
 var Dt;
-function Wu() {
+function Yu() {
   if (Dt) return Dt;
   const e = Vi(), n = new Map(e.map((o, i) => [o, i])), t = new Uint8Array(e.length * 2).fill(255), r = [];
-  for (const o of Z1) {
+  for (const o of em) {
     const i = Br(
-      oc(Mt(o)),
+      oc(At(o)),
       oc(Rt(o))
-    ), s = n.get(o) * 2 + nm(i);
+    ), s = n.get(o) * 2 + tm(i);
     t[s] = 0, r.push(s);
   }
   for (let o = 0; o < r.length; o += 1) {
@@ -5646,13 +5646,13 @@ function oc(e) {
   throw new Error("@cubesmith/scrambler: a Square-1 ring with no corners");
 }
 function ic(e, n) {
-  const { indexOf: t, distance: r } = Wu(), o = t.get(e);
+  const { indexOf: t, distance: r } = Yu(), o = t.get(e);
   if (o === void 0)
     throw new Error("@cubesmith/scrambler: Square-1 shape key is not a shape the puzzle has");
   return r[o * 2 + n];
 }
 var uo, fo;
-function Yu() {
+function Hu() {
   if (uo && fo) return { table: uo, indexOf: fo };
   const e = Vi(), n = new Map(e.map((s, c) => [s, c])), t = new Uint8Array(e.length * 4).fill(255), r = (s, c, a) => (s * 2 + c) * 2 + a, o = r(
     n.get(Pn(xn)),
@@ -5679,22 +5679,22 @@ function Yu() {
   return uo = t, fo = n, { table: t, indexOf: n };
 }
 function lo(e) {
-  const { table: n, indexOf: t } = Yu(), r = t.get(Pn(e));
+  const { table: n, indexOf: t } = Hu(), r = t.get(Pn(e));
   if (r === void 0)
     throw new Error("@cubesmith/scrambler: Square-1 state has a shape the puzzle cannot make");
   return n[(r * 2 + Vr(e)) * 2 + (e.middleFlipped ? 1 : 0)];
 }
-function tm(e) {
-  const n = Pn(e), { corners: t, edges: r } = Ku(n), o = t.map((s) => e.slots[s]), i = r.map((s) => e.slots[s] - ye);
-  return ((Yu().indexOf.get(n) * ne + mt(o)) * ne + mt(i)) * 2 + (e.middleFlipped ? 1 : 0);
+function rm(e) {
+  const n = Pn(e), { corners: t, edges: r } = Xu(n), o = t.map((s) => e.slots[s]), i = r.map((s) => e.slots[s] - ye);
+  return ((Hu().indexOf.get(n) * ne + mt(o)) * ne + mt(i)) * 2 + (e.middleFlipped ? 1 : 0);
 }
-function rm(e, n) {
+function om(e, n) {
   if (qs(e)) return 0;
   if (lo(e) > n) return n + 1;
   const t = Tt(), r = /* @__PURE__ */ new Map(), o = (i, s, c, a) => {
     if (s + lo(i) > c) return !1;
     if (qs(i)) return !0;
-    const u = tm(i) * 4 + a, f = r.get(u);
+    const u = rm(i) * 4 + a, f = r.get(u);
     if (f !== void 0 && f <= s) return !1;
     if (r.set(u, s), a !== 1) {
       for (const l of t)
@@ -5708,7 +5708,7 @@ function rm(e, n) {
           return !0;
     }
     return a === 2 || !$r(i) ? !1 : o(
-      At(i),
+      Mt(i),
       s + 1,
       c,
       2
@@ -5726,12 +5726,12 @@ function rm(e, n) {
   return n + 1;
 }
 var sc;
-function Hu() {
-  return sc ?? (sc = Vi().filter(H1)), sc;
+function zu() {
+  return sc ?? (sc = Vi().filter(z1)), sc;
 }
-function om(e) {
-  const n = Hu();
-  return Xu(
+function im(e) {
+  const n = zu();
+  return Wu(
     n[we(e, n.length)],
     je(e, ye),
     je(e, ye),
@@ -5741,7 +5741,7 @@ function om(e) {
 function cc(e, n = {}) {
   const t = Pn(e), r = Vr(e), o = n.maxSolutions ?? 1, i = n.extraDepth ?? 0, s = n.accept, c = n.maxPerFirstMove ?? Number.POSITIVE_INFINITY, a = Tt(), u = n.visit, f = [], l = [], d = /* @__PURE__ */ new Map();
   let p = !1, v = 0;
-  const A = () => {
+  const M = () => {
     const R = l[0];
     return R === void 0 ? "" : R.kind === "slice" ? "/" : `${R.top},${R.bottom}`;
   }, C = (R, G, $, K, ee) => {
@@ -5749,7 +5749,7 @@ function cc(e, n = {}) {
     const Q = ic(R, G);
     if (Q === 0 && $ === K) {
       if (s && !s(l)) return;
-      const j = A(), V = d.get(j) ?? 0;
+      const j = M(), V = d.get(j) ?? 0;
       if (V >= c) return;
       d.set(j, V + 1), v += 1, u ? u(l) && (p = !0) : f.push([...l]);
       return;
@@ -5789,7 +5789,7 @@ function cc(e, n = {}) {
   return f;
 }
 var Nt;
-function im() {
+function sm() {
   if (Nt) return Nt;
   const { turns: e, turnAlignment: n, sliceAlignment: t } = Dn(), r = [], o = [];
   for (let i = 0; i < t.length; i += 1) {
@@ -5802,18 +5802,18 @@ function im() {
   }
   return Nt = { enabling: r, closing: o }, Nt;
 }
-var zu = class extends Error {
+var Ju = class extends Error {
   constructor(e) {
     super(`@cubesmith/scrambler: Square-1 phase 2 gave up after ${e} nodes`), this.name = "Phase2BudgetExceededError";
   }
 };
-function Ju(e, n = {}) {
-  const t = "slots" in e ? $u(e) : e, r = Dn(), { turns: o, turnAlignment: i, turnCornerMap: s, turnEdgeMap: c } = r, { sliceAlignment: a, sliceCornerMap: u, sliceEdgeMap: f, permMove: l } = r, d = jr(), p = Gu(), { enabling: v } = im(), A = o.length, C = n.maxLength ?? 40, L = n.nodeBudget ?? 4e7;
+function Qu(e, n = {}) {
+  const t = "slots" in e ? ku(e) : e, r = Dn(), { turns: o, turnAlignment: i, turnCornerMap: s, turnEdgeMap: c } = r, { sliceAlignment: a, sliceCornerMap: u, sliceEdgeMap: f, permMove: l } = r, d = jr(), p = Ku(), { enabling: v } = sm(), M = o.length, C = n.maxLength ?? 40, L = n.nodeBudget ?? 4e7;
   let R = 0;
   const G = (V, Y, ce, ae) => Math.max(
     d[(V * 2 + Y) * ne + ce],
     p[(V * 2 + Y) * ne + ae]
-  ), $ = [], K = qu(), ee = (V, Y, ce, ae, he) => {
+  ), $ = [], K = Gu(), ee = (V, Y, ce, ae, he) => {
     let J = { alignment: V, middle: Y, corners: ce, edges: ae };
     for (let le = he; le > 0; le -= 1) {
       const ue = a[J.alignment];
@@ -5830,8 +5830,8 @@ function Ju(e, n = {}) {
         }
       }
       let se = !1;
-      for (let oe = 0; oe < A; oe += 1) {
-        const de = J.alignment * A + oe, q = {
+      for (let oe = 0; oe < M; oe += 1) {
+        const de = J.alignment * M + oe, q = {
           alignment: i[de],
           middle: J.middle,
           corners: l[s[de] * ne + J.corners],
@@ -5846,7 +5846,7 @@ function Ju(e, n = {}) {
         throw new Error("@cubesmith/scrambler: Square-1 backward table has no descending move");
     }
   }, Q = (V, Y, ce, ae, he, J) => {
-    if (R += 1, R > L) throw new zu(R);
+    if (R += 1, R > L) throw new Ju(R);
     const le = G(V, Y, ce, ae);
     if (he + le > J) return !1;
     if (le === 0) return !0;
@@ -5870,7 +5870,7 @@ function Ju(e, n = {}) {
     }
     if (he + 2 > J) return !1;
     for (const ue of v[V]) {
-      const se = V * A + ue, oe = i[se], de = l[s[se] * ne + ce], q = l[c[se] * ne + ae];
+      const se = V * M + ue, oe = i[se], de = l[s[se] * ne + ce], q = l[c[se] * ne + ae];
       if ($.push(o[ue], nt), Q(
         a[oe],
         1 - Y,
@@ -5888,19 +5888,19 @@ function Ju(e, n = {}) {
     if ($.length = 0, Q(t.alignment, re, t.corners, t.edges, 0, V))
       return [...$];
 }
-function sm(e) {
-  const n = "slots" in e ? $u(e) : e, t = n.middleFlipped ? 1 : 0;
+function cm(e) {
+  const n = "slots" in e ? ku(e) : e, t = n.middleFlipped ? 1 : 0;
   return Math.max(
     jr()[(n.alignment * 2 + t) * ne + n.corners],
-    Gu()[(n.alignment * 2 + t) * ne + n.edges]
+    Ku()[(n.alignment * 2 + t) * ne + n.edges]
   );
 }
-var cm = class extends Error {
+var am = class extends Error {
   constructor() {
     super("@cubesmith/scrambler: no Square-1 solution found — the state is not one the puzzle reaches"), this.name = "Square1UnsolvableError";
   }
 };
-function am(e, n = {}) {
+function um(e, n = {}) {
   const t = n.attempts ?? 30, r = n.extraPhase1Depth ?? 1, o = n.phase2NodeBudget ?? 3e5, i = n.maxLength ?? 40, s = n.relaxations ?? [0, 2, 4, 6, 10], c = n.maxPerFirstMove ?? 3;
   for (const [u, f] of s.entries()) {
     const l = f >= 6 ? o * 30 : o;
@@ -5913,17 +5913,17 @@ function am(e, n = {}) {
         const v = Vs(e, p);
         if (!ki(v))
           throw new Error("@cubesmith/scrambler: Square-1 phase 1 did not reach square layers");
-        const A = Math.min(
-          sm(v) + f,
+        const M = Math.min(
+          cm(v) + f,
           i - p.length
-        ), C = um(v, { maxLength: A, nodeBudget: l });
+        ), C = fm(v, { maxLength: M, nodeBudget: l });
         return C ? (d = js([...p, ...C]), !0) : !1;
       }
     }), d) return d;
   }
   const [a] = cc(e, { maxSolutions: 1 });
   if (a) {
-    const u = Vs(e, a), f = Ju(u, {
+    const u = Vs(e, a), f = Qu(u, {
       maxLength: i - a.length,
       // Unbounded on purpose: this runs only when every sweep has been
       // abandoned, and a slow answer beats a thrown one.
@@ -5931,39 +5931,39 @@ function am(e, n = {}) {
     });
     if (f) return js([...a, ...f]);
   }
-  throw new cm();
+  throw new am();
 }
-function um(e, n) {
+function fm(e, n) {
   if (!(n.maxLength < 0))
     try {
-      return Ju(e, n);
+      return Qu(e, n);
     } catch (t) {
-      if (t instanceof zu) return;
+      if (t instanceof Ju) return;
       throw t;
     }
 }
 var ac = 11;
-function fm(e) {
+function lm(e) {
   const n = wt(
     e,
-    om,
+    im,
     // Exact below the threshold and honest above it: the value is either a
     // distance actually achieved or a proof that none that short exists.
-    (t) => rm(t, ac - 1),
+    (t) => om(t, ac - 1),
     ac
   );
-  return R1(_1(am(n)));
-}
-function lm() {
-  Te(
-    "sq1",
-    (e) => fm(e),
-    "random-state",
-    dm
-  );
+  return P1(C1(um(n)));
 }
 function dm() {
-  z1(), Hu(), Wu(), Dn(), jr(), Bu(), qu();
+  Te(
+    "sq1",
+    (e) => lm(e),
+    "random-state",
+    pm
+  );
+}
+function pm() {
+  J1(), zu(), Yu(), Dn(), jr(), ju(), Gu();
 }
 var _n = 4, Pe = 8, Z = 24, Ie = 24;
 function uc(e) {
@@ -5974,7 +5974,7 @@ function uc(e) {
   ];
 }
 var Lt;
-function pm(e, n) {
+function hm(e, n) {
   return [0, 1, 2].filter((r) => r !== n).reduce((r, o) => r * 2 + (e[o] > 0 ? 0 : 1), 0);
 }
 function fc(e) {
@@ -5987,7 +5987,7 @@ function lc(e, n) {
 }
 function pn() {
   if (Lt) return Lt;
-  const e = ga(_n), n = /* @__PURE__ */ new Map();
+  const e = va(_n), n = /* @__PURE__ */ new Map();
   for (const [c, a] of e.entries()) {
     const u = tn(uc(a)), f = n.get(u);
     f ? f.push(c) : n.set(u, [c]);
@@ -5996,7 +5996,7 @@ function pn() {
   for (const c of n.values()) {
     const a = uc(e[c[0]]);
     if (c.length === 3) {
-      t[lc(Yt, fc(a))] = mm(
+      t[lc(Yt, fc(a))] = gm(
         e,
         c,
         a
@@ -6004,22 +6004,22 @@ function pn() {
       continue;
     }
     if (c.length === 2) {
-      const p = [0, 1, 2].find((L) => Math.abs(a[L]) === 1), v = fc(a), A = [
+      const p = [0, 1, 2].find((L) => Math.abs(a[L]) === 1), v = fc(a), M = [
         p === 0 ? 0 : v[0],
         p === 1 ? 0 : v[1],
         p === 2 ? 0 : v[2]
-      ], C = lc(Ht, A);
+      ], C = lc(Ht, M);
       r[2 * C + (a[p] > 0 ? 0 : 1)] = [...c];
       continue;
     }
-    const u = c[0], f = [0, 1, 2].find((p) => Math.abs(a[p]) === _n - 1), l = Re.indexOf(e[u].face), d = 4 * l + pm(a, f);
+    const u = c[0], f = [0, 1, 2].find((p) => Math.abs(a[p]) === _n - 1), l = Re.indexOf(e[u].face), d = 4 * l + hm(a, f);
     o[d] = u, i[d] = l;
   }
-  if (hm(e, r), !(t.every((c) => c.length === 3) && r.every((c) => c.length === 2) && o.every((c) => c >= 0)))
+  if (mm(e, r), !(t.every((c) => c.length === 3) && r.every((c) => c.length === 2) && o.every((c) => c >= 0)))
     throw new Error("444-pieces: the geometry did not account for every piece");
   return Lt = { facelets: e, cornerFacelets: t, wingFacelets: r, centreFacelets: o, centreFace: i }, Lt;
 }
-function hm(e, n) {
+function mm(e, n) {
   const t = /* @__PURE__ */ new Map();
   n.forEach((s, c) => s.forEach((a) => t.set(a, c)));
   const r = St(_n).map(
@@ -6048,7 +6048,7 @@ function hm(e, n) {
     n[c] = [a, s.find((u) => u !== a)];
   });
 }
-function mm(e, n, t) {
+function gm(e, n, t) {
   const r = /* @__PURE__ */ new Map();
   for (const s of n) {
     const c = e[s].normal.findIndex((a) => a !== 0);
@@ -6076,18 +6076,18 @@ function Ee() {
     for (let p = 0; p < Pe; p += 1) {
       const v = o.get(a[n[p][0]]);
       u[p] = v.slot, f[p] = v.index;
-      for (let A = 0; A < 3; A += 1) {
-        const C = o.get(a[n[p][A]]);
-        if (C.slot !== v.slot || C.index !== (A + v.index) % 3)
+      for (let M = 0; M < 3; M += 1) {
+        const C = o.get(a[n[p][M]]);
+        if (C.slot !== v.slot || C.index !== (M + v.index) % 3)
           throw new Error(`444-state: ${c.face} tore corner ${p} apart`);
       }
     }
     const l = new Array(Z).fill(-1);
     for (let p = 0; p < Z; p += 1) {
-      const v = t[p], A = i.get(a[v[0]]);
-      if (i.get(a[v[1]]) !== A)
+      const v = t[p], M = i.get(a[v[0]]);
+      if (i.get(a[v[1]]) !== M)
         throw new Error(`444-state: ${c.face} tore wing ${p} apart`);
-      l[p] = A;
+      l[p] = M;
     }
     const d = new Array(Ie).fill(-1);
     for (let p = 0; p < Ie; p += 1)
@@ -6095,7 +6095,7 @@ function Ee() {
     return { move: c, cornerDestination: u, cornerTwist: f, wingDestination: l, centreDestination: d };
   }), $t;
 }
-function gm(e, n) {
+function vm(e, n) {
   const t = new Array(Pe), r = new Array(Pe);
   for (let s = 0; s < Pe; s += 1) {
     const c = n.cornerDestination[s];
@@ -6111,15 +6111,15 @@ function gm(e, n) {
 }
 function _e(e, n) {
   const t = Ee();
-  return n.reduce((r, o) => gm(r, t[o]), e);
+  return n.reduce((r, o) => vm(r, t[o]), e);
 }
-function Qu(e) {
-  return vm(e, gt);
+function Zu(e) {
+  return wm(e, gt);
 }
-function vm(e, n) {
+function wm(e, n) {
   return e.cornerPermutation.every((t, r) => t === n.cornerPermutation[r]) && e.cornerOrientation.every((t, r) => t === n.cornerOrientation[r]) && e.wingPermutation.every((t, r) => t === n.wingPermutation[r]) && e.centreColour.every((t, r) => t === n.centreColour[r]);
 }
-var Qt = 24, Zu = (() => {
+var Qt = 24, ef = (() => {
   var n, t;
   const e = [];
   for (let r = 0; r <= Qt; r += 1) {
@@ -6131,23 +6131,23 @@ var Qt = 24, Zu = (() => {
   }
   return e;
 })();
-function ef(e, n) {
-  return Zu[e][n];
+function nf(e, n) {
+  return ef[e][n];
 }
-function wm(e) {
-  return ef(Qt, e);
+function Sm(e) {
+  return nf(Qt, e);
 }
 function ze(e, n) {
   let t = 0, r = 1;
   for (let o = e; o !== 0; o &= o - 1) {
     const i = 31 - Math.clz32(o & -o);
-    t += Zu[i][r], r += 1;
+    t += ef[i][r], r += 1;
   }
   if (r !== n + 1)
     throw new Error(`444-subsets: expected a subset of ${n} slots, got ${r - 1}`);
   return t;
 }
-function Sm(e) {
+function Em(e) {
   const n = new Int32Array(768);
   for (let t = 0; t < 3; t += 1)
     for (let r = 0; r < 256; r += 1) {
@@ -6158,12 +6158,12 @@ function Sm(e) {
     }
   return n;
 }
-function Em(e, n) {
+function ym(e, n) {
   return n[e & 255] | n[256 + (e >>> 8 & 255)] | n[512 + (e >>> 16 & 255)];
 }
-var nf = 8, kt = wm(nf);
+var tf = 8, kt = Sm(tf);
 function On(e) {
-  return ze(e, nf);
+  return ze(e, tf);
 }
 var Xe = [
   [Re.indexOf("U"), Re.indexOf("D")],
@@ -6188,13 +6188,13 @@ function No(e) {
   return t;
 }
 var dc;
-function ym() {
-  return dc ?? (dc = Ee().map((e) => Sm(e.centreDestination))), dc;
+function bm() {
+  return dc ?? (dc = Ee().map((e) => Em(e.centreDestination))), dc;
 }
 function Zt(e, n) {
-  return Em(e, ym()[n]);
+  return ym(e, bm()[n]);
 }
-function bm(e) {
+function xm(e) {
   const n = Ee().length, t = new Uint8Array(kt).fill(255), r = new Int32Array(kt), o = No(e);
   t[On(o)] = 0, r[0] = o;
   let i = 1;
@@ -6215,17 +6215,17 @@ var pc = /* @__PURE__ */ new Map();
 function er(e) {
   const n = pc.get(e);
   if (n) return n;
-  const t = bm(Xe[e]);
+  const t = xm(Xe[e]);
   return pc.set(e, t), t;
 }
-function xm(e) {
+function Om(e) {
   return {
     upDown: po(e, Xe[0]),
     frontBack: po(e, Xe[1]),
     leftRight: po(e, Xe[2])
   };
 }
-function Om(e) {
+function Tm(e) {
   return e.upDown === No(Xe[0]) && e.frontBack === No(Xe[1]);
 }
 function hc(e) {
@@ -6241,7 +6241,7 @@ function qr() {
 function Er(e) {
   return Math.floor(e / 2);
 }
-function tf(e) {
+function rf(e) {
   for (let n = 0; n < Z / 2; n += 1) {
     const t = e.wingPermutation[2 * n], r = e.wingPermutation[2 * n + 1];
     if (Er(t) !== Er(r)) return !1;
@@ -6254,11 +6254,11 @@ function Yi(e) {
     if (e.centreColour[t] !== n[t]) return !1;
   return !0;
 }
-function Tm(e) {
-  return Yi(e) && tf(e);
+function Mm(e) {
+  return Yi(e) && rf(e);
 }
-var De = ef(8, 4), mc = De ** 3, Bt;
-function rf() {
+var De = nf(8, 4), mc = De ** 3, Bt;
+function of() {
   if (Bt) return Bt;
   const { centreFace: e } = pn(), n = Xe.map((o) => {
     const i = [];
@@ -6281,20 +6281,20 @@ function rf() {
   return Bt = { slots: n, destination: r }, Bt;
 }
 function ho(e, n) {
-  const { slots: t } = rf(), r = Xe[n][0];
+  const { slots: t } = of(), r = Xe[n][0];
   let o = 0;
   for (const [i, s] of t[n].entries())
     e[s] === r && (o |= 1 << i);
   return o;
 }
-function of(e) {
+function sf(e) {
   return ze(ho(e, 0), 4) + De * ze(ho(e, 1), 4) + De ** 2 * ze(ho(e, 2), 4);
 }
 function Am(e) {
-  return of(e.centreColour);
+  return sf(e.centreColour);
 }
-function Mm() {
-  return of(pn().centreFace);
+function Rm() {
+  return sf(pn().centreFace);
 }
 var jt;
 function mo(e) {
@@ -6314,34 +6314,34 @@ function go(e, n) {
     (e & 1 << r) !== 0 && (t |= 1 << n[r]);
   return t;
 }
-function sf(e, n) {
-  const t = rf().destination[n], r = e % De, o = Math.floor(e / De) % De, i = Math.floor(e / De ** 2);
+function cf(e, n) {
+  const t = of().destination[n], r = e % De, o = Math.floor(e / De) % De, i = Math.floor(e / De ** 2);
   return ze(go(mo(r), t[0]), 4) + De * ze(go(mo(o), t[1]), 4) + De ** 2 * ze(go(mo(i), t[2]), 4);
 }
 var vo;
-function cf() {
+function af() {
   if (vo) return vo;
-  const e = qr().length, n = new Uint8Array(mc).fill(255), t = new Int32Array(mc), r = Mm();
+  const e = qr().length, n = new Uint8Array(mc).fill(255), t = new Int32Array(mc), r = Rm();
   n[r] = 0, t[0] = r;
   let o = 1;
   for (let i = 0; i < o; i += 1) {
     const s = t[i], c = n[s] + 1;
     for (let a = 0; a < e; a += 1) {
-      const u = sf(s, a);
+      const u = cf(s, a);
       n[u] === 255 && (n[u] = c, t[o] = u, o += 1);
     }
   }
   return vo = n, n;
 }
-function af(e) {
-  const n = qr(), t = cf(), r = [];
+function uf(e) {
+  const n = qr(), t = af(), r = [];
   let o = Am(e), i = t[o];
   if (i === 255)
     throw new Error("444-centres: this centre coordinate is unreachable — run phase 1 first");
   for (; i > 0; ) {
     let s = !1;
     for (const [c, a] of n.entries()) {
-      const u = sf(o, c);
+      const u = cf(o, c);
       if (t[u] === i - 1) {
         r.push(a), o = u, i -= 1, s = !0;
         break;
@@ -6360,7 +6360,7 @@ function af(e) {
   [10, 11]
 ].map(([e, n]) => [2 * e, 2 * e + 1, 2 * n, 2 * n + 1]);
 var wo = 552;
-function Rm(e, n) {
+function Pm(e, n) {
   return e * 23 + (n > e ? n - 1 : n);
 }
 function gc(e) {
@@ -6368,7 +6368,7 @@ function gc(e) {
   return [n, t >= n ? t + 1 : t];
 }
 var So;
-function Pm() {
+function _m() {
   if (So) return So;
   const e = qr(), n = Ee(), t = new Uint8Array(wo).fill(255), r = new Int32Array(wo);
   let o = 0;
@@ -6379,7 +6379,7 @@ function Pm() {
   for (let i = 0; i < o; i += 1) {
     const s = r[i], [c, a] = gc(s), u = t[s] + 1;
     for (const f of e) {
-      const l = Rm(
+      const l = Pm(
         n[f].wingDestination[c],
         n[f].wingDestination[a]
       );
@@ -6388,7 +6388,7 @@ function Pm() {
   }
   return So = t, t;
 }
-function _m(e) {
+function Cm(e) {
   const n = [];
   let t = !1;
   for (const r of e) {
@@ -6406,15 +6406,15 @@ function _m(e) {
   }
   return t ? n : void 0;
 }
-function Cm(e) {
+function Um(e) {
   let n = [...e];
   for (; ; ) {
-    const t = _m(n);
+    const t = Cm(n);
     if (!t) return n;
     n = t;
   }
 }
-function Um(e) {
+function Im(e) {
   const n = je(e, Pe), t = new Array(Pe).fill(0);
   let r = 0;
   for (let s = 0; s < Pe - 1; s += 1) {
@@ -6430,15 +6430,15 @@ function Um(e) {
   return { cornerPermutation: n, cornerOrientation: t, wingPermutation: o, centreColour: i };
 }
 var Vt;
-function Im() {
+function Fm() {
   if (Vt) return Vt;
   const e = Z / 2, n = Ee(), t = [];
-  for (const o of fa()) {
+  for (const o of la()) {
     const i = n.findIndex(
       (a) => a.move.depth === 1 && a.move.face === o.face && a.move.amount === o.amount
     );
     if (i < 0) continue;
-    const s = _e(gt, [i]), c = la(Fe, [o]);
+    const s = _e(gt, [i]), c = da(Fe, [o]);
     for (let a = 0; a < e; a += 1) {
       const u = s.wingPermutation[2 * a], f = Math.floor(u / 2);
       f !== a && t.push([a, f, u % 2 ^ c.edgeOrientation[a]]);
@@ -6459,9 +6459,9 @@ function Im() {
   return Vt = r, Vt;
 }
 function mn(e) {
-  if (!tf(e) || !Yi(e))
+  if (!rf(e) || !Yi(e))
     throw new Error("@cubesmith/scrambler: 4x4x4 hand-off needs a reduced cube");
-  const n = Im(), t = new Array(Z / 2), r = new Array(Z / 2);
+  const n = Fm(), t = new Array(Z / 2), r = new Array(Z / 2);
   for (let o = 0; o < Z / 2; o += 1) {
     const i = e.wingPermutation[2 * o], s = Math.floor(i / 2);
     t[o] = s, r[o] = i % 2 ^ n[o] ^ n[s];
@@ -6492,21 +6492,21 @@ function nr(e) {
   const n = e.edgeOrientation.reduce((r, o) => r + o, 0) % 2 !== 0, t = yr(e.cornerPermutation) !== yr(e.edgePermutation);
   return n && t ? "both" : n ? "flip" : t ? "permutation" : "none";
 }
-function Fm(e) {
+function Dm(e) {
   const n = Ee(), t = Array.from({ length: Z }, (r, o) => o);
   for (const r of e)
     for (let o = 0; o < Z; o += 1)
       t[o] = n[r].wingDestination[t[o]];
   return t;
 }
-function Dm(e) {
+function Nm(e) {
   const n = Ee(), { face: t, depth: r, amount: o } = n[e].move, i = o === 2 ? 2 : o === 1 ? 3 : 1, s = n.findIndex(
     (c) => c.move.face === t && c.move.depth === r && c.move.amount === i
   );
   if (s < 0) throw new Error("444-generators: a move without an inverse");
   return s;
 }
-function Nm(e) {
+function Lm(e) {
   for (let n = 0; n < Z; n += 1) {
     const t = n % 2 === 0 ? n + 1 : n - 1;
     if (Math.floor(e[n] / 2) !== Math.floor(e[t] / 2))
@@ -6514,7 +6514,7 @@ function Nm(e) {
   }
   return !0;
 }
-function uf(e) {
+function ff(e) {
   const n = Ee(), t = gt.centreColour;
   let r = t;
   for (const o of e) {
@@ -6528,15 +6528,15 @@ function uf(e) {
   return !0;
 }
 var qt;
-function Lm(e = 4) {
+function $m(e = 4) {
   if (qt) return qt;
   const n = Ee(), t = n.map((c, a) => ({ table: c, index: a })).filter(({ table: c }) => c.move.depth === 2).map(({ index: c }) => c), r = n.map((c, a) => ({ table: c, index: a })).filter(({ table: c }) => c.move.depth === 1).map(({ index: c }) => c), o = /* @__PURE__ */ new Map(), i = [], s = (c, a, u) => {
     if (i.length > 0) {
-      const f = [c, ...i, a], l = Fm(f);
-      if (!Nm(l) && uf(f)) {
+      const f = [c, ...i, a], l = Dm(f);
+      if (!Lm(l) && ff(f)) {
         let d = 0;
-        for (let A = 0; A < Z; A += 1)
-          l[A] !== A && (d += 1);
+        for (let M = 0; M < Z; M += 1)
+          l[M] !== M && (d += 1);
         const p = l.join(","), v = o.get(p);
         (!v || v.moves.length > f.length) && o.set(p, {
           moves: f,
@@ -6552,7 +6552,7 @@ function Lm(e = 4) {
         u >= 0 && n[f].move.face === n[u].move.face || (i.push(f), s(c, a, f), i.pop());
   };
   for (const c of t)
-    s(c, Dm(c), -1);
+    s(c, Nm(c), -1);
   return qt = [...o.values()].sort(
     (c, a) => c.support - a.support || c.moves.length - a.moves.length
   ), qt;
@@ -6560,7 +6560,7 @@ function Lm(e = 4) {
 var Gt;
 function Hi() {
   if (Gt) return Gt;
-  const e = Lm(4), n = e.filter((r) => r.support === 6), t = /* @__PURE__ */ new Map();
+  const e = $m(4), n = e.filter((r) => r.support === 6), t = /* @__PURE__ */ new Map();
   for (const r of n)
     for (const o of e) {
       const i = new Array(Z);
@@ -6590,7 +6590,7 @@ function Tn(e) {
     vc(e[2 * t]) === vc(e[2 * t + 1]) && (n += 1);
   return n;
 }
-function $m(e) {
+function km(e) {
   return Tn(e) === Z / 2;
 }
 function rt(e, n) {
@@ -6608,10 +6608,10 @@ var wc = class extends Error {
     this.name = "PairingStalledError", this.paired = n;
   }
 }, Kt;
-function km() {
-  ff();
+function Bm() {
+  lf();
 }
-function ff() {
+function lf() {
   if (Kt) return Kt;
   const e = Hi(), n = e.length, t = new Uint8Array(n * Z), r = new Uint8Array(n * Z), o = new Uint8Array(n);
   return e.forEach((i, s) => {
@@ -6623,28 +6623,28 @@ function ff() {
     o[s] = i.moves.length;
   }), Kt = { destination: t, source: r, length: o, count: n }, Kt;
 }
-function Bm(e) {
+function jm(e) {
   let n = 0;
   for (let t = 0; t < Z / 2; t += 1)
     e[2 * t] >> 1 === e[2 * t + 1] >> 1 && (n += 1);
   return n;
 }
-var Sc = 64, jm = 4;
-function Vm(e) {
-  const n = Hi(), { destination: t, source: r, length: o, count: i } = ff(), s = new Uint8Array(Z);
+var Sc = 64, Vm = 4;
+function qm(e) {
+  const n = Hi(), { destination: t, source: r, length: o, count: i } = lf(), s = new Uint8Array(Z);
   for (let d = 0; d < Z; d += 1) s[d] = e.wingPermutation[d];
   let c = [{ wings: s, moves: 0, path: [] }], a;
   const u = Z / 2, f = (d, p) => {
-    const v = p * Z, A = new Uint8Array(Z);
+    const v = p * Z, M = new Uint8Array(Z);
     for (let C = 0; C < Z; C += 1)
-      A[t[v + C]] = d.wings[C];
-    return A;
+      M[t[v + C]] = d.wings[C];
+    return M;
   };
   for (let d = 0; d < u && c.length > 0; d += 1) {
     const p = Sc * 2, v = [];
-    let A = 1 / 0;
+    let M = 1 / 0;
     for (const L of c) {
-      const R = L.wings, G = Bm(R);
+      const R = L.wings, G = jm(R);
       for (let $ = 0; $ < i; $ += 1) {
         const K = $ * Z;
         let ee = 0;
@@ -6659,11 +6659,11 @@ function Vm(e) {
           a = { wings: f(L, $), moves: Q, path: [...L.path, $] };
           continue;
         }
-        const re = Q + (u - ee) * jm;
-        if (v.length >= p && re >= A) continue;
+        const re = Q + (u - ee) * Vm;
+        if (v.length >= p && re >= M) continue;
         let j = v.length;
         for (; j > 0 && v[j - 1].score > re; ) j -= 1;
-        v.splice(j, 0, { node: L, generator: $, moves: Q, score: re }), v.length > p && v.pop(), A = v[v.length - 1].score;
+        v.splice(j, 0, { node: L, generator: $, moves: Q, score: re }), v.length > p && v.pop(), M = v[v.length - 1].score;
       }
     }
     if (v.length === 0) break;
@@ -6688,15 +6688,15 @@ function Vm(e) {
     steps: a.path.length
   };
 }
-function lf(e, n = 40) {
-  return Vm(e) ?? qm(e, n);
+function df(e, n = 40) {
+  return qm(e) ?? Gm(e, n);
 }
-function qm(e, n = 40) {
+function Gm(e, n = 40) {
   const t = Hi();
   let r = [...e.wingPermutation];
   const o = [];
   let i = 0;
-  for (; !$m(r); ) {
+  for (; !km(r); ) {
     if (i >= n) throw new wc(Tn(r));
     const s = Tn(r);
     let c;
@@ -6709,21 +6709,21 @@ function qm(e, n = 40) {
       r = rt(r, c.generator), o.push(...c.generator.moves), i += 1;
       continue;
     }
-    const a = Gm(t, r, s);
+    const a = Km(t, r, s);
     if (!a) throw new wc(s);
     for (const u of a)
       r = rt(r, u), o.push(...u.moves), i += 1;
   }
   return { moves: o, wingPermutation: r, steps: i };
 }
-function Gm(e, n, t) {
+function Km(e, n, t) {
   const r = e.map((o) => ({ generator: o, wings: rt(n, o) })).map((o) => ({ ...o, paired: Tn(o.wings) })).filter((o) => o.paired >= t - 3).sort((o, i) => i.paired - o.paired || o.generator.moves.length - i.generator.moves.length);
   for (const o of r)
     for (const i of e)
       if (Tn(rt(o.wings, i)) > t)
         return [o.generator, i];
 }
-function Km(e) {
+function Xm(e) {
   let n = e >>> 0;
   return () => {
     n = n + 1831565813 | 0;
@@ -6731,19 +6731,19 @@ function Km(e) {
     return t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t, (t ^ t >>> 14) >>> 0;
   };
 }
-function Xm(e) {
+function Wm(e) {
   let n = 2166136261;
   for (let t = 0; t < e.length; t += 1)
     n ^= e.charCodeAt(t), n = Math.imul(n, 16777619);
   return n >>> 0;
 }
-function Wm(e) {
-  return typeof e == "string" ? Xm(e) : Math.floor(e) >>> 0;
-}
 function Ym(e) {
-  return { nextUint32: Km(Wm(e)) };
+  return typeof e == "string" ? Wm(e) : Math.floor(e) >>> 0;
 }
-function Hm() {
+function Hm(e) {
+  return { nextUint32: Xm(Ym(e)) };
+}
+function zm() {
   const e = globalThis.crypto;
   return e && typeof e.getRandomValues == "function" ? {
     nextUint32: () => {
@@ -6754,23 +6754,23 @@ function Hm() {
     nextUint32: () => Math.floor(Math.random() * 4294967296)
   };
 }
-function df(e) {
-  return e !== void 0 ? Ym(e) : Hm();
+function pf(e) {
+  return e !== void 0 ? Hm(e) : zm();
 }
 var Ec;
-function zm() {
+function Jm() {
   return Ec ?? (Ec = Ee().map((e) => ({
     axis: st(e.move),
     layerSet: cn(e.move)
   }))), Ec;
 }
-function pf(e, n = {}) {
-  const t = xm(e), r = n.maxLength ?? 12, o = n.maxSolutions ?? 1, i = n.visit, s = zm(), c = s.length, a = [], u = [];
+function hf(e, n = {}) {
+  const t = Om(e), r = n.maxLength ?? 12, o = n.maxSolutions ?? 1, i = n.visit, s = Jm(), c = s.length, a = [], u = [];
   let f = !1;
-  const l = (p, v, A, C, L, R) => {
+  const l = (p, v, M, C, L, R) => {
     if (f) return;
-    const G = { upDown: p, frontBack: v, leftRight: A }, $ = hc(G);
-    if ($ === 0 && Om(G)) {
+    const G = { upDown: p, frontBack: v, leftRight: M }, $ = hc(G);
+    if ($ === 0 && Tm(G)) {
       if (C !== L) return;
       i ? i(u) && (f = !0) : (a.push([...u]), a.length >= o && (f = !0));
       return;
@@ -6780,7 +6780,7 @@ function pf(e, n = {}) {
         if (!(R >= 0 && (s[K].layerSet === s[R].layerSet || s[K].axis === s[R].axis && s[K].layerSet < s[R].layerSet)) && (u.push(K), l(
           Zt(p, K),
           Zt(v, K),
-          Zt(A, K),
+          Zt(M, K),
           C + 1,
           L,
           K
@@ -6793,12 +6793,12 @@ function pf(e, n = {}) {
   return a;
 }
 function zi(e) {
-  const [n] = pf(e);
+  const [n] = hf(e);
   if (!n)
     throw new Error("444-phase1: no solution within the length cap — the tables are wrong");
   return n;
 }
-function Jm(e) {
+function Qm(e) {
   const n = new Array(e.length).fill(!1);
   let t = 0;
   for (let r = 0; r < e.length; r += 1) {
@@ -6810,12 +6810,12 @@ function Jm(e) {
   }
   return t % 2;
 }
-function hf(e) {
-  return Jm(e);
+function mf(e) {
+  return Qm(e);
 }
-var Qm = 48, tr;
+var Zm = 48, tr;
 function yo(e = 0) {
-  tr ?? (tr = mf());
+  tr ?? (tr = gf());
   const n = tr[e];
   if (!n)
     throw new Error(
@@ -6823,25 +6823,25 @@ function yo(e = 0) {
     );
   return n;
 }
-function Zm() {
-  tr ?? (tr = mf());
+function eg() {
+  tr ?? (tr = gf());
 }
-function mf() {
-  const e = Ee(), n = df("cubesmith 4x4x4 odd wing gadget"), t = [];
-  for (let r = 0; t.length < Qm; r += 1) {
+function gf() {
+  const e = Ee(), n = pf("cubesmith 4x4x4 odd wing gadget"), t = [];
+  for (let r = 0; t.length < Zm; r += 1) {
     if (r >= 2e4)
       throw new Error(`@cubesmith/scrambler: only ${t.length} odd-wing gadgets found`);
     const o = Array.from(
       { length: 3 + r % 6 },
       () => we(n, e.length)
-    ), i = _e(gt, o), s = zi(i), c = _e(i, s), a = [...o, ...s, ...af(c)], u = _e(gt, a);
-    !Yi(u) || !uf(a) || hf(u.wingPermutation) === 1 && t.push(a);
+    ), i = _e(gt, o), s = zi(i), c = _e(i, s), a = [...o, ...s, ...uf(c)], u = _e(gt, a);
+    !Yi(u) || !ff(a) || mf(u.wingPermutation) === 1 && t.push(a);
   }
   return t.map((r, o) => ({ moves: r, discovered: o })).sort((r, o) => r.moves.length - o.moves.length || r.discovered - o.discovered).map((r) => r.moves);
 }
-function eg(e, n) {
-  const t = _e(e, n), r = af(t), o = _e(t, r), i = lf(o), s = _e(o, i.moves);
-  if (!Tm(s))
+function ng(e, n) {
+  const t = _e(e, n), r = uf(t), o = _e(t, r), i = df(o), s = _e(o, i.moves);
+  if (!Mm(s))
     throw new Error("@cubesmith/scrambler: 4x4x4 reduction did not reduce");
   return {
     moves: [...n, ...r, ...i.moves],
@@ -6850,7 +6850,7 @@ function eg(e, n) {
     pairingMoves: i.moves.length
   };
 }
-function ng(e) {
+function tg(e) {
   switch (nr(mn(e))) {
     case "none":
       return 0;
@@ -6860,45 +6860,45 @@ function ng(e) {
       return 1;
   }
 }
-var tg = 4, rg = 2, og = 3e3;
-function ig(e, n) {
-  return hf(_e(e, n).wingPermutation) === 0;
-}
+var rg = 4, og = 2, ig = 3e3;
 function sg(e, n) {
+  return mf(_e(e, n).wingPermutation) === 0;
+}
+function cg(e, n) {
   const t = zi(e).length, r = [];
   let o = 0;
-  return pf(e, {
-    maxLength: t + rg,
-    visit: (i) => (o += 1, ig(e, i) && r.push([...i]), r.length >= n || o >= og)
+  return hf(e, {
+    maxLength: t + og,
+    visit: (i) => (o += 1, sg(e, i) && r.push([...i]), r.length >= n || o >= ig)
   }), r;
 }
-function cg(e, n = tg) {
-  const t = [...sg(e, n), zi(e)];
+function ag(e, n = rg) {
+  const t = [...cg(e, n), zi(e)];
   let r;
   for (const o of t) {
-    const i = eg(e, o), s = ng(i.state);
+    const i = ng(e, o), s = tg(i.state);
     if ((!r || s < r.passes || s === r.passes && i.moves.length < r.reduction.moves.length) && (r = { reduction: i, passes: s }), s === 0) break;
   }
   return r.reduction;
 }
 var Lo = 8, $o = 6;
-function ag(e) {
+function ug(e) {
   return (e + 17) % (Lo * $o);
 }
-var An = class extends Error {
+var Mn = class extends Error {
   constructor(e) {
     super(`@cubesmith/scrambler: ${e}`), this.name = "Solve444Error";
   }
 };
-function ug(e, n) {
+function fg(e, n) {
   const t = Ee().findIndex(
     (r) => r.move.depth === 1 && r.move.face === e && r.move.amount === n
   );
-  if (t < 0) throw new An(`no 4x4x4 outer move for ${e}${n}`);
+  if (t < 0) throw new Mn(`no 4x4x4 outer move for ${e}${n}`);
   return t;
 }
 var yc;
-function fg(e) {
+function lg(e) {
   yc ?? (yc = new Map(
     Ee().map((t, r) => [
       `${t.move.face}${t.move.depth}${t.move.amount}`,
@@ -6907,27 +6907,27 @@ function fg(e) {
   ));
   const n = yc.get(`${e.face}${e.depth}${e.amount}`);
   if (n === void 0)
-    throw new An(`no 4x4x4 move for ${e.face} depth ${e.depth} x${e.amount}`);
+    throw new Mn(`no 4x4x4 move for ${e.face} depth ${e.depth} x${e.amount}`);
   return n;
 }
-function lg(e) {
-  const n = Ee();
-  return Cm(e.map((r) => n[r].move)).map(fg);
-}
 function dg(e) {
-  const n = cg(e), t = [...n.moves];
+  const n = Ee();
+  return Um(e.map((r) => n[r].move)).map(lg);
+}
+function pg(e) {
+  const n = ag(e), t = [...n.moves];
   let r = n.state;
   for (let s = 0; !Eo(mn(r)); s += 1) {
     if (s >= Lo)
-      throw new An(
+      throw new Mn(
         `4x4x4 parity unresolved after ${Lo} passes (${nr(mn(r))})`
       );
     const c = nr(mn(r)) === "permutation";
     let a;
     for (let u = 0; u < $o; u += 1) {
-      const f = s * $o + u, l = c ? [...yo(f), ...yo(ag(f))] : yo(f), d = _e(r, l), p = lf(d), v = _e(d, p.moves), A = { moves: [...l, ...p.moves], state: v };
-      if (a ?? (a = A), Eo(mn(v))) {
-        a = A;
+      const f = s * $o + u, l = c ? [...yo(f), ...yo(ug(f))] : yo(f), d = _e(r, l), p = df(d), v = _e(d, p.moves), M = { moves: [...l, ...p.moves], state: v };
+      if (a ?? (a = M), Eo(mn(v))) {
+        a = M;
         break;
       }
     }
@@ -6935,80 +6935,80 @@ function dg(e) {
   }
   const o = mn(r);
   if (!Eo(o))
-    throw new An(
+    throw new Mn(
       `4x4x4 parity fix left the cube unreachable (${nr(o)})`
     );
   for (const s of Ti(o))
-    t.push(ug(s.face, s.amount));
-  const i = lg(t);
-  if (!Qu(_e(e, i)))
-    throw new An("4x4x4 solution does not solve the cube");
+    t.push(fg(s.face, s.amount));
+  const i = dg(t);
+  if (!Zu(_e(e, i)))
+    throw new Mn("4x4x4 solution does not solve the cube");
   return i;
 }
-function gf(e) {
+function vf(e) {
   const n = Ee(), t = n.map((r) => r.move);
   for (let r = 0; r < 64; r += 1) {
-    const o = Um(e);
+    const o = Im(e);
     if (!ti(
       o,
       n.map((s, c) => c),
       (s, c) => _e(s, [c]),
-      Qu
+      Zu
     ))
       continue;
-    const i = dg(o).map((s) => t[s]);
-    return ma(qd(i));
+    const i = pg(o).map((s) => t[s]);
+    return ga(Gd(i));
   }
-  throw new An("4x4x4 draw never cleared the two-move floor");
+  throw new Mn("4x4x4 draw never cleared the two-move floor");
 }
-function vf() {
-  Ee(), Zm(), km(), cf();
+function wf() {
+  Ee(), eg(), Bm(), af();
   for (let e = 0; e < Xe.length; e += 1) er(e);
-  Pm(), Rr();
+  _m(), Rr();
 }
-function pg() {
-  Te("444", (e) => gf(e), "random-state", vf);
+function hg() {
+  Te("444", (e) => vf(e), "random-state", wf);
 }
 var ko = 4, Jn = (() => {
-  const e = fu.find((n) => n.event === "555");
+  const e = lu.find((n) => n.event === "555");
   if (!e) throw new Error("variants: 555 is missing from RANDOM_MOVE_CUBES");
   return e;
 })();
 function bc(e) {
   return Cn(
     ct,
-    () => si(Qa(e), e, ct)
-  );
-}
-function hg(e) {
-  return Cn(
-    ko,
-    () => si(gf(e), e, ko)
+    () => si(Za(e), e, ct)
   );
 }
 function mg(e) {
   return Cn(
+    ko,
+    () => si(vf(e), e, ko)
+  );
+}
+function gg(e) {
+  return Cn(
     Jn.size,
     () => si(
-      lu(e, Jn.size, Jn.length),
+      du(e, Jn.size, Jn.length),
       e,
       Jn.size
     )
   );
 }
-function gg() {
-  Te("333oh", (e) => Za(e), "random-state", bo), Te("333bf", bc, "random-state", bo), Te("444bf", hg, "random-state", vg), Te("555bf", mg, "random-moves", wg), Ad("333mbf", bc, "random-state", bo);
+function vg() {
+  Te("333oh", (e) => eu(e), "random-state", bo), Te("333bf", bc, "random-state", bo), Te("444bf", mg, "random-state", wg), Te("555bf", gg, "random-moves", Sg), Rd("333mbf", bc, "random-state", bo);
 }
 function bo() {
   Rr(), _r(ct);
 }
-function vg() {
-  vf(), _r(ko);
-}
 function wg() {
+  wf(), _r(ko);
+}
+function Sg() {
   _r(Jn.size);
 }
-var Sg = class extends Error {
+var Sf = class extends Error {
   constructor(n) {
     super(`@cubesmith/scrambler: no scrambler is registered for event "${n}" yet`);
     Yn(this, "event");
@@ -7045,10 +7045,10 @@ function yg(e, n) {
   return n;
 }
 async function bg(e, n = {}) {
-  const t = Md(e);
+  const t = ua(e);
   if (!t)
-    throw new Sg(e);
-  const r = df(n.seed);
+    throw new Sf(e);
+  const r = pf(n.seed);
   if (!t.multiScramble && n.count !== void 0)
     throw new rr(
       e,
@@ -7063,7 +7063,14 @@ async function bg(e, n = {}) {
     t.multiScramble ? yg(e, n.count) : 1
   );
 }
-var xg = {
+async function xg(e) {
+  var t;
+  const n = ua(e);
+  if (!n)
+    throw new Sf(e);
+  (t = n.prepare) == null || t.call(n);
+}
+var Og = {
   minx: "megaminx",
   clock: "clock",
   pyram: "pyraminx",
@@ -7071,41 +7078,50 @@ var xg = {
   sq1: "square1"
 };
 new Set(
-  Object.keys(xg)
+  Object.keys(Og)
 );
-Id();
-Y0();
-np();
-jh();
-T1();
-Pp();
-Zp();
-th();
-lm();
-pg();
-gg();
-async function Og(e = {}) {
+Fd();
+Hp();
+t0();
+Vh();
+M1();
+_0();
+eh();
+rh();
+dm();
+hg();
+vg();
+async function Ng() {
+  await xg("444");
+}
+async function Tg(e = {}) {
   if (e.randomWord !== void 0)
     throw new TypeError(
       "The 4x4 backend does not support randomWord injection; use seed for reproducible tests"
     );
-  const n = e.seed === void 0 ? {} : { seed: e.seed }, t = await bg("444", n), r = t.moves.trim(), o = r.split(/\s+/), i = Xl($c(), o);
-  if (kl(i))
+  const n = e.seed === void 0 ? {} : { seed: e.seed }, t = performance.now(), r = await bg(
+    "444",
+    n
+  ), o = performance.now(), i = r.moves.trim(), s = i.split(/\s+/), c = performance.now(), a = Yl($c(), s), u = performance.now();
+  if (console.log({
+    backendMs: Math.round(o - t),
+    replayMs: Math.round(u - c)
+  }), jl(a))
     throw new Error("The 4x4 backend returned a solved scramble state");
   return {
     event: "444",
-    notation: r,
-    moves: o,
-    state: i,
-    method: t.quality,
+    notation: i,
+    moves: s,
+    state: a,
+    method: r.quality,
     backend: "@cubesmith/scrambler"
   };
 }
 const Oc = [-1, 0, 1];
-function wf(e, n) {
+function Ef(e, n) {
   return `${e.join(",")}|${n.join(",")}`;
 }
-function Tg() {
+function Mg() {
   const e = [];
   for (const n of ur) {
     const t = $e.find(
@@ -7139,23 +7155,23 @@ function Tg() {
           face: n,
           position: c,
           normal: t,
-          key: wf(c, t)
+          key: Ef(c, t)
         });
       }
   }
   return e;
 }
-const or = Tg(), Ag = new Map(
+const or = Mg(), Ag = new Map(
   or.map((e, n) => [e.key, n])
 );
-function Mg(e) {
+function Rg(e) {
   return e === -3 ? -1 : e === 3 ? 1 : 0;
 }
-function Rg(e) {
+function Pg(e) {
   Bc(e);
   const n = or.map(() => []);
   for (let r = 0; r < $e.length; r++) {
-    const o = $e[r], i = o.position.map(Mg), s = wf(i, o.normal), c = Ag.get(s);
+    const o = $e[r], i = o.position.map(Rg), s = Ef(i, o.normal), c = Ag.get(s);
     if (c === void 0)
       throw new Error("Could not map a 4x4 sticker to the 3x3 layout");
     n[c].push(e[r]);
@@ -7180,24 +7196,24 @@ function Rg(e) {
   }
   return t.join("");
 }
-function Dg() {
-  return Rg($c());
+function Lg() {
+  return Pg($c());
 }
-function Pg(e) {
+function _g(e) {
   if (typeof e != "string" || !/^[a-z0-9]+$/.test(e))
     throw new TypeError(
       "Event ID must be a non-empty lowercase alphanumeric string"
     );
 }
-function _g(e) {
+function Cg(e) {
   if (typeof e != "function")
     throw new TypeError("Event generator must be a function");
 }
-function Cg() {
+function Ug() {
   const e = /* @__PURE__ */ new Map();
   return Object.freeze({
     register(n, t) {
-      if (Pg(n), _g(t), e.has(n))
+      if (_g(n), Cg(t), e.has(n))
         throw new RangeError(`Event "${n}" is already registered`);
       e.set(n, t);
     },
@@ -7209,49 +7225,50 @@ function Cg() {
     }
   });
 }
-const Bo = Cg();
-let Sf = Object.freeze([]);
+const Bo = Ug();
+let yf = Object.freeze([]);
 function Gr(e, n) {
-  Bo.register(e, n), Sf = Bo.list();
+  Bo.register(e, n), yf = Bo.list();
 }
-function Ug(e) {
+function Ig(e) {
   return Bo.get(e);
 }
 Gr(
   "333",
-  ({ randomWord: e } = {}) => Bf(e)
+  ({ randomWord: e } = {}) => Vf(e)
 );
 Gr(
   "222",
-  ({ randomWord: e } = {}) => pl(e)
+  ({ randomWord: e } = {}) => ml(e)
 );
 Gr(
   "pyram",
-  ({ randomWord: e } = {}) => Il(e)
+  ({ randomWord: e } = {}) => Dl(e)
 );
 Gr(
   "444",
-  (e = {}) => Og(e)
+  (e = {}) => Tg(e)
 );
-async function Ng(e = "333", n = {}) {
+async function $g(e = "333", n = {}) {
   if (!n || typeof n != "object" || Array.isArray(n))
     throw new TypeError("options must be an object");
   if (n.randomWord !== void 0 && typeof n.randomWord != "function")
     throw new TypeError("options.randomWord must be a function");
-  const t = Ug(e);
+  const t = Ig(e);
   if (!t)
     throw new RangeError(
-      `Unsupported event "${e}". Supported events: ${Sf.join(", ")}`
+      `Unsupported event "${e}". Supported events: ${yf.join(", ")}`
     );
   return await t(n);
 }
 export {
-  Sf as events,
-  Ng as generate,
-  kl as isSolved444State,
+  yf as events,
+  $g as generate,
+  jl as isSolved444State,
   kc as isValid444State,
+  Ng as prepare444Scrambler,
   Gr as registerEvent,
   $c as solved444State,
-  Dg as solvedReduced3x3Facelets,
-  Rg as toReduced3x3Facelets
+  Lg as solvedReduced3x3Facelets,
+  Pg as toReduced3x3Facelets
 };

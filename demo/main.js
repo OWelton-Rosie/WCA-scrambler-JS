@@ -1,4 +1,9 @@
-import { generate, events } from "../dist/wca-scramble.es.js";
+
+import {
+  generate,
+  events,
+  prepare444Scrambler
+} from "../dist/wca-scramble.es.js";
 import "./style.css";
 
 const eventSelect = document.querySelector("#event-select");
@@ -51,8 +56,31 @@ let currentScramble = null;
 let history = [];
 let generating = false;
 
+let prepared444 = false;
+let preparing444 = false;
+let prepare444Promise = null;
+
 function eventName(event) {
   return EVENT_NAMES[event] ?? event;
+}
+
+function updateControls() {
+  const busy = generating || preparing444;
+  const hasEvents = events.length > 0;
+
+  generateButton.disabled = busy || !hasEvents;
+  eventSelect.disabled = busy || !hasEvents;
+
+  if (preparing444) {
+    generateButton.innerHTML =
+      '<span class="spinner" aria-hidden="true"></span> Preparing 4×4…';
+  } else if (generating) {
+    generateButton.innerHTML =
+      '<span class="spinner" aria-hidden="true"></span> Generating…';
+  } else {
+    generateButton.innerHTML =
+      '<span aria-hidden="true">↻</span> Generate scramble';
+  }
 }
 
 function populateEvents() {
@@ -74,12 +102,9 @@ function populateEvents() {
     eventSelect.value = "333";
   }
 
-  const hasEvents = supportedEvents.length > 0;
+  updateControls();
 
-  eventSelect.disabled = !hasEvents;
-  generateButton.disabled = !hasEvents;
-
-  if (!hasEvents) {
+  if (supportedEvents.length === 0) {
     setStatus("No puzzle generators are registered in the library.", "error");
   }
 }
@@ -91,12 +116,38 @@ function setStatus(message, type = "normal") {
 
 function setGenerating(value) {
   generating = value;
-  generateButton.disabled = value || events.length === 0;
-  eventSelect.disabled = value || events.length === 0;
+  updateControls();
+}
 
-  generateButton.innerHTML = value
-    ? '<span class="spinner" aria-hidden="true"></span> Generating…'
-    : '<span aria-hidden="true">↻</span> Generate scramble';
+/**
+ * Prepare the 4x4 backend once, sharing the promise between callers.
+ */
+async function ensure444Prepared() {
+  if (prepared444) return;
+
+  if (prepare444Promise) {
+    return prepare444Promise;
+  }
+
+  preparing444 = true;
+  updateControls();
+
+  setStatus(
+    "Preparing the 4×4 solver. First-time preparation may take several seconds."
+  );
+
+  prepare444Promise = (async () => {
+    try {
+      await prepare444Scrambler();
+      prepared444 = true;
+    } finally {
+      preparing444 = false;
+      prepare444Promise = null;
+      updateControls();
+    }
+  })();
+
+  return prepare444Promise;
 }
 
 function renderScramble(result, elapsedMs) {
@@ -173,20 +224,26 @@ function renderHistory() {
 }
 
 async function generateScramble() {
-  if (generating) return;
+  if (generating || preparing444) return;
 
   if (!events.includes(eventSelect.value)) {
     setStatus("Select a supported puzzle event first.", "error");
     return;
   }
 
-  setGenerating(true);
-  setStatus("Generating scramble…");
+  const event = eventSelect.value;
 
-  const startedAt = performance.now();
+  setGenerating(true);
 
   try {
-    const event = eventSelect.value;
+    // Ensure cold-start work happens before measuring scramble generation.
+    if (event === "444") {
+      await ensure444Prepared();
+    }
+
+    setStatus("Generating scramble…");
+
+    const startedAt = performance.now();
     const result = await generate(event);
     const elapsedMs = performance.now() - startedAt;
 
@@ -253,8 +310,31 @@ generateButton.addEventListener("click", generateScramble);
 copyButton.addEventListener("click", copyScramble);
 clearHistoryButton.addEventListener("click", clearHistory);
 
-eventSelect.addEventListener("change", () => {
-  setStatus(`Selected event: ${eventName(eventSelect.value)}.`);
+eventSelect.addEventListener("change", async () => {
+  const event = eventSelect.value;
+
+  if (event !== "444") {
+    setStatus(`Selected event: ${eventName(event)}.`);
+    return;
+  }
+
+  try {
+    await ensure444Prepared();
+
+    setStatus(
+      "4×4 solver ready. You can now generate scrambles.",
+      "success"
+    );
+  } catch (error) {
+    console.error("4×4 solver preparation failed:", error);
+
+    setStatus(
+      error instanceof Error
+        ? `4×4 preparation failed: ${error.message}`
+        : "4×4 preparation failed.",
+      "error"
+    );
+  }
 });
 
 document.addEventListener("keydown", event => {
