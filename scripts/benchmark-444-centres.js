@@ -1,11 +1,11 @@
 import { randomInt } from "../src/core/random.js";
 import { applyMoves, parseMove, MOVE_NAMES } from "../src/puzzles/444/moves.js";
-import { solveCentresBounded } from "../src/puzzles/444/centre-solver.js";
+import { estimateCentreDistance, solveCentresBounded } from "../src/puzzles/444/centre-solver.js";
 import { solvedState } from "../src/puzzles/444/state.js";
 
-const LENGTHS = [1, 2, 3, 4, 5, 6];
-const TRIALS_PER_LENGTH = 3;
-const MAX_DEPTH = 5;
+const LENGTHS = [1, 2, 3, 4, 5, 6, 7, 8];
+const TRIALS_PER_LENGTH = 5;
+const MAX_DEPTH = 7;
 const MAX_NODES = 25_000;
 
 const INNER_MOVES = MOVE_NAMES.filter((move) => move.startsWith("2"));
@@ -49,6 +49,7 @@ function benchmarkCase(length, trial) {
   const seed = (0x44400000 + length * 100 + trial) >>> 0;
   const scramble = makeCentreScramble(length, seed);
   const state = applyMoves(solvedState(), scramble);
+  const estimate = estimateCentreDistance(state);
   const start = process.hrtime.bigint();
 
   try {
@@ -63,6 +64,7 @@ function benchmarkCase(length, trial) {
       trial,
       seed,
       scramble: scramble.join(" "),
+      estimate,
       status: "solved",
       depth: result.depth,
       nodes: result.nodesVisited,
@@ -78,6 +80,7 @@ function benchmarkCase(length, trial) {
       trial,
       seed,
       scramble: scramble.join(" "),
+      estimate,
       status: Number(message.match(/visited (\d+) nodes/)?.[1] ?? 0) >= MAX_NODES
         ? "node-limit"
         : "depth-limit",
@@ -102,6 +105,7 @@ for (const length of LENGTHS) {
         `trial=${result.trial}`,
         `seed=${result.seed}`,
         `status=${result.status}`,
+        `h=${result.estimate}`,
         `depth=${result.depth === "" ? "-" : result.depth}`,
         `nodes=${result.nodes}`,
         `ms=${result.elapsedMs.toFixed(2)}`,
@@ -136,5 +140,6 @@ for (const length of LENGTHS) {
 console.log(
   `\nConfiguration: ${TRIALS_PER_LENGTH} trials/length, ` +
   `maxDepth=${MAX_DEPTH}, maxNodes=${MAX_NODES} per case. ` +
-  "Results are reproducible for this code version and Node runtime."
+  "The h column is the new admissible centre-distance estimate. " +
+  "Seeds and scrambles are reproducible for this code version and Node runtime."
 );
