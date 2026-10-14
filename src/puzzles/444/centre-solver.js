@@ -206,10 +206,19 @@ function centreLowerBound(state) {
     farthestSticker = Math.max(farthestSticker, distance);
   }
 
+  // The assignment abstraction assumes four centre stickers per colour.
+  // If given a colour-count-valid but impossible facelet state, avoid indexing
+  // beyond the four home slots; the search will fail cleanly rather than throw
+  // an incidental TypeError while evaluating the heuristic.
+  const hasFourCentresPerColour = [...positionsByColour.values()]
+    .every((positions) => positions.length === 4);
+
   let assignmentDistanceSum = 0;
 
-  for (const [colour, positions] of positionsByColour) {
-    assignmentDistanceSum += minimumCentreAssignmentDistance(positions, colour);
+  if (hasFourCentresPerColour) {
+    for (const [colour, positions] of positionsByColour) {
+      assignmentDistanceSum += minimumCentreAssignmentDistance(positions, colour);
+    }
   }
 
   // Assigning each colour's four stickers to four distinct home slots gives
