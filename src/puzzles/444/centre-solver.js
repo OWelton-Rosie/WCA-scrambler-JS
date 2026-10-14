@@ -125,7 +125,6 @@ function buildCentreStickerDistances() {
   return distancesByColour;
 }
 
-const CENTRE_STICKER_DISTANCES = buildCentreStickerDistances();
 
 function centreLowerBound(state) {
   let misplaced = 0;
@@ -175,6 +174,8 @@ function sliceKey(move) {
 
 // Outer and wide turns do not provide additional centre-colour moves.
 const CENTRE_MOVES = MOVE_NAMES.filter((move) => move.startsWith("2"));
+
+const CENTRE_STICKER_DISTANCES = buildCentreStickerDistances();
 
 /**
  * Search for a sequence that solves the centres of a 4x4 state.
