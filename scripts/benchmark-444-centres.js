@@ -78,7 +78,7 @@ function benchmarkCase(length, trial) {
       trial,
       seed,
       scramble: scramble.join(" "),
-      status: /node limit/i.test(message) ? "node-limit" : "depth-limit",
+      status: Number(message.match(/visited (\\d+) nodes/)?.[1] ?? 0) >= MAX_NODES\n        ? "node-limit"\n        : "depth-limit",
       depth: "",
       nodes: Number(message.match(/visited (\d+) nodes/)?.[1] ?? MAX_NODES),
       elapsedMs,
