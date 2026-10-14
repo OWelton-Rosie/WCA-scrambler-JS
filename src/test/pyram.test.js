@@ -38,7 +38,7 @@ function assertSameState(actual, expected) {
 }
 
 test("advertises the Pyraminx event", () => {
-  assert.deepEqual(events, ["333", "222", "pyram"]);
+  assert.deepEqual(events, ["333", "222", "pyram", "444"]);
 });
 
 test("identity state is legal and solved", () => {
