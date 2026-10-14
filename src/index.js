@@ -1,7 +1,17 @@
-
 import { generate333 } from "./puzzles/333/scramble.js";
 import { generate222 } from "./puzzles/222/scramble.js";
 import { generatePyram } from "./puzzles/pyram/scramble.js";
+
+import {
+  solvedState as solved444State,
+  isValidState as isValid444State,
+  isSolved as isSolved444State
+} from "./puzzles/444/state.js";
+
+import {
+  toReduced3x3Facelets,
+  solvedReduced3x3Facelets
+} from "./puzzles/444/reduced.js";
 
 import {
   events,
@@ -22,6 +32,14 @@ registerEvent("pyram", ({ randomWord } = {}) =>
 );
 
 export { events, registerEvent };
+
+export {
+  solved444State,
+  isValid444State,
+  isSolved444State,
+  toReduced3x3Facelets,
+  solvedReduced3x3Facelets
+};
 
 export async function generate(event = "333", options = {}) {
   if (

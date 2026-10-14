@@ -1,0 +1,28 @@
+name: PR Quality Check
+
+# This tells GitHub to run the action on pull request events
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  test-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the PR branch code onto the runner
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Step 3: Install project dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # Step 4: Run tests
+      - name: Run tests
+        run: npm test

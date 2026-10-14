@@ -29,8 +29,8 @@ function seededRandomWord(seed) {
   };
 }
 
-test("advertises both implemented events", () => {
-  assert.deepEqual(events, ["333", "222"]);
+test("advertises all implemented events", () => {
+  assert.deepEqual(events, ["333", "222", "pyram"]);
 });
 
 test("rejects unsupported events", async () => {

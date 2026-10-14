@@ -1,5 +1,4 @@
-
-import { generate, events } from "../src/index.js";
+import { generate, events } from "../dist/wca-scramble.es.js";
 import "./style.css";
 
 const eventSelect = document.querySelector("#event-select");
@@ -22,7 +21,30 @@ const MAX_HISTORY = 100;
 
 const EVENT_NAMES = {
   "333": "3×3×3",
-  "222": "2×2×2"
+  "222": "2×2×2",
+  "444": "4×4×4",
+  pyram: "Pyraminx",
+  minx: "Megaminx",
+  skewb: "Skewb",
+  clock: "Clock",
+  "555": "5×5×5",
+  "666": "6×6×6",
+  "777": "7×7×7",
+  sq1: "Square-1",
+  "333oh": "3×3×3 One-Handed",
+  "333ft": "3×3×3 Fewest Moves",
+  "333bf": "3×3×3 Blindfolded",
+  "444bf": "4×4×4 Blindfolded",
+  "555bf": "5×5×5 Blindfolded",
+  "333mbf": "3×3×3 Multi-Blind"
+};
+
+const STATE_DESCRIPTIONS = {
+  "333": "Raw 3×3 state: corner, edge and centre permutation/orientation data.",
+  "222": "Raw 2×2 state: corner permutation (cp) and corner orientation (co).",
+  "444": "Raw 4×4 state returned by the library.",
+  pyram: "Raw Pyraminx state returned by the library.",
+  minx: "Raw Megaminx state returned by the library."
 };
 
 let currentScramble = null;
@@ -33,6 +55,35 @@ function eventName(event) {
   return EVENT_NAMES[event] ?? event;
 }
 
+function populateEvents() {
+  const supportedEvents = [...events];
+  const previousSelection = eventSelect.value;
+
+  eventSelect.replaceChildren();
+
+  for (const event of supportedEvents) {
+    const option = document.createElement("option");
+    option.value = event;
+    option.textContent = eventName(event);
+    eventSelect.append(option);
+  }
+
+  if (supportedEvents.includes(previousSelection)) {
+    eventSelect.value = previousSelection;
+  } else if (supportedEvents.includes("333")) {
+    eventSelect.value = "333";
+  }
+
+  const hasEvents = supportedEvents.length > 0;
+
+  eventSelect.disabled = !hasEvents;
+  generateButton.disabled = !hasEvents;
+
+  if (!hasEvents) {
+    setStatus("No puzzle generators are registered in the library.", "error");
+  }
+}
+
 function setStatus(message, type = "normal") {
   statusMessage.textContent = message;
   statusMessage.dataset.type = type;
@@ -40,8 +91,8 @@ function setStatus(message, type = "normal") {
 
 function setGenerating(value) {
   generating = value;
-  generateButton.disabled = value;
-  eventSelect.disabled = value;
+  generateButton.disabled = value || events.length === 0;
+  eventSelect.disabled = value || events.length === 0;
 
   generateButton.innerHTML = value
     ? '<span class="spinner" aria-hidden="true"></span> Generating…'
@@ -58,8 +109,10 @@ function renderScramble(result, elapsedMs) {
   scrambleNotation.textContent = result.notation;
   scrambleNotation.hidden = false;
 
+  const count = result.moves.length;
+
   moveCount.textContent =
-    `${result.moves.length} ${result.moves.length === 1 ? "move" : "moves"}`;
+    `${count} ${count === 1 ? "move" : "moves"}`;
 
   generationTime.textContent =
     `${elapsedMs.toFixed(0)} ms generation time`;
@@ -68,9 +121,8 @@ function renderScramble(result, elapsedMs) {
   stateOutput.textContent = JSON.stringify(result.state, null, 2);
 
   debugDescription.textContent =
-    result.event === "222"
-      ? "Raw 2×2 state: corner permutation (cp) and corner orientation (co)."
-      : "Raw 3×3 state: corner, edge and centre permutation/orientation data.";
+    STATE_DESCRIPTIONS[result.event] ??
+    "Raw puzzle state returned by the library.";
 }
 
 function renderHistory() {
@@ -123,18 +175,18 @@ function renderHistory() {
 async function generateScramble() {
   if (generating) return;
 
+  if (!events.includes(eventSelect.value)) {
+    setStatus("Select a supported puzzle event first.", "error");
+    return;
+  }
+
   setGenerating(true);
-  setStatus("Sampling a state and calculating the scramble…");
+  setStatus("Generating scramble…");
 
   const startedAt = performance.now();
 
   try {
     const event = eventSelect.value;
-
-    if (!events.includes(event)) {
-      throw new Error(`The "${event}" event is not implemented yet.`);
-    }
-
     const result = await generate(event);
     const elapsedMs = performance.now() - startedAt;
 
@@ -158,7 +210,7 @@ async function generateScramble() {
     renderHistory();
 
     setStatus(
-      `${eventName(event)} scramble generated and verified by the library.`,
+      `${eventName(event)} scramble generated successfully.`,
       "success"
     );
   } catch (error) {
@@ -228,5 +280,11 @@ document.addEventListener("keydown", event => {
   }
 });
 
+populateEvents();
+
 // Start with a real scramble so the interface is immediately useful.
-generateScramble();
+if (events.length > 0) {
+  generateScramble();
+} else {
+  setStatus("No puzzle generators are registered in the library.", "error");
+}
