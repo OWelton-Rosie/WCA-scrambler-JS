@@ -162,7 +162,7 @@ test("generated scrambles use valid Pyraminx notation", async () => {
 
   assert.equal(result.event, "pyram");
   assert.ok(result.notation.length > 0);
-  assert.deepEqual(result.moves, result.notation.split(/\\s+/));
+  assert.deepEqual(result.moves, result.notation.split(/\s+/));
 
   for (const move of result.moves) {
     assert.match(move, /^[ULRBulrb]'?$/);
