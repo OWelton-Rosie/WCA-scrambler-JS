@@ -1,4 +1,3 @@
-
 import test from "node:test";
 import assert from "node:assert/strict";
 
@@ -38,7 +37,7 @@ function assertSameState(actual, expected) {
 }
 
 test("advertises the Pyraminx event", () => {
-  assert.deepEqual(events, ["333", "222", "pyram", "444"]);
+  assert.deepEqual(events, ["333", "222", "pyram", "444", "minx"]);
 });
 
 test("identity state is legal and solved", () => {

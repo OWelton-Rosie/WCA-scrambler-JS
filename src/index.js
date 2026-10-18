@@ -2,6 +2,7 @@ import { generate333 } from "./puzzles/333/scramble.js";
 import { generate222 } from "./puzzles/222/scramble.js";
 import { generatePyram } from "./puzzles/pyram/scramble.js";
 import { generate444Scramble } from "./puzzles/444/scramble.js";
+import { generateMinx } from "./puzzles/minx/scramble.js";
 export { prepare444Scrambler } from "./puzzles/444/scramble.js";
 
 import {
@@ -35,6 +36,10 @@ registerEvent("pyram", ({ randomWord } = {}) =>
 
 registerEvent("444", (options = {}) =>
   generate444Scramble(options)
+);
+
+registerEvent("minx", (options = {}) =>
+  generateMinx(options)
 );
 
 export { events, registerEvent };

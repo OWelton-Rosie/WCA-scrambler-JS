@@ -32,7 +32,20 @@ function seededRandomWord(seed) {
 }
 
 test("advertises all implemented events", () => {
-  assert.deepEqual(events, ["333", "222", "pyram", "444"]);
+  assert.deepEqual(events, ["333", "222", "pyram", "444", "minx"]);
+});
+
+
+test("public API generates a Megaminx random-move scramble", async () => {
+  const result = await generate("minx", {
+    randomWord: seededRandomWord(20261019)
+  });
+
+  assert.equal(result.event, "minx");
+  assert.equal(result.method, "random-moves");
+  assert.equal(result.moves.length, 76);
+  assert.deepEqual(result.notation.split(/\s+/), result.moves);
+  assert.equal(result.state, null);
 });
 
 test("rejects unsupported events", async () => {

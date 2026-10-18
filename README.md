@@ -2,13 +2,13 @@
 
 A JavaScript library for generating Rubik's Cube scrambles, with the long-term goal of supporting every World Cube Association (WCA) puzzle event.
 
-**Status:** Early development. Currently supports 2×2×2 (`222`), 3×3×3 (`333`), Pyraminx (`pyram`) and 4×4×4 (`444`).
+**Status:** Early development. Currently supports 2×2×2 (`222`), 3×3×3 (`333`), Pyraminx (`pyram`), 4×4×4 (`444`) and Megaminx (`minx`).
 
 ## Overview
 
 This project generates scrambles by sampling eligible legal puzzle states and calculating move sequences that reach those states.
 
-The implementation uses event-specific state representations and solving algorithms, with shared utilities for randomness and event registration. The 2×2×2 implementation uses a dedicated solver operating on corner permutations and orientations, while the 3×3×3 implementation uses `cubejs`.
+The implementation uses event-specific state representations and solving algorithms, with shared utilities for randomness and event registration. Megaminx uses the random-move approach permitted by Regulation 4b3e rather than a random-state solver. The 2×2×2 implementation uses a dedicated solver operating on corner permutations and orientations, while the 3×3×3 implementation uses `cubejs`.
 
 The project is being developed with the WCA Regulations in mind, particularly Regulation 4b3, which specifies random-state requirements for scrambles.
 
@@ -47,6 +47,7 @@ This project is intended for development, experimentation, learning and non-offi
 ## Features
 
 - Random-state scramble generation for 2×2×2 and 3×3×3, plus 4×4×4 through `@cubesmith/scrambler`.
+- Megaminx random-move scramble generation using conventional `R++`, `R--`, `D++`, `D--`, `U` and `U'` notation.
 - Cryptographically backed random-number generation using Web Crypto by default.
 - Unbiased bounded integer sampling using rejection sampling.
 - Fisher–Yates permutation shuffling.
@@ -107,9 +108,11 @@ Generate a 4×4×4 scramble through the JavaScript random-state backend:```javas
 | `moves` | Scramble represented as an array of moves |
 | `state` | Target puzzle state, represented using the state structure for the selected event |
 
+Generate a Megaminx scramble with `generate("minx")`. The generator produces 70 alternating `R`/`D` turns arranged in seven rows, with six additional `U` turns (76 tokens total). It uses random moves rather than uniformly sampling Megaminx states; this is the approach specified for Megaminx by Regulation 4b3e, but does not make this project an official WCA scrambling program or establish formal regulatory compliance.
+
 The supported move notation is event-specific. The 2×2×2 generator uses the `U`, `R` and `F` face moves, including quarter turns, half turns and inverse quarter turns.
 
-Only `222`, `333`, `pyram` and `444` are currently supported. Unsupported event identifiers throw a `RangeError`. The 4×4 backend accepts a `seed` option for reproducible tests; it does not accept the local `randomWord` injection.
+The supported events are `222`, `333`, `pyram`, `444` and `minx`. Unsupported event identifiers throw a `RangeError`. The 4×4 backend accepts a `seed` option for reproducible tests; it does not accept the local `randomWord` injection.
 
 The generator accepts an optional random-word source for testing. See [Reproducible testing](#reproducible-testing).
 
