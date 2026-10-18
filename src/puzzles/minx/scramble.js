@@ -2,7 +2,6 @@ import { randomInt } from "../../core/random.js";
 
 const ROWS = 7;
 const PAIRS_PER_ROW = 5;
-const RANDOM_TURNS = ROWS * PAIRS_PER_ROW * 2;
 const U_TURNS = ROWS - 1;
 
 /**
