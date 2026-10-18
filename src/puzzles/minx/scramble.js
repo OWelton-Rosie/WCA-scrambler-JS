@@ -26,6 +26,7 @@ export function generateMinx(options = {}) {
 
   for (let row = 0; row < ROWS; row++) {
     const rowMoves = [];
+
     for (let pair = 0; pair < PAIRS_PER_ROW; pair++) {
       rowMoves.push(randomInt(2, randomWord) === 0 ? "R++" : "R--");
       rowMoves.push(randomInt(2, randomWord) === 0 ? "D++" : "D--");
@@ -41,7 +42,7 @@ export function generateMinx(options = {}) {
 
   return {
     event: "minx",
-    notation: rows.map(rowMoves => rowMoves.join(" ")).join("\\n"),
+    notation: rows.map(rowMoves => rowMoves.join(" ")).join("\n"),
     moves,
     method: "random-moves",
     state: null
