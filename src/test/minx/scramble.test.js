@@ -38,28 +38,25 @@ test("generates a conventional 76-token Megaminx random-move scramble", () => {
 });
 
 test("formats Megaminx scrambles as seven rows of five R/D pairs", () => {
-  const { notation } = generateMinx();
-  const rows = notation.split(" U").join(" U").split(/(?<=U') |(?<=U) /);
-
-  assert.equal(notation.split(" ").length, 76);
-
-  // Each of the first six rows has ten R/D turns and one U turn;
-  // the final row has ten R/D turns and no U turn.
+  const { moves } = generateMinx();
   let index = 0;
 
+  assert.equal(moves.length, 76);
+
+  // The first six rows have ten R/D turns and one U turn;
+  // the final row has ten R/D turns and no U turn.
   for (let row = 0; row < 7; row++) {
     for (let pair = 0; pair < 5; pair++) {
-      assert.match(notation.split(" ")[index++], /^R(?:\+\+|--)$/);
-      assert.match(notation.split(" ")[index++], /^D(?:\+\+|--)$/);
+      assert.match(moves[index++], /^R(?:\+\+|--)$/);
+      assert.match(moves[index++], /^D(?:\+\+|--)$/);
     }
 
     if (row < 6) {
-      assert.match(notation.split(" ")[index++], /^U'?$/);
+      assert.match(moves[index++], /^U'?$/);
     }
   }
 
   assert.equal(index, 76);
-  assert.ok(Array.isArray(rows));
 });
 
 test("supports reproducible generation with an injected random source", () => {
