@@ -44,7 +44,7 @@ test("public API generates a Megaminx random-move scramble", async () => {
   assert.equal(result.event, "minx");
   assert.equal(result.method, "random-moves");
   assert.equal(result.moves.length, 76);
-  assert.equal(result.notation, result.moves.join(" "));
+  assert.deepEqual(result.notation.split(/\\s+/), result.moves);
   assert.equal(result.state, null);
 });
 
