@@ -24,8 +24,8 @@ test("generates a conventional 76-token Megaminx random-move scramble", () => {
   assert.equal(result.method, "random-moves");
   assert.equal(result.state, null);
   assert.equal(result.moves.length, 76);
-  assert.deepEqual(result.notation.split(/\\s+/), result.moves);
-  assert.equal(result.notation.split("\\n").length, 7);
+  assert.deepEqual(result.notation.split(/\s+/), result.moves);
+  assert.equal(result.notation.split("\n").length, 7);
   assert.equal(result.moves.filter(move => move === "U" || move === "U'").length, 6);
   assert.equal(result.moves.filter(move => move.startsWith("R")).length, 35);
   assert.equal(result.moves.filter(move => move.startsWith("D")).length, 35);
