@@ -1,4 +1,3 @@
-
 import test from "node:test";
 import assert from "node:assert/strict";
 
@@ -38,7 +37,7 @@ function assertSameState(actual, expected) {
 }
 
 test("advertises the Pyraminx event", () => {
-  assert.deepEqual(events, ["333", "222", "pyram", "444"]);
+  assert.deepEqual(events, ["333", "222", "pyram", "444", "minx"]);
 });
 
 test("identity state is legal and solved", () => {
@@ -163,7 +162,7 @@ test("generated scrambles use valid Pyraminx notation", async () => {
 
   assert.equal(result.event, "pyram");
   assert.ok(result.notation.length > 0);
-  assert.deepEqual(result.moves, result.notation.split(/\s+/));
+  assert.deepEqual(result.moves, result.notation.split(/\\s+/));
 
   for (const move of result.moves) {
     assert.match(move, /^[ULRBulrb]'?$/);
