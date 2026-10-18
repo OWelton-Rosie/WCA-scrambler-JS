@@ -23,21 +23,26 @@ export function generateMinx(options = {}) {
 
   const { randomWord } = options;
   const moves = [];
+  const rows = [];
 
   for (let row = 0; row < ROWS; row++) {
+    const rowMoves = [];
     for (let pair = 0; pair < PAIRS_PER_ROW; pair++) {
-      moves.push(randomInt(2, randomWord) === 0 ? "R++" : "R--");
-      moves.push(randomInt(2, randomWord) === 0 ? "D++" : "D--");
+      rowMoves.push(randomInt(2, randomWord) === 0 ? "R++" : "R--");
+      rowMoves.push(randomInt(2, randomWord) === 0 ? "D++" : "D--");
     }
 
     if (row < U_TURNS) {
-      moves.push(randomInt(2, randomWord) === 0 ? "U" : "U'");
+      rowMoves.push(randomInt(2, randomWord) === 0 ? "U" : "U'");
     }
+
+    rows.push(rowMoves);
+    moves.push(...rowMoves);
   }
 
   return {
     event: "minx",
-    notation: moves.join(" "),
+    notation: rows.map(rowMoves => rowMoves.join(" ")).join("\\n"),
     moves,
     method: "random-moves",
     state: null
