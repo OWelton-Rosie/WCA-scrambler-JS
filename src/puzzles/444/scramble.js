@@ -69,26 +69,15 @@ export async function generate444Scramble(options = {}) {
     ? {}
     : { seed: options.seed };
 
-  const backendStart = performance.now();
-
   const result = await generateRandomStateScramble(
     "444",
     backendOptions
   );
 
-  const backendEnd = performance.now();
-
   const notation = result.moves.trim();
   const moves = notation.split(/\s+/);
 
-  const replayStart = performance.now();
   const state = applyMoves(solvedState(), moves);
-  const replayEnd = performance.now();
-
-  console.log({
-    backendMs: Math.round(backendEnd - backendStart),
-    replayMs: Math.round(replayEnd - replayStart)
-  });
 
   if (isSolved(state)) {
     throw new Error("The 4x4 backend returned a solved scramble state");
