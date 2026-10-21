@@ -194,6 +194,7 @@ The tests are organized by puzzle under `src/test/222/`, `src/test/333/`, `src/t
 - [x] Pyraminx and Megaminx generators.
 - [x] Automated tests and browser demo.
 - [ ] Improve and document 4×4 generation performance.
+- [ ] Ship/generate image of scramble.
 - [ ] Strengthen edge-case and invalid-input testing.
 - [ ] Document and rigorously verify sampling properties for each event.
 - [ ] Review compliance with current WCA Regulations.
