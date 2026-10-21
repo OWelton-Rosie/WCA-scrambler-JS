@@ -9,7 +9,8 @@
     "build": "vite build",
     "demo": "npm run build && vite --config demo/vite.config.js",
     "test": "node --test",
-    "dev": "vite"
+    "dev": "vite",
+    "benchmark:444": "node scripts/benchmark-444.js"
   },
   "dependencies": {
     "@cubesmith/scrambler": "0.14.1",
