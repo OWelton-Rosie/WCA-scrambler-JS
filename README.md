@@ -1,73 +1,61 @@
 # WCA-scrambler-JS
 
-A JavaScript library for generating Rubik's Cube scrambles, with the long-term goal of supporting every World Cube Association (WCA) puzzle event.
+An independent JavaScript library for generating puzzle scrambles, with the long-term goal of supporting every World Cube Association (WCA) event.
 
-**Status:** Early development. Currently supports 2×2×2 (`222`), 3×3×3 (`333`), Pyraminx (`pyram`), 4×4×4 (`444`) and Megaminx (`minx`).
+**Status:** Early development. Implemented events: 2×2×2 (`222`), 3×3×3 (`333`), Pyraminx (`pyram`), 4×4×4 (`444`) and Megaminx (`minx`).
 
 ## Overview
 
-This project generates scrambles by sampling eligible legal puzzle states and calculating move sequences that reach those states.
+The library uses event-specific generation methods behind a shared asynchronous `generate(event, options)` API:
 
-The implementation uses event-specific state representations and solving algorithms, with shared utilities for randomness and event registration. Megaminx uses the random-move approach permitted by Regulation 4b3e rather than a random-state solver. The 2×2×2 implementation uses a dedicated solver operating on corner permutations and orientations, while the 3×3×3 implementation uses `cubejs`.
+- **2×2×2 and 3×3×3:** random-state generation and event-specific solving.
+- **4×4×4:** random-state generation through the MIT-licensed [`@cubesmith/scrambler`](https://github.com/cubesmithjs/cubesmith-scrambler) backend, followed by replay through this project's independent facelet model.
+- **Pyraminx:** event-specific scramble generation.
+- **Megaminx:** random-move generation using conventional `R++`, `R--`, `D++`, `D--`, `U` and `U'` notation.
 
-The project is being developed with the WCA Regulations in mind, particularly Regulation 4b3, which specifies random-state requirements for scrambles.
-
-The long-term goal is to provide a modular, reusable library with a shared core for randomness and event registration alongside individual implementations for each supported puzzle.
+The implementation is modular, with shared randomness and event registration utilities alongside puzzle-specific code. The methods and verification available differ by event; passing automated tests is not a formal proof of uniformity or regulatory compliance.
 
 ## WCA regulation status
 
-### Regulation 4b3: Random-state requirements
+### Regulation 4b3: random-state requirements
 
-The generators use random-state approaches designed to sample eligible puzzle states.
+The 2×2×2, 3×3×3 and 4×4×4 implementations use random-state approaches, with different event-specific algorithms and dependencies. The Megaminx generator instead uses the random-move approach described in Regulation 4b3e.
 
-The 3×3×3 implementation samples legal states and rejects the solved state and the 18 states obtainable by a single face turn.
+The 3×3×3 implementation rejects the solved state and the 18 states obtainable by a single face turn. See [the 3×3×3 uniformity audit](docs/uniformity-audit.md) for the assumptions and mathematical argument relating to that sampler. That audit does not cover the other events.
 
-The 2×2×2 implementation samples corner permutations and orientations subject to its state constraints and uses a dedicated solver to generate scrambles in the supported move set.
+### 4×4×4 backend and performance
 
-Automated tests cover state legality, relevant permutation and orientation constraints, excluded states, scramble replay, solver verification and random-number generation. The exact checks vary by event.
+The public `generate("444")` API uses `@cubesmith/scrambler`. The backend samples a legal state, applies a centres → wing-pairing → parity → 3×3 reduction pipeline, and verifies the solve. This project then replays the returned notation through its own 4×4 facelet model.
 
-### 4×4×4 status: enabled through a JavaScript backend
+The backend prepares and caches solver tables. Use the exported `prepare444Scrambler()` function to prepare those tables before measuring generation time or before a user requests their first scramble. The first preparation may take several seconds; later scramble generation is much faster. See [4×4 performance notes](docs/444-performance.md) for the benchmark command and current optimization strategy.
 
-The public `generate("444")` API now uses the MIT-licensed [`@cubesmith/scrambler`](https://github.com/cubesmithjs/cubesmith-scrambler) package's random-state 4×4 implementation. It samples a legal state, uses a centres → wing-pairing → parity → 3×3 reduction pipeline, and verifies the solve before returning the scramble. We replay the returned notation through this project's independent 4×4 facelet move model and return that resulting state.
+This is a pragmatic backend integration, not a claim that this repository independently implements or formally proves the 4×4 sampler. The backend's own documentation and design record should be reviewed before relying on its guarantees.
 
-The original local random-walk and bounded centre-search code remains experimental and is **not** the public generator. This is a pragmatic working backend, not a claim that this repository has independently implemented or formally proved the 4×4 sampler. The backend's own design record documents its state-count derivation, solver approach and remaining empirical coverage work; review that record before relying on it.
+For reproducible tests, `generate("444", { seed: "your-seed" })` accepts a seed. The 4×4 backend does not support the local `randomWord` injection: reducing that source to a 32-bit seed would not preserve the backend's random-state distribution.
 
-For reproducible tests, `generate("444", { seed: "your-seed" })` accepts a seed. The custom `randomWord` injection used by the smaller local generators is intentionally not supported for 4×4: collapsing it to a 32-bit seed would not preserve the random-state distribution.
-
-These tests do not constitute a formal proof of uniformity for every event or establish full compliance with the WCA's requirements. See [`docs/uniformity-audit.md`](docs/uniformity-audit.md) for the mathematical audit of the 3×3×3 sampler.
-
-### Regulation 4b: Official competition use
+### Official competition use
 
 **This project is not an official WCA scrambling program and is not approved for generating scrambles for official WCA competitions.**
 
-Generating random states in accordance with Regulation 4b3 does not, by itself, satisfy Regulation 4b. Competition scrambles must be generated using a current official version of an official WCA scrambling program.
-
-This project is intended for development, experimentation, learning and non-official use.
+Generating random states in accordance with Regulation 4b3 does not, by itself, satisfy Regulation 4b. Official competition scrambles must be generated using a current official WCA scrambling program. This project is intended for development, experimentation, learning and non-official use.
 
 ## Features
 
-- Random-state scramble generation for 2×2×2 and 3×3×3, plus 4×4×4 through `@cubesmith/scrambler`.
-- Megaminx random-move scramble generation using conventional `R++`, `R--`, `D++`, `D--`, `U` and `U'` notation.
-- Cryptographically backed random-number generation using Web Crypto by default.
+- Event-specific scramble generation for `222`, `333`, `pyram`, `444` and `minx`.
+- Cryptographically backed random-number generation using Web Crypto by default for local generators.
 - Unbiased bounded integer sampling using rejection sampling.
 - Fisher–Yates permutation shuffling.
-- Puzzle-state legality checks and event-specific state constraints.
-- Dedicated 2×2×2 solving implementation using corner permutation and orientation coordinates.
-- Solver-backed 3×3×3 scramble generation using `cubejs`.
-- 4×4×4 random-state generation using a reduction-based JavaScript backend, with replay through the local facelet model.
-- Verification that generated scrambles reproduce their target states.
-- Verification of solver solutions and sampled-state constraints.
-- Exclusion of the solved state and all 18 single-face-turn states for 3×3×3.
-- Injectable random sources for reproducible testing.
+- Event-specific state constraints and solver verification where implemented.
+- 4×4 random-state generation through a reduction-based JavaScript backend.
+- Conventional Megaminx random-move notation arranged in seven rows.
+- Deterministic testing options: injected random-word sources for supported local generators and a `seed` for 4×4.
 - Automated tests using Node.js's built-in test runner.
 - Production builds using Vite.
-- A browser-based demo for generating, viewing and copying scrambles.
+- Browser-based demo for generating, viewing and copying scrambles.
 
 ## Installation
 
-The project is under active development and is not yet published as a stable npm package.
-
-Clone the repository and install its dependencies:
+The project is under active development and is not published as a stable npm package.
 
 ```bash
 git clone https://github.com/OWelton-Rosie/WCA-scrambler-JS.git
@@ -77,66 +65,82 @@ npm install
 
 ## Usage
 
-Generate a 3×3×3 scramble from the source code:
+Generate a 3×3×3 scramble:
 
 ```javascript
 import { generate } from "./src/index.js";
 
 const scramble = await generate("333");
-
 console.log(scramble.notation);
 ```
 
-Generate a 2×2×2 scramble:
+Generate a 2×2×2 scramble and inspect the result:
 
 ```javascript
 import { generate } from "./src/index.js";
 
 const scramble = await generate("222");
-
 console.log(scramble.notation);
 console.log(scramble.moves);
 console.log(scramble.state);
 ```
 
-Generate a 4×4×4 scramble through the JavaScript random-state backend:```javascriptimport { generate } from "./src/index.js";const scramble = await generate("444", { seed: "repeatable-test-seed" });console.log(scramble.notation);```The `generate()` function returns a promise that resolves to an object containing:
+Generate a 4×4×4 scramble with a reproducible seed:
+
+```javascript
+import { generate, prepare444Scrambler } from "./src/index.js";
+
+// Optional: prepare solver tables before the first scramble.
+await prepare444Scrambler();
+
+const scramble = await generate("444", {
+  seed: "repeatable-test-seed"
+});
+
+console.log(scramble.notation);
+```
+
+Generate a Megaminx scramble:
+
+```javascript
+import { generate } from "./src/index.js";
+
+const scramble = await generate("minx");
+console.log(scramble.notation);
+```
+
+The Megaminx generator returns 76 move tokens: 70 alternating `R`/`D` turns and six `U` turns, formatted as seven lines. It samples move sequences, not uniformly distributed puzzle states. This implementation does not claim formal compliance with Regulation 4b3e.
+
+### Return value
+
+`generate()` returns a promise resolving to an event-specific object. Common fields include:
 
 | Property | Description |
 |---|---|
-| `event` | Event identifier: `"222"`, `"333"`, `"pyram"` or `"444"` |
-| `notation` | Scramble as a space-separated move sequence |
-| `moves` | Scramble represented as an array of moves |
-| `state` | Target puzzle state, represented using the state structure for the selected event |
+| `event` | Event identifier: `"222"`, `"333"`, `"pyram"`, `"444"` or `"minx"`. |
+| `notation` | Scramble notation. Megaminx notation contains line breaks between rows; other events generally use space-separated moves. |
+| `moves` | The moves as an array. |
+| `state` | The event's returned state representation where available. Megaminx currently returns `null`. |
+| `method` | Event-specific generation method label. |
+| `backend` | Backend identifier for 4×4 generation. |
 
-Generate a Megaminx scramble with `generate("minx")`. The generator produces 70 alternating `R`/`D` turns arranged in seven rows, with six additional `U` turns (76 tokens total). It uses random moves rather than uniformly sampling Megaminx states; this is the approach specified for Megaminx by Regulation 4b3e, but does not make this project an official WCA scrambling program or establish formal regulatory compliance.
-
-The supported move notation is event-specific. The 2×2×2 generator uses the `U`, `R` and `F` face moves, including quarter turns, half turns and inverse quarter turns.
-
-The supported events are `222`, `333`, `pyram`, `444` and `minx`. Unsupported event identifiers throw a `RangeError`. The 4×4 backend accepts a `seed` option for reproducible tests; it does not accept the local `randomWord` injection.
-
-The generator accepts an optional random-word source for testing. See [Reproducible testing](#reproducible-testing).
+The exact fields and state representation depend on the event. Unsupported event identifiers throw a `RangeError`.
 
 ## Browser demo
 
-The repository includes a browser-based demo, separate from the library source.
-
-Start the development server from the project root:
+Start the browser demo from the project root:
 
 ```bash
 npm run demo
 ```
 
-Open the local URL printed by Vite in your browser.
-
-The demo provides an interface for generating and viewing scrambles, copying notation and reviewing recent results within the current session.
+Open the local URL printed by Vite. The demo supports scramble generation, copying notation and viewing recent results for the current session. It prepares the 4×4 backend before timing a 4×4 scramble, so the first-time table-building cost is not included in the displayed generation time.
 
 The demo is a development tool, not an official WCA scrambling application.
 
 ## Reproducible testing
 
-The generator accepts an optional `randomWord` function that returns unsigned 32-bit integers. This allows deterministic tests and reproducible debugging.
-
-For example:
+The local generators that support `randomWord` accept a function returning unsigned 32-bit integers. This is useful for deterministic tests and debugging. For example:
 
 ```javascript
 import { generate } from "./src/index.js";
@@ -162,47 +166,37 @@ const scramble = await generate("222", {
 console.log(scramble.notation);
 ```
 
-**This seeded source is intended for testing and reproducibility, not security or production randomness.** The default local generators use Web Crypto. The 4×4 backend uses its own seeded interface when `seed` is provided.
+This seeded source is for testing, not security-sensitive or production randomness. The 4×4 backend instead accepts a `seed` option.
 
 ## Development
 
-Run the automated test suite:
+Run tests, build the package or start the demo:
 
 ```bash
 npm test
-```
-
-Build the production bundles:
-
-```bash
 npm run build
-```
-
-Run the browser demo:
-
-```bash
 npm run demo
 ```
 
-The tests cover random-number generation, permutation sampling, event-specific state constraints, excluded states, scramble replay, solver verification and deterministic generation.
+Run the warmed-up 4×4 generation benchmark:
 
-The tests are organized by puzzle under `src/test/222/`, `src/test/333/`, `src/test/pyram/` and `src/test/444/`. Shared core tests live in `src/test/core/`, and public-API cross-event checks live in `src/test/integration/`.The 2×2×2 tests also exercise the dedicated solver and its supported move set. The 3×3×3 tests cover corner and edge legality, orientation constraints, permutation parity and the excluded-state set. The 4×4 tests cover facelet geometry, move application, piece extraction, parity and reduction helpers, as well as seeded backend generation and scramble replay.
+```bash
+npm run benchmark:444
+```
+
+The tests are organized by puzzle under `src/test/222/`, `src/test/333/`, `src/test/pyram/`, `src/test/444/` and `src/test/minx/`. Shared core tests live in `src/test/core/`; public API checks across events live in `src/test/integration/`.
 
 ## Roadmap
 
 - [x] Cryptographically backed random-number generation.
-- [x] Unbiased bounded integer sampling.
-- [x] Random legal 3×3×3 state sampling.
-- [x] Solver-backed 3×3×3 scramble generation.
-- [x] Dedicated 2×2×2 state sampling and solver.
-- [x] State and scramble verification.
-- [x] Deterministic random-source injection.
-- [x] Initial automated test suite.
-- [x] Browser-based development demo.
+- [x] Random-state generation for 2×2×2 and 3×3×3.
+- [x] 4×4×4 random-state backend integration.
+- [x] Pyraminx and Megaminx generators.
+- [x] Automated tests and browser demo.
+- [ ] Improve and document 4×4 generation performance.
 - [ ] Strengthen edge-case and invalid-input testing.
-- [ ] Document and rigorously verify the sampling uniformity argument for each event.
-- [ ] Review compliance with the current WCA Regulations.
-- [ ] Improve the shared event registry and move utilities.
+- [ ] Document and rigorously verify sampling properties for each event.
+- [ ] Review compliance with current WCA Regulations.
 - [ ] Expand support to other WCA events.
 - [ ] Review dependencies, licensing and release packaging.
 - [ ] Prepare for a versioned npm release.
