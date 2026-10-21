@@ -69,4 +69,16 @@ try {
   throw error;
 }
 
-await benchmark("cubing.js", async () => (await cubingScramble("444")).toString());
+// cubing.js emits per-scramble timing messages via console.log. Suppress those
+// during measurements so terminal I/O does not inflate the measured latency.
+async function generateCubingScramble() {
+  const originalLog = console.log;
+  console.log = () => {};
+  try {
+    return (await cubingScramble("444")).toString();
+  } finally {
+    console.log = originalLog;
+  }
+}
+
+await benchmark("cubing.js", generateCubingScramble);
