@@ -27,6 +27,22 @@ npm run benchmark:444 -- 30
 
 For meaningful comparisons, use the same machine, Node.js version, sample count and power conditions. Run the benchmark more than once and compare medians rather than a single result. The benchmark intentionally excludes preparation time and does not alter the generator's output.
 
+## CPU profiling
+
+When the benchmark confirms that the backend dominates warm generation, capture a CPU profile to find the expensive solver functions:
+
+```bash
+npm run profile:444 -- 100
+```
+
+Preparation and five warm-up scrambles happen before profiling starts. The profile then covers only backend generation calls, excluding this project's local move parsing and state replay. The default output is `444-cpu-profile.cpuprofile` in the current directory. You can choose a different sample count and output path:
+
+```bash
+npm run profile:444 -- 200 /tmp/444-profile.cpuprofile
+```
+
+Profiling adds overhead, so use `benchmark:444` for latency comparisons and this command only to identify hot functions. Open the resulting `.cpuprofile` in Chrome DevTools' Performance panel.
+
 ## Optimization priorities
 
 1. **Measure before changing algorithms.** Keep warm backend latency separate from preparation and local replay.
