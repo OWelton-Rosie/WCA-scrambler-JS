@@ -40,10 +40,14 @@ if (!Number.isSafeInteger(requestedSamples) || requestedSamples < 1) {
 
   let profile;
   let generationError;
+  let profilerEnabled = false;
+  let profilerStarted = false;
 
   try {
     await post(session, "Profiler.enable");
+    profilerEnabled = true;
     await post(session, "Profiler.start");
+    profilerStarted = true;
 
     console.log("Profiling " + requestedSamples + " warm backend generations...");
 
@@ -56,9 +60,13 @@ if (!Number.isSafeInteger(requestedSamples) || requestedSamples < 1) {
     generationError = error;
   } finally {
     try {
-      const result = await post(session, "Profiler.stop");
-      profile = result.profile;
-      await post(session, "Profiler.disable");
+      if (profilerStarted) {
+        const result = await post(session, "Profiler.stop");
+        profile = result.profile;
+      }
+      if (profilerEnabled) {
+        await post(session, "Profiler.disable");
+      }
     } finally {
       session.disconnect();
     }
