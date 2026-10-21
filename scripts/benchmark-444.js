@@ -50,7 +50,7 @@ if (!Number.isSafeInteger(requestedSamples) || requestedSamples < 1) {
     const result = await generateRandomStateScramble("444", {
       seed: `benchmark-warmup-${index}`
     });
-    const moves = result.moves.trim().split(/\\s+/);
+    const moves = result.moves.trim().split(/\s+/);
     const state = applyMoves(solvedState(), moves);
 
     if (isSolved(state)) {
@@ -71,7 +71,7 @@ if (!Number.isSafeInteger(requestedSamples) || requestedSamples < 1) {
 
     const replayStart = performance.now();
     const notation = result.moves.trim();
-    const moves = notation.split(/\\s+/);
+    const moves = notation.split(/\s+/);
     const state = applyMoves(solvedState(), moves);
 
     if (isSolved(state)) {
