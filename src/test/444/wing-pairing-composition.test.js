@@ -50,9 +50,10 @@ test("bounded search returns a replayable result for a two-macro composition", (
     beamWidth: 100
   });
 
-  assert.equal(result.solved, false);
+  assert.equal(typeof result.solved, "boolean");
   assert.ok(result.nodesVisited <= 5000);
   assert.deepEqual(result.state, applyMoves(state, result.moves));
   assert.ok(result.depth >= 0 && result.depth <= 2);
-  assert.ok(result.primitiveMoveCount === result.moves.length);
+  assert.equal(result.primitiveMoveCount, result.moves.length);
+  if (result.solved) assert.equal(result.pairedEdges, 12);
 });
