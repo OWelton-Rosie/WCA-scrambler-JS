@@ -22,7 +22,7 @@ test("derived centre-neutral commutators preserve centres and affect wings", () 
     assert.equal(centresAreSolved(applyMoves(solved, macro.moves)), true, macro.notation);
     assert.ok(macro.changedWingStickers > 0, macro.notation);
     assert.ok(
-      macro.moves.some((move) => move.startsWith("2") || move.endsWith("w")),
+      macro.moves.some((move) => move.startsWith("2") || /^[URFDLB]w(?:2|')?$/.test(move)),
       macro.notation
     );
   }
