@@ -8,7 +8,7 @@ import { toReduced3x3Facelets } from "./reduced.js";
 
 function areCentresSolved(state) {
   return CENTRE_SLOTS.every(
-    ({ faceletIndex }) => state[faceletIndex] === FACELETS[index].face
+    ({ faceletIndex }) => state[faceletIndex] === FACELETS[faceletIndex].face
   );
 }
 
