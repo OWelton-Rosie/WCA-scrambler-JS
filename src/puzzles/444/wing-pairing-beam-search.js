@@ -72,11 +72,12 @@ function getActions() {
   return cachedActions;
 }
 
-function evaluate(state, moves, nodesVisited) {
+function evaluate(state, moves, nodesVisited, macroDepth = 0) {
   return {
     state,
     moves,
     nodesVisited,
+    macroDepth,
     pairedEdges: countPairedEdges(state),
     estimatedMacroDepth: tryEstimateMacroDepth(state)
   };
@@ -130,13 +131,14 @@ export function searchWingPairingBounded(
       moves: [],
       state: [...state],
       depth: 0,
+      primitiveMoveCount: 0,
       pairedEdges: countPairedEdges(state),
       estimatedMacroDepth: 0,
       nodesVisited: 0
     };
   }
 
-  const initial = evaluate([...state], [], 0);
+  const initial = evaluate([...state], [], 0, 0);
   let frontier = [initial];
   let best = initial;
   let nodesVisited = 0;
@@ -161,7 +163,7 @@ export function searchWingPairingBounded(
         visited.add(key);
 
         const moves = [...node.moves, ...action.moves];
-        const candidate = evaluate(nextState, moves, nodesVisited);
+        const candidate = evaluate(nextState, moves, nodesVisited, depth);
 
         if (isFullyReduced(nextState)) {
           return {
@@ -169,6 +171,7 @@ export function searchWingPairingBounded(
             moves,
             state: nextState,
             depth,
+            primitiveMoveCount: moves.length,
             pairedEdges: candidate.pairedEdges,
             estimatedMacroDepth: 0,
             nodesVisited
@@ -190,7 +193,8 @@ export function searchWingPairingBounded(
     solved: false,
     moves: [...best.moves],
     state: [...best.state],
-    depth: best.moves.length,
+    depth: best.macroDepth,
+    primitiveMoveCount: best.moves.length,
     pairedEdges: best.pairedEdges,
     estimatedMacroDepth: best.estimatedMacroDepth,
     nodesVisited
