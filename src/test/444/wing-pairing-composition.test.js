@@ -14,8 +14,10 @@ test("two-macro compositions preserve centres and are reversible in the facelet 
   assert.ok(macros.length >= 2);
 
   const first = macros[0];
-  const second = macros.find(
-    (macro) => macro.wingPermutationKey !== first.wingPermutationKey
+  const solved = solvedState();
+  const second = macros.find((macro) =>
+    macro.wingPermutationKey !== first.wingPermutationKey &&
+    JSON.stringify(applyMoves(solved, [...first.moves, ...macro.moves])) !== JSON.stringify(solved)
   );
   assert.ok(second);
 
