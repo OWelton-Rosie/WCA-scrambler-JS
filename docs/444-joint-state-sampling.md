@@ -13,7 +13,7 @@ This work makes the native state representation explicit and testable before cla
 - **Centre-colour abstraction:** for each colour, a 4-of-24 mask records the four centre positions carrying that colour. There are C(24,4) = 10,626 masks, ranked compactly by a colex combinatorial number system.
 - **Exact pattern databases:** BFS builds exact single-coordinate distances using both outer and wide turns derived from the repository's facelet permutations. The tests verify full coverage of all 10,626 masks for each colour.
 - **Bounded full-centre search:** IDA* combines the six exact single-colour distances with a maximum heuristic and searches outer/wide turns. It verifies its returned sequence against the full 96-facelet state. Depth/node limits are explicit, so search exhaustion is not described as proof of unsolvability.
-- **Centre-neutral commutator discovery:** the local move model enumerates short commutators and retains only sequences that preserve solved centre colours while changing wing stickers. These are verified macro candidates for wing-pairing research, not yet a complete pairing algorithm.
+- **Centre-neutral commutator discovery:** the move model searches four- and six-move commutators, first checking centre permutations and then replaying candidates. It retains only macros that preserve solved centre colours while changing wing stickers. These are verified macro candidates for wing-pairing research, not yet a complete pairing algorithm.
 
 The wing mapping fails loudly if two legal move paths place the same labelled wing in the same slot with different sticker assignments. Coordinate tests compare abstract transitions with the facelet move model and verify reachable-state coverage.
 
