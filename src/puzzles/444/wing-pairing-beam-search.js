@@ -124,19 +124,19 @@ export function searchWingPairingBounded(
     throw new RangeError("beamWidth must be a positive integer");
   }
 
-  const initial = evaluate([...state], [], 0);
   if (isFullyReduced(state)) {
     return {
       solved: true,
       moves: [],
       state: [...state],
       depth: 0,
-      pairedEdges: initial.pairedEdges,
+      pairedEdges: countPairedEdges(state),
       estimatedMacroDepth: 0,
       nodesVisited: 0
     };
   }
 
+  const initial = evaluate([...state], [], 0);
   let frontier = [initial];
   let best = initial;
   let nodesVisited = 0;
