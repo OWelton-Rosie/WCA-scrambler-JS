@@ -1,5 +1,5 @@
 import { applyMoves, invertMoves } from "./moves.js";
-import { solvedState } from "./state.js";
+import { assertValidState, solvedState } from "./state.js";
 import { deriveCentreNeutralCommutators } from "./centre-neutral-macros.js";
 import { countPairedEdges } from "./wing-pairing.js";
 import { analyzeReduced444State } from "./reduced-solver.js";
@@ -70,8 +70,10 @@ export function repairReducedParityBounded(state, { maxSteps = 2 } = {}) {
     throw new RangeError("maxSteps must be a non-negative integer");
   }
 
+  assertValidState(state);
   let current = [...state];
   const moves = [];
+  let steps = 0;
   const visited = new Set([current.join("")]);
   const macros = deriveReducedParityMacros();
 
@@ -121,6 +123,7 @@ export function repairReducedParityBounded(state, { maxSteps = 2 } = {}) {
     visited.add(next.join(""));
     current = next;
     moves.push(...nextMoves);
+    steps++;
   }
 
   const finalAnalysis = analyseIfReduced(current);
@@ -129,6 +132,6 @@ export function repairReducedParityBounded(state, { maxSteps = 2 } = {}) {
     moves,
     state: current,
     analysis: finalAnalysis,
-    steps: moves.length === 0 ? 0 : undefined
+    steps
   };
 }
