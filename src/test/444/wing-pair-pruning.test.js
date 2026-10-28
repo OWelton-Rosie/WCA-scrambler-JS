@@ -40,3 +40,23 @@ test("wing-pair coordinates reject malformed inputs", () => {
   assert.throws(() => getWingPairDistance([0, 24], "UR"), /indices/);
   assert.throws(() => getWingPairDistance([0, 1], "XX"), /Unknown/);
 });
+
+test("wing-pair pattern databases remain admissible across two-macro compositions", () => {
+  const macros = deriveCentreNeutralCommutators().filter(
+    (candidate) => candidate.pairedEdges < 12
+  );
+  assert.ok(macros.length >= 2);
+
+  const first = macros[0];
+  const second = macros.find(
+    (candidate) => candidate.wingPermutationKey !== first.wingPermutationKey
+  );
+  assert.ok(second);
+
+  const state = applyMoves(solvedState(), [...first.moves, ...second.moves]);
+  for (const signature of getWingPairSignatures()) {
+    const position = encodeWingPairPosition(state, signature);
+    assert.ok(getWingPairDistance(position, signature) <= 2, signature);
+  }
+  assert.ok(estimateWingPairingMacroDepth(state) <= 2);
+});
