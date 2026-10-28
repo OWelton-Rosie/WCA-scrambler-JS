@@ -21,11 +21,17 @@ test("derived centre-neutral commutators preserve centres and affect wings", () 
   for (const macro of macros) {
     assert.equal(centresAreSolved(applyMoves(solved, macro.moves)), true, macro.notation);
     assert.ok(macro.changedWingStickers > 0, macro.notation);
+    assert.ok(macro.pairedEdges >= 0 && macro.pairedEdges <= 12, macro.notation);
     assert.ok(
       macro.moves.some((move) => move.startsWith("2") || /^[URFDLB]w(?:2|')?$/.test(move)),
       macro.notation
     );
   }
+
+  assert.ok(
+    macros.some((macro) => macro.pairedEdges < 12),
+    "expected at least one centre-neutral macro that disrupts wing pairing"
+  );
 });
 
 test("centre-neutral commutators also preserve centres after outer turns", () => {
