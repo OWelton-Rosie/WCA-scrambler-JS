@@ -27,7 +27,7 @@ It samples a permutation of the eight corner identities with Fisher–Yates usin
 
 This construction gives every corner permutation probability (1/8!) and every admissible orientation vector probability (1/3^7), assuming the underlying random source is uniform. The default source is the existing Web Crypto-backed uint32 source with rejection sampling for bounded integers.
 
-Tests in `src/test/444/corner-sampler.test.js` cover legal coordinates, permutation completeness, orientation constraints, deterministic injected randomness, and a non-identity fixture.
+Tests in `src/test/444/corner-sampler.test.js` cover legal coordinates, permutation completeness, orientation constraints, deterministic injected randomness, and a non-identity fixture. `applyCornerStateToFacelets()` now writes a corner coordinate into the independent facelet representation, and `src/test/444/corner-coordinate-roundtrip.test.js` checks that sampled coordinates round-trip through extraction without changing non-corner stickers.
 
 **Scope limit:** this is deliberately not a complete 4×4 random-state sampler. It does not sample centres or wings, enforce combined 4×4 reachability constraints, construct a facelet state, or generate a scramble. Do not use it as a production generator. The corner coordinate must eventually be combined with the other coordinates using a proven joint distribution over reachable 4×4 states.
 
@@ -97,6 +97,12 @@ The dependency may be removed only when all gates pass:
 
 Keep the existing generator behind the current API until the native implementation passes the gates. Do not switch to the current random-walk prototype merely to make the dependency tree look clean. When the native backend is ready, change the API implementation, tests, benchmarks, lockfile, and docs together in a reviewable migration.
 
+### Milestone 2: centre-colour coordinate sampler
+
+Added `src/puzzles/444/centre-sampler.js`. It samples a uniformly random visible assignment to the 24 centre slots by shuffling a multiset containing four copies of each face colour. Each distinct arrangement has exactly `(4!)^6` labelled preimages, so Fisher–Yates plus unbiased bounded draws gives a uniform visible centre arrangement. Tests check colour multiplicities, deterministic injection, and invalid RNG handling.
+
+This remains a coordinate marginal, not a proof that every such centre arrangement can be combined with arbitrary corners and wings into a reachable 4×4 state.
+
 ## Next milestone
 
-Formalise the full 4×4 coordinate factorisation before writing the centre/wing sampler. Document the distinguishability of the 24 centre stickers and 24 wings, centre-colour multiplicities, edge-pair duplication, and all reachability/parity constraints. The full state sampler must follow from that model, not from independently shuffling visible stickers.
+Formalise and independently verify the full 4×4 coordinate factorisation before assembling a complete state. Document the distinguishability of the 24 wings, centre-colour multiplicities, edge-pair duplication, and all reachability/parity constraints. The full state sampler must follow from that model, not from independently shuffling visible stickers.
