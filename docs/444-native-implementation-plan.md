@@ -103,6 +103,12 @@ Added `src/puzzles/444/centre-sampler.js`. It samples a uniformly random visible
 
 This remains a coordinate marginal, not a proof that every such centre arrangement can be combined with arbitrary corners and wings into a reachable 4×4 state.
 
+### Milestone 3: wing-permutation coordinate sampler
+
+Added `src/puzzles/444/wing-sampler.js`, which uniformly samples a permutation of the 24 labelled wing identities using the same unbiased Fisher–Yates implementation. The labels remain distinct even when two wings share the same visible edge colours. Tests check permutation completeness, deterministic injection, and invalid RNG handling.
+
+This does not yet map the permutation to correctly oriented stickers or prove that arbitrary wing, corner, and centre coordinates combine into a reachable state.
+
 ## Next milestone
 
 Formalise and independently verify the full 4×4 coordinate factorisation before assembling a complete state. Document the distinguishability of the 24 wings, centre-colour multiplicities, edge-pair duplication, and all reachability/parity constraints. The full state sampler must follow from that model, not from independently shuffling visible stickers.
