@@ -75,7 +75,6 @@ export function repairReducedParityBounded(state, { maxSteps = 2 } = {}) {
   const moves = [];
   let steps = 0;
   const visited = new Set([current.join("")]);
-  const macros = deriveReducedParityMacros();
 
   for (let step = 0; step <= maxSteps; step++) {
     const analysis = analyseIfReduced(current);
@@ -87,6 +86,7 @@ export function repairReducedParityBounded(state, { maxSteps = 2 } = {}) {
     }
     if (step === maxSteps) break;
 
+    const macros = deriveReducedParityMacros();
     let next = null;
     let nextMoves = null;
     let nextAnalysis = null;
