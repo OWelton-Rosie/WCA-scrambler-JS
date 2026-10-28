@@ -1,4 +1,4 @@
-import { FACELETS, assertValidState, solvedState } from "./state.js";
+import { assertValidState, solvedState } from "./state.js";
 import { CENTRE_SLOTS } from "./centres.js";
 import { CENTRE_AXIS_MOVES } from "./centre-axis-coordinate.js";
 
@@ -6,9 +6,9 @@ export const CENTRE_COLOUR_NAMES = Object.freeze(["U", "R", "F", "D", "L", "B"])
 export const CENTRE_COLOUR_COORDINATE_SIZE = 10626; // binomial(24, 4)
 
 const FULL_MASK = (1 << CENTRE_SLOTS.length) - 1;
-const WIDE_MOVES = Object.freeze(
-  CENTRE_AXIS_MOVES.filter(({ move }) => move.includes("w"))
-);
+// Outer turns can permute centres within a face; wide turns move centres
+// between faces. Both are needed for the full centre-colour coordinate.
+const CENTRE_MOVES = Object.freeze(CENTRE_AXIS_MOVES);
 
 function popcount(value) {
   let count = 0;
@@ -69,7 +69,7 @@ function binomial(n, k) {
 }
 
 export const CENTRE_COLOUR_MOVES = Object.freeze(
-  WIDE_MOVES.map(({ move, destination }) => Object.freeze({
+  CENTRE_MOVES.map(({ move, destination }) => Object.freeze({
     move,
     destination
   }))
