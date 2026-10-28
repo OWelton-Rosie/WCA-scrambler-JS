@@ -73,14 +73,15 @@ function getActions() {
 }
 
 function evaluate(state, moves, nodesVisited, macroDepth = 0) {
+  const heuristic = tryEvaluateHeuristic(state);
   return {
     state,
     moves,
     nodesVisited,
     macroDepth,
     pairedEdges: countPairedEdges(state),
-    heuristic: tryEvaluateHeuristic(state),
-    estimatedMacroDepth: tryEvaluateHeuristic(state)?.maxDistance ?? null
+    heuristic,
+    estimatedMacroDepth: heuristic?.maxDistance ?? null
   };
 }
 
