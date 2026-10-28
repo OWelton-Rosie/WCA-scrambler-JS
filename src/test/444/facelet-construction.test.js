@@ -7,7 +7,7 @@ import { extractCornerState, isLegalCornerState, applyCornerStateToFacelets } fr
 import { sample444CornerState } from "../../puzzles/444/corner-sampler.js";
 import { sample444CentreColours, applyCentreColoursToFacelets } from "../../puzzles/444/centre-sampler.js";
 import { extractCentreState } from "../../puzzles/444/centres.js";
-import { sample444WingState, applyWingStateToFacelets } from "../../puzzles/444/wing-sampler.js";
+import { sample444WingPermutation, applyWingPermutationToFacelets } from "../../puzzles/444/wing-sampler.js";
 import { extractWingState, hasValidWingPairCounts } from "../../puzzles/444/wings.js";
 
 function deterministicSource(seed = 0x12345678) {
@@ -24,11 +24,11 @@ test("sampled coordinates construct facelet states with valid sticker counts and
     let state = solvedState();
     const corners = sample444CornerState({ randomWord });
     const centres = sample444CentreColours({ randomWord });
-    const wings = sample444WingState({ randomWord });
+    const wings = sample444WingPermutation({ randomWord });
 
     state = applyCornerStateToFacelets(state, corners);
     state = applyCentreColoursToFacelets(state, centres);
-    state = applyWingStateToFacelets(state, wings);
+    state = applyWingPermutationToFacelets(state, wings);
 
     assert.ok(isValidState(state), `sample ${sample}: sticker counts`);
     assert.ok(isLegalCornerState(extractCornerState(state)), `sample ${sample}: corner legality`);
@@ -40,9 +40,9 @@ test("sampled coordinates construct facelet states with valid sticker counts and
     );
     assert.ok(hasValidWingPairCounts(state), `sample ${sample}: wing pair counts`);
     assert.deepEqual(
-      extractWingState(state).map((wing) => wing.signature).sort(),
-      [...wings.edgePairs].sort(),
-      `sample ${sample}: wing pair round trip`
+      [...wings].sort((a, b) => a - b),
+      Array.from({ length: 24 }, (_, index) => index),
+      `sample ${sample}: labelled wing permutation`
     );
   }
 });
@@ -60,12 +60,13 @@ test("coordinate writers preserve facelets outside their own piece class", () =>
   const afterCentres = applyCentreColoursToFacelets(base, sample444CentreColours({ randomWord }));
   for (let i = 0; i < base.length; i++) if (!centreIndices.has(i)) assert.equal(afterCentres[i], base[i]);
 
-  const afterWings = applyWingStateToFacelets(base, sample444WingState({ randomWord }));
+  const afterWings = applyWingPermutationToFacelets(base, sample444WingPermutation({ randomWord }));
   for (let i = 0; i < base.length; i++) if (!wingIndices.has(i)) assert.equal(afterWings[i], base[i]);
 });
 
 test("facelet writers reject malformed centre and wing coordinates", () => {
   const base = solvedState();
   assert.throws(() => applyCentreColoursToFacelets(base, Array(24).fill("U")));
-  assert.throws(() => applyWingStateToFacelets(base, { edgePairs: [], orientations: [] }));
+  assert.throws(() => applyWingPermutationToFacelets(base, []));
+  assert.throws(() => applyWingPermutationToFacelets(base, Array(24).fill(0)));
 });
