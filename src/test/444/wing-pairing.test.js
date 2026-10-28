@@ -16,10 +16,10 @@ test("outer turns preserve wing pairing", () => {
   assert.equal(areWingsPaired(state), true);
 });
 
-test("a wide turn exposes the wing pairing diagnostic", () => {
+test("a wide turn disrupts some wing pairs", () => {
   const state = applyMoves(solvedState(), "Rw");
   const pairedEdges = countPairedEdges(state);
 
-  assert.ok(Number.isInteger(pairedEdges));
-  assert.ok(pairedEdges >= 0 && pairedEdges <= 12);
+  assert.ok(pairedEdges >= 0 && pairedEdges < 12);
+  assert.equal(areWingsPaired(state), false);
 });
