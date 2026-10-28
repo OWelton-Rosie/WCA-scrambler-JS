@@ -115,7 +115,7 @@ export async function solve444Bounded(
     stages.parity = {
       moves: [...result.moves],
       steps: result.steps,
-      issuesBeforeRepair: result.analysis.issues
+      issuesAfterRepair: result.analysis.issues
     };
   } catch (error) {
     throw new RangeError(`4x4 parity stage failed: ${error.message}`, { cause: error });
