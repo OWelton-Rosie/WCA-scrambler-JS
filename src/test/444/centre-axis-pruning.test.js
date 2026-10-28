@@ -28,3 +28,24 @@ test("centre-axis exact distances are admissible on legal outer/wide move sequen
     assert.ok(getCentreAxisDistance(mask, "UD") <= upperBound, sequence);
   }
 });
+
+import { solve444CentresToAxisPairs } from "../../puzzles/444/centre-axis-solver.js";
+
+test("centre axis-pair solver reduces a short wide-turn scramble", () => {
+  const scramble = ["Rw", "Uw'", "Fw2"];
+  const state = applyMoves(solvedState(), scramble);
+  const result = solve444CentresToAxisPairs(state, {
+    maxDepth: 6,
+    maxNodes: 200000
+  });
+
+  assert.ok(result.depth <= 3);
+  assert.ok(result.nodesVisited > 0);
+  for (const axis of ["UD", "FB", "LR"]) {
+    assert.equal(
+      encodeCentreAxisMask(result.state, axis),
+      solvedCentreAxisMask(axis),
+      `${axis} centres did not reach their correct axis pair`
+    );
+  }
+});
