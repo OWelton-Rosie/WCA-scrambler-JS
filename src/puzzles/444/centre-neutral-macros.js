@@ -2,6 +2,7 @@ import { FACELETS, solvedState } from "./state.js";
 import { applyMoves, getMovePermutation, invertMoves, MOVE_NAMES } from "./moves.js";
 import { CENTRE_SLOTS } from "./centres.js";
 import { WING_SLOTS } from "./wings.js";
+import { countPairedEdges } from "./wing-pairing.js";
 
 const CENTRE_FACELET_INDICES = CENTRE_SLOTS.map(({ faceletIndex }) => faceletIndex);
 const WING_FACELET_INDICES = WING_SLOTS.flatMap(({ faceletIndices }) => faceletIndices);
@@ -73,7 +74,8 @@ function addMacro(moves, solved, macros, seen) {
   macros.push(Object.freeze({
     moves: Object.freeze(moves),
     notation: key,
-    changedWingStickers
+    changedWingStickers,
+    pairedEdges: countPairedEdges(result)
   }));
 }
 
@@ -86,6 +88,10 @@ let cachedMacros;
  * Candidate centre permutations are checked first, then promising candidates
  * are replayed through the complete facelet model and retained only when they
  * preserve centre colours and change wing stickers.
+ *
+ * Each result includes the number of geometric edge slots whose two wings
+ * have matching colour-pair signatures, as a simple pairing-effect diagnostic.
+ * This metric is necessary but not sufficient for a valid reduced 3×3 state.
  *
  * This is a macro-discovery primitive for wing-pairing research, not a complete
  * wing-pairing algorithm. It does not claim that the macros connect every
