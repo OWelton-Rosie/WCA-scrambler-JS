@@ -100,3 +100,20 @@ test("deterministic adversarial outer-turn sequences survive reduced 3x3 hand-of
     );
   }
 });
+
+test("bounded pipeline attempts a centre-neutral wide/outer commutator end to end", async () => {
+  const scramble = ["Rw", "U", "Rw'"];
+  const start = applyMoves(solvedState(), scramble);
+  const result = await solve444Bounded(start, {
+    centreMaxDepth: 6,
+    centreMaxNodes: 100000,
+    wingMaxMacroDepth: 4,
+    wingMaxNodes: 20000,
+    wingBeamWidth: 300
+  });
+
+  assert.equal(result.solved, true);
+  assert.ok(isSolved(result.state));
+  assert.deepEqual(applyMoves(start, result.moves), solvedState());
+  assert.deepEqual(applyMoves(solvedState(), [...scramble, ...result.moves]), solvedState());
+});
