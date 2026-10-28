@@ -36,8 +36,10 @@ test("bounded search solves a state produced by two distinct centre-neutral macr
   assert.ok(macros.length >= 2);
 
   const first = macros[0];
-  const second = macros.find(
-    (macro) => macro.wingPermutationKey !== first.wingPermutationKey
+  const solved = solvedState();
+  const second = macros.find((macro) =>
+    macro.wingPermutationKey !== first.wingPermutationKey &&
+    JSON.stringify(applyMoves(solved, [...first.moves, ...macro.moves])) !== JSON.stringify(solved)
   );
   assert.ok(second);
 
