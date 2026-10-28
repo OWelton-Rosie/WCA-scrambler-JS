@@ -11,6 +11,7 @@ test("bounded beam search returns immediately for a fully reduced state", () => 
   const result = searchWingPairingBounded(solvedState());
   assert.equal(result.solved, true);
   assert.equal(result.depth, 0);
+  assert.equal(result.primitiveMoveCount, 0);
   assert.equal(result.pairedEdges, 12);
   assert.equal(result.nodesVisited, 0);
 });
@@ -32,6 +33,7 @@ test("bounded beam search can reverse a known wing-pairing disruption", () => {
 
   assert.equal(result.solved, true);
   assert.equal(result.depth, 1);
+  assert.equal(result.primitiveMoveCount, result.moves.length);
   assert.equal(result.pairedEdges, 12);
 });
 
@@ -48,6 +50,7 @@ test("bounded beam search reports exhaustion rather than claiming unsolvability"
 
   assert.equal(result.solved, false);
   assert.equal(result.depth, 0);
+  assert.equal(result.primitiveMoveCount, 0);
   assert.equal(result.nodesVisited, 0);
 });
 
