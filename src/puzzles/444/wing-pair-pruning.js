@@ -59,6 +59,20 @@ function getPairingMoves() {
 
 const TABLES = new Map();
 
+function positionsBySignature(state) {
+  const wings = extractWingState(state);
+  const positions = new Map(
+    [...GOAL_SLOTS_BY_SIGNATURE.keys()].map((signature) => [signature, []])
+  );
+
+  for (let slot = 0; slot < wings.length; slot++) {
+    const list = positions.get(wings[slot].signature);
+    if (list) list.push(slot);
+  }
+
+  return positions;
+}
+
 export function getWingPairSignatures() {
   return Object.freeze([...GOAL_SLOTS_BY_SIGNATURE.keys()]);
 }
@@ -70,12 +84,7 @@ export function encodeWingPairPosition(state, signature) {
     throw new RangeError(`Unknown wing-pair signature: ${signature}`);
   }
 
-  const wings = extractWingState(state);
-  const positions = [];
-  for (let slot = 0; slot < wings.length; slot++) {
-    if (wings[slot].signature === signature) positions.push(slot);
-  }
-
+  const positions = positionsBySignature(state).get(signature);
   if (positions.length !== 2) {
     throw new RangeError(
       `Expected exactly two ${signature} wings; found ${positions.length}`
@@ -167,11 +176,17 @@ export function getWingPairDistance(position, signature) {
 /** Maximum exact single-pair distance; an admissible macro-depth lower bound. */
 export function estimateWingPairingMacroDepth(state) {
   assertValidState(state);
+  const positions = positionsBySignature(state);
   let bound = 0;
 
   for (const signature of GOAL_SLOTS_BY_SIGNATURE.keys()) {
-    const position = encodeWingPairPosition(state, signature);
-    bound = Math.max(bound, getWingPairDistance(position, signature));
+    const pair = positions.get(signature);
+    if (pair.length !== 2) {
+      throw new RangeError(
+        `Expected exactly two ${signature} wings; found ${pair.length}`
+      );
+    }
+    bound = Math.max(bound, getWingPairDistance(pair, signature));
   }
 
   return bound;
