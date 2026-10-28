@@ -5,6 +5,7 @@ import { FACELETS } from "./state.js";
 import { solve444CentresWithPatternDatabase } from "./centre-colour-solver.js";
 import { searchWingPairingBounded } from "./wing-pairing-beam-search.js";
 import { solveReduced3x3 } from "./reduced-solver.js";
+import { repairReducedParityBounded } from "./parity-macros.js";
 import { toReduced3x3Facelets } from "./reduced.js";
 
 function centresAreSolved(state) {
@@ -36,7 +37,8 @@ export async function solve444Bounded(
     centreMaxNodes = 1_000_000,
     wingMaxMacroDepth = 3,
     wingMaxNodes = 20_000,
-    wingBeamWidth = 100
+    wingBeamWidth = 100,
+    parityMaxSteps = 2
   } = {}
 ) {
   assertValidState(state);
@@ -49,6 +51,7 @@ export async function solve444Bounded(
       stages: {
         centres: { moves: [], nodesVisited: 0 },
         wings: { moves: [], nodesVisited: 0 },
+        parity: { moves: [], steps: 0 },
         reduced3x3: { moves: [] }
       }
     };
@@ -101,6 +104,24 @@ export async function solve444Bounded(
   }
 
   try {
+    const result = repairReducedParityBounded(current, { maxSteps: parityMaxSteps });
+    current = replayAndCompare(current, result.moves, result.state, "Parity");
+    if (!result.solved || !result.analysis?.legal) {
+      const issues = result.analysis?.issues?.join("; ") || "no reduced-state parity solution found";
+      throw new RangeError(
+        `bounded parity repair exhausted its budget after ${result.steps} macro steps: ${issues}`
+      );
+    }
+    stages.parity = {
+      moves: [...result.moves],
+      steps: result.steps,
+      issuesBeforeRepair: result.analysis.issues
+    };
+  } catch (error) {
+    throw new RangeError(`4x4 parity stage failed: ${error.message}`, { cause: error });
+  }
+
+  try {
     const result = await solveReduced3x3(current);
     const moves = result.solution ? result.solution.split(/\s+/).filter(Boolean) : [];
     const solved = applyMoves(current, moves);
@@ -119,6 +140,7 @@ export async function solve444Bounded(
     const allMoves = [
       ...stages.centres.moves,
       ...stages.wings.moves,
+      ...stages.parity.moves,
       ...moves
     ];
     const finalState = applyMoves(initial, allMoves);
