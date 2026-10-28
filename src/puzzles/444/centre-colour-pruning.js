@@ -12,9 +12,9 @@ const TABLES = new Map();
 
 /**
  * Build an exact BFS pattern database for the four centres of one colour.
- * The combinatorial coordinate has C(24,4) masks, but only the solved-goal
- * orbit is reachable using wide turns. Unvisited ranks remain explicitly
- * marked so impossible masks are never assigned a fabricated distance.
+ * The table is indexed by the combinatorial rank of each 4-of-24 mask.
+ * Outer and wide turns are included because outer turns can permute centres
+ * within a face, while wide turns move centres between faces.
  */
 export function buildCentreColourPruningTable(colour) {
   const cached = TABLES.get(colour);
