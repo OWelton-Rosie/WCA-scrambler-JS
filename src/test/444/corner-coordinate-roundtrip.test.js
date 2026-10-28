@@ -2,12 +2,19 @@ import test from "node:test";
 import assert from "node:assert/strict";
 
 import { solvedState, isValidState } from "../../puzzles/444/state.js";
+import { PIECE_LOCATIONS } from "../../puzzles/444/pieces.js";
 import {
   applyCornerStateToFacelets,
   extractCornerState,
   isLegalCornerState
 } from "../../puzzles/444/corners.js";
 import { sample444CornerState } from "../../puzzles/444/corner-sampler.js";
+
+const cornerFaceletIndices = new Set(
+  PIECE_LOCATIONS
+    .filter((location) => location.type === "corner")
+    .flatMap((location) => location.faceletIndices)
+);
 
 test("sampled corner coordinates round-trip through the facelet model", () => {
   for (let i = 0; i < 500; i++) {
@@ -20,20 +27,16 @@ test("sampled corner coordinates round-trip through the facelet model", () => {
   }
 });
 
-test("writing corners preserves all non-corner facelets", () => {
+test("writing corners preserves every non-corner facelet", () => {
   const base = solvedState();
   const sampled = sample444CornerState();
   const result = applyCornerStateToFacelets(base, sampled);
-  const cornerIndices = new Set(
-    // Derive the set from the difference between solved and the rewritten
-    // state is not reliable when a colour happens to match, so identify
-    // corners geometrically through the public piece-location model.
-    []
-  );
-  void cornerIndices;
 
-  assert.equal(result.length, base.length);
-  assert.ok(isValidState(result));
+  for (let i = 0; i < base.length; i++) {
+    if (!cornerFaceletIndices.has(i)) {
+      assert.equal(result[i], base[i], `non-corner facelet ${i}`);
+    }
+  }
 });
 
 test("rejects malformed corner coordinates", () => {
