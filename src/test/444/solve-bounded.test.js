@@ -117,3 +117,20 @@ test("bounded pipeline attempts a centre-neutral wide/outer commutator end to en
   assert.deepEqual(applyMoves(start, result.moves), solvedState());
   assert.deepEqual(applyMoves(solvedState(), [...scramble, ...result.moves]), solvedState());
 });
+
+test("bounded pipeline solves a multi-wide-turn legal scramble with full replay verification", async () => {
+  const scramble = ["Rw", "Uw'", "Fw2"];
+  const start = applyMoves(solvedState(), scramble);
+  const result = await solve444Bounded(start, {
+    centreMaxDepth: 6,
+    centreMaxNodes: 200000,
+    wingMaxMacroDepth: 4,
+    wingMaxNodes: 20000,
+    wingBeamWidth: 300
+  });
+
+  assert.equal(result.solved, true);
+  assert.ok(isSolved(result.state));
+  assert.deepEqual(applyMoves(start, result.moves), solvedState());
+  assert.deepEqual(applyMoves(solvedState(), [...scramble, ...result.moves]), solvedState());
+});
