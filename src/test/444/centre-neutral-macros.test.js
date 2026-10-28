@@ -17,11 +17,18 @@ test("derived centre-neutral commutators preserve centres and affect wings", () 
   const macros = deriveCentreNeutralCommutators();
 
   assert.ok(macros.length > 0, "expected at least one non-trivial centre-neutral commutator");
+  assert.equal(
+    new Set(macros.map((macro) => macro.wingPermutationKey)).size,
+    macros.length,
+    "wing-slot-equivalent macros should be deduplicated"
+  );
 
   for (const macro of macros) {
     assert.equal(centresAreSolved(applyMoves(solved, macro.moves)), true, macro.notation);
     assert.ok(macro.changedWingStickers > 0, macro.notation);
     assert.ok(macro.pairedEdges >= 0 && macro.pairedEdges <= 12, macro.notation);
+    assert.equal(macro.wingDestinationBySource.length, 24, macro.notation);
+    assert.equal(new Set(macro.wingDestinationBySource).size, 24, macro.notation);
     assert.ok(
       macro.moves.some((move) => move.startsWith("2") || /^[URFDLB]w(?:2|')?$/.test(move)),
       macro.notation
