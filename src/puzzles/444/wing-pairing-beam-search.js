@@ -4,7 +4,7 @@ import { CENTRE_SLOTS } from "./centres.js";
 import { WING_SLOTS } from "./wings.js";
 import { deriveCentreNeutralCommutators } from "./centre-neutral-macros.js";
 import { countPairedEdges } from "./wing-pairing.js";
-import { estimateWingPairingMacroDepth } from "./wing-pair-pruning.js";
+import { evaluateWingPairingHeuristic } from "./wing-pair-pruning.js";
 import { toReduced3x3Facelets } from "./reduced.js";
 
 function areCentresSolved(state) {
@@ -29,9 +29,9 @@ function wingStateKey(state) {
     .join("");
 }
 
-function tryEstimateMacroDepth(state) {
+function tryEvaluateHeuristic(state) {
   try {
-    return estimateWingPairingMacroDepth(state);
+    return evaluateWingPairingHeuristic(state);
   } catch (error) {
     if (error instanceof RangeError) return null;
     throw error;
@@ -79,7 +79,8 @@ function evaluate(state, moves, nodesVisited, macroDepth = 0) {
     nodesVisited,
     macroDepth,
     pairedEdges: countPairedEdges(state),
-    estimatedMacroDepth: tryEstimateMacroDepth(state)
+    heuristic: tryEvaluateHeuristic(state),
+    estimatedMacroDepth: tryEvaluateHeuristic(state)?.maxDistance ?? null
   };
 }
 
@@ -93,6 +94,11 @@ function compareNodes(a, b) {
   } else if (b.estimatedMacroDepth !== null) {
     return 1;
   }
+
+  // Sum of pair distances is a non-admissible tie-breaker, not a proof bound.
+  const aTotal = a.heuristic?.totalDistance ?? Number.POSITIVE_INFINITY;
+  const bTotal = b.heuristic?.totalDistance ?? Number.POSITIVE_INFINITY;
+  if (aTotal !== bTotal) return aTotal - bTotal;
 
   if (a.pairedEdges !== b.pairedEdges) return b.pairedEdges - a.pairedEdges;
   return a.moves.length - b.moves.length;
