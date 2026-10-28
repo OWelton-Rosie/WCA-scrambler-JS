@@ -52,3 +52,51 @@ test("solved input returns an empty verified solution without initialising the 3
   assert.deepEqual(result.state, solvedState());
   assert.equal(isSolved(result.state), true);
 });
+
+test("bounded pipeline reduces a single wide turn, then verifies the complete solution", async () => {
+  for (const scramble of [["Rw"], ["Uw'"], ["Fw2"], ["2R'"]]) {
+    const start = applyMoves(solvedState(), scramble);
+    const result = await solve444Bounded(start, {
+      centreMaxDepth: 4,
+      centreMaxNodes: 100000,
+      wingMaxMacroDepth: 2,
+      wingMaxNodes: 5000,
+      wingBeamWidth: 100
+    });
+
+    assert.equal(result.solved, true, scramble.join(" "));
+    assert.ok(isSolved(result.state), scramble.join(" "));
+    assert.ok(result.stages.centres.moves.length > 0, scramble.join(" "));
+    assert.deepEqual(applyMoves(start, result.moves), solvedState(), scramble.join(" "));
+    assert.deepEqual(applyMoves(solvedState(), [...scramble, ...result.moves]), solvedState());
+  }
+});
+
+test("deterministic adversarial outer-turn sequences survive reduced 3x3 hand-off and full replay", async () => {
+  const movePool = [
+    "U", "U'", "U2", "R", "R'", "R2", "F", "F'", "F2",
+    "D", "D'", "D2", "L", "L'", "L2", "B", "B'", "B2"
+  ];
+  let seed = 0x4d595df4;
+  const random = () => {
+    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+    return seed / 0x1_0000_0000;
+  };
+
+  for (let sample = 0; sample < 8; sample++) {
+    const scramble = Array.from(
+      { length: 12 + sample },
+      () => movePool[Math.floor(random() * movePool.length)]
+    );
+    const start = applyMoves(solvedState(), scramble);
+    const result = await solve444Bounded(start);
+
+    assert.equal(result.solved, true, `sample ${sample}: ${scramble.join(" ")}`);
+    assert.ok(isSolved(result.state), `sample ${sample}`);
+    assert.deepEqual(
+      applyMoves(start, result.moves),
+      solvedState(),
+      `sample ${sample}: replay mismatch`
+    );
+  }
+});
