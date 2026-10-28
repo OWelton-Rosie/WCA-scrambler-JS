@@ -186,3 +186,36 @@ export function cornerPermutationParity(cornerState) {
 
   return parity;
 }
+
+
+/**
+ * Write a corner coordinate into a facelet state while preserving all
+ * non-corner stickers.
+ *
+ * The input coordinate uses the same convention as extractCornerState:
+ * cp[position] identifies the corner and co[position] is the index (0..2)
+ * at which its U/D sticker appears in that position's ordered face list.
+ *
+ * This is a coordinate/representation helper, not a full 4x4 state
+ * constructor: centres and wings are left untouched.
+ */
+export function applyCornerStateToFacelets(state, cornerState) {
+  assertValidState(state);
+  assertLegalCornerState(cornerState);
+
+  const result = [...state];
+
+  for (let position = 0; position < CORNER_SLOTS.length; position++) {
+    const identity = cornerState.cp[position];
+    const orientation = cornerState.co[position];
+    const sourceColours = CORNER_SLOTS[identity].faces;
+    const targetFaceletIndices = CORNER_FACELET_INDICES[position];
+
+    for (let targetIndex = 0; targetIndex < 3; targetIndex++) {
+      const sourceIndex = (targetIndex - orientation + 3) % 3;
+      result[targetFaceletIndices[targetIndex]] = sourceColours[sourceIndex];
+    }
+  }
+
+  return result;
+}
