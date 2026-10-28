@@ -38,13 +38,13 @@ test("4-of-24 centre-colour ranking is a bijection", () => {
 test("each centre-colour pattern database covers its full reachable orbit", () => {
   for (const colour of CENTRE_COLOUR_NAMES) {
     const result = buildCentreColourPruningTable(colour);
-    assert.equal(result.coordinateCount, 5670);
+    assert.equal(result.coordinateCount, CENTRE_COLOUR_COORDINATE_SIZE);
     assert.equal(getCentreColourDistance(solvedCentreColourMask(colour), colour), 0);
     assert.equal(buildCentreColourPruningTable(colour).cached, true);
   }
 });
 
-test("centre-colour pattern distances are admissible for legal wide-turn sequences", () => {
+test("centre-colour pattern distances are admissible for legal outer/wide sequences", () => {
   const cases = [
     ["Rw", 1],
     ["Rw Uw' Fw2", 3],
