@@ -12,7 +12,9 @@ const TABLES = new Map();
 
 /**
  * Build an exact BFS pattern database for the four centres of one colour.
- * The compact table is indexed by the combinatorial rank, not a 24-bit mask.
+ * The combinatorial coordinate has C(24,4) masks, but only the solved-goal
+ * orbit is reachable using wide turns. Unvisited ranks remain explicitly
+ * marked so impossible masks are never assigned a fabricated distance.
  */
 export function buildCentreColourPruningTable(colour) {
   const cached = TABLES.get(colour);
@@ -53,12 +55,6 @@ export function buildCentreColourPruningTable(colour) {
       queue[tail++] = next;
       if (nextDistance > maxDistance) maxDistance = nextDistance;
     }
-  }
-
-  if (tail !== CENTRE_COLOUR_COORDINATE_SIZE) {
-    throw new Error(
-      `Centre-colour BFS for ${colour} reached ${tail} states; expected ${CENTRE_COLOUR_COORDINATE_SIZE}`
-    );
   }
 
   const table = { distances, visited: tail, maxDistance };
