@@ -44,6 +44,17 @@ function applyLookup(mask, chunks) {
   return result;
 }
 
+/** Apply one precomputed abstract move to a valid centre-axis mask. */
+export function applyCentreAxisMaskMoveIndex(mask, moveIndex) {
+  if (!Number.isInteger(mask) || mask < 0 || mask >= MASK_SPACE_SIZE) {
+    throw new RangeError("Invalid 24-bit centre-axis mask");
+  }
+  if (!Number.isInteger(moveIndex) || moveIndex < 0 || moveIndex >= MOVE_LOOKUPS.length) {
+    throw new RangeError("Invalid centre-axis move index");
+  }
+  return applyLookup(mask, MOVE_LOOKUPS[moveIndex]);
+}
+
 /**
  * Build an exact BFS distance table for one 8-of-24 centre-axis coordinate.
  * Distances are indexed by the raw 24-bit mask; 0xff denotes an unvisited
