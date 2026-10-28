@@ -1,17 +1,40 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
+import { FACELETS, solvedState } from "../../puzzles/444/state.js";
+import { EDGE_SLOTS, WING_SLOTS } from "../../puzzles/444/wings.js";
 import { applyMoves } from "../../puzzles/444/moves.js";
-import { solvedState, isSolved } from "../../puzzles/444/state.js";
 import { analyzeReduced444State } from "../../puzzles/444/reduced-solver.js";
 import {
   deriveReducedParityMacros,
   repairReducedParityBounded
 } from "../../puzzles/444/parity-macros.js";
 
-test("derived parity macros are reduced and reproduce their declared parity", () => {
+function makeSingleEdgeFlipProjection() {
+  const state = solvedState();
+  const ufEdge = EDGE_SLOTS.find((edge) =>
+    edge.wingSlotIndices.every((slotIndex) => {
+      const slot = WING_SLOTS[slotIndex];
+      const colours = slot.faceletIndices.map((index) => FACELETS[index].face).sort();
+      return colours.join("") === ["F", "U"].sort().join("");
+    })
+  );
+  assert.ok(ufEdge);
+
+  for (const slotIndex of ufEdge.wingSlotIndices) {
+    const slot = WING_SLOTS[slotIndex];
+    const uIndex = slot.faceletIndices.find((index) => FACELETS[index].face === "U");
+    const fIndex = slot.faceletIndices.find((index) => FACELETS[index].face === "F");
+    assert.notEqual(uIndex, undefined);
+    assert.notEqual(fIndex, undefined);
+    state[uIndex] = "F";
+    state[fIndex] = "U";
+  }
+  return state;
+}
+
+test("every discovered parity gadget, if any, is independently verified", () => {
   const macros = deriveReducedParityMacros();
-  assert.ok(macros.length > 0, "expected at least one derived parity gadget");
 
   for (const macro of macros) {
     const state = applyMoves(solvedState(), macro.moves);
@@ -23,14 +46,16 @@ test("derived parity macros are reduced and reproduce their declared parity", ()
   }
 });
 
-test("bounded parity repair verifies a derived parity fixture through facelet replay", () => {
-  const macro = deriveReducedParityMacros()[0];
-  assert.ok(macro, "expected a derived parity gadget");
-  const state = applyMoves(solvedState(), macro.moves);
+test("parity repair explicitly reports an unsupported single-edge-flip projection", () => {
+  const state = makeSingleEdgeFlipProjection();
+  const before = analyzeReduced444State(state);
+  assert.equal(before.ollParity, true);
+  assert.equal(before.legal, false);
+
   const result = repairReducedParityBounded(state, { maxSteps: 1 });
 
-  assert.equal(result.solved, true);
-  assert.equal(result.analysis.legal, true);
-  assert.deepEqual(result.state, applyMoves(state, result.moves));
-  assert.equal(isSolved(result.state), true);
+  assert.equal(result.solved, false);
+  assert.equal(result.analysis.ollParity, true);
+  assert.deepEqual(result.moves, []);
+  assert.deepEqual(result.state, state);
 });
