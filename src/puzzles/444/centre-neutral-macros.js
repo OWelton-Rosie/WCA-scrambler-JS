@@ -6,7 +6,7 @@ import { WING_SLOTS } from "./wings.js";
 const CENTRE_FACELET_INDICES = CENTRE_SLOTS.map(({ faceletIndex }) => faceletIndex);
 const WING_FACELET_INDICES = WING_SLOTS.flatMap(({ faceletIndices }) => faceletIndices);
 const NON_OUTER_MOVES = new Set(
-  MOVE_NAMES.filter((move) => move.startsWith("2") || move.endsWith("w"))
+  MOVE_NAMES.filter((move) => move.startsWith("2") || /^[URFDLB]w(?:2|')?$/.test(move))
 );
 
 const CENTRE_DESTINATIONS = new Map(
