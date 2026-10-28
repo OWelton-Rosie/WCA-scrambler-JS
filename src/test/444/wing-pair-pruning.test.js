@@ -9,7 +9,8 @@ import {
   encodeWingPairPosition,
   estimateWingPairingMacroDepth,
   getWingPairDistance,
-  getWingPairSignatures
+  getWingPairSignatures,
+  evaluateWingPairingHeuristic
 } from "../../puzzles/444/wing-pair-pruning.js";
 
 test("each wing-pair pattern database includes its solved coordinate", () => {
@@ -61,4 +62,11 @@ test("wing-pair pattern databases remain admissible across two-macro composition
     assert.ok(getWingPairDistance(position, signature) <= 2, signature);
   }
   assert.ok(estimateWingPairingMacroDepth(state) <= 2);
+});
+
+test("aggregate wing-pair heuristic is zero at the goal", () => {
+  assert.deepEqual(evaluateWingPairingHeuristic(solvedState()), {
+    maxDistance: 0,
+    totalDistance: 0
+  });
 });
