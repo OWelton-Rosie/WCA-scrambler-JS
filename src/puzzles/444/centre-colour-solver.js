@@ -33,7 +33,7 @@ function heuristic(masks) {
 }
 
 /**
- * Solve all 24 4×4 centres using wide turns only.
+ * Solve all 24 4×4 centres using outer and wide turns.
  *
  * Exact single-colour pattern databases provide an admissible lower bound.
  * This IDA* implementation is bounded; it reports search exhaustion rather
