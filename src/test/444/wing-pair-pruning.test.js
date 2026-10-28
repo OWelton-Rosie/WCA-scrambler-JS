@@ -48,8 +48,10 @@ test("wing-pair pattern databases remain admissible across two-macro composition
   assert.ok(macros.length >= 2);
 
   const first = macros[0];
-  const second = macros.find(
-    (candidate) => candidate.wingPermutationKey !== first.wingPermutationKey
+  const solved = solvedState();
+  const second = macros.find((candidate) =>
+    candidate.wingPermutationKey !== first.wingPermutationKey &&
+    JSON.stringify(applyMoves(solved, [...first.moves, ...candidate.moves])) !== JSON.stringify(solved)
   );
   assert.ok(second);
 
