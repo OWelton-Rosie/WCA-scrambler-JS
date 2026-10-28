@@ -51,7 +51,12 @@ function buildPairingMoves() {
   return Object.freeze([...byPermutation.values()]);
 }
 
-const PAIRING_MOVES = buildPairingMoves();
+let PAIRING_MOVES;
+function getPairingMoves() {
+  if (!PAIRING_MOVES) PAIRING_MOVES = buildPairingMoves();
+  return PAIRING_MOVES;
+}
+
 const TABLES = new Map();
 
 export function getWingPairSignatures() {
@@ -108,13 +113,14 @@ export function buildWingPairPruningTable(signature) {
   let head = 0;
   let tail = 1;
   let maxDistance = 0;
+  const moves = getPairingMoves();
 
   while (head < tail) {
     const code = queue[head++];
     const [a, b] = decodePairCode(code);
     const nextDistance = distances[code] + 1;
 
-    for (const destination of PAIRING_MOVES) {
+    for (const destination of moves) {
       const next = pairCode(destination[a], destination[b]);
       if (distances[next] !== 0xff) continue;
       if (tail >= queue.length) {
