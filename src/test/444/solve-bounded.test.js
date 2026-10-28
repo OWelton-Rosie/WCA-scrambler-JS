@@ -134,3 +134,20 @@ test("bounded pipeline solves a multi-wide-turn legal scramble with full replay 
   assert.deepEqual(applyMoves(start, result.moves), solvedState());
   assert.deepEqual(applyMoves(solvedState(), [...scramble, ...result.moves]), solvedState());
 });
+
+test("bounded pipeline handles a mixed outer/wide sequence beyond a single commutator", async () => {
+  const scramble = ["Rw", "U", "Rw'", "Fw"];
+  const start = applyMoves(solvedState(), scramble);
+  const result = await solve444Bounded(start, {
+    centreMaxDepth: 8,
+    centreMaxNodes: 200000,
+    wingMaxMacroDepth: 5,
+    wingMaxNodes: 30000,
+    wingBeamWidth: 500
+  });
+
+  assert.equal(result.solved, true, scramble.join(" "));
+  assert.ok(isSolved(result.state));
+  assert.deepEqual(applyMoves(start, result.moves), solvedState());
+  assert.deepEqual(applyMoves(solvedState(), [...scramble, ...result.moves]), solvedState());
+});
