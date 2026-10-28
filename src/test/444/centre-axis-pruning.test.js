@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 
 import { solvedState } from "../../puzzles/444/state.js";
-import { applyMove, applyMoves } from "../../puzzles/444/moves.js";
+import { applyMoves } from "../../puzzles/444/moves.js";
 import { encodeCentreAxisMask, solvedCentreAxisMask } from "../../puzzles/444/centre-axis-coordinate.js";
 import { buildCentreAxisPruningTable, getCentreAxisDistance } from "../../puzzles/444/centre-axis-pruning.js";
 
@@ -14,11 +14,11 @@ test("UD centre-axis BFS reaches the entire 8-of-24 coordinate space", () => {
   assert.equal(buildCentreAxisPruningTable("UD").cached, true);
 });
 
-test("centre-axis exact distances are admissible on legal move sequences", () => {
+test("centre-axis exact distances are admissible on legal outer/wide move sequences", () => {
   const cases = [
     ["R", 1],
     ["Rw U F2", 3],
-    ["2R U' Fw R2", 4]
+    ["Rw U' Fw R2", 4]
   ];
 
   for (const [sequence, upperBound] of cases) {
@@ -27,10 +27,4 @@ test("centre-axis exact distances are admissible on legal move sequences", () =>
     const mask = encodeCentreAxisMask(state, "UD");
     assert.ok(getCentreAxisDistance(mask, "UD") <= upperBound, sequence);
   }
-
-  const moved = applyMove(solvedState(), "Rw");
-  assert.equal(
-    getCentreAxisDistance(encodeCentreAxisMask(moved, "UD"), "UD"),
-    getCentreAxisDistance(encodeCentreAxisMask(moved, "UD"), "UD")
-  );
 });
