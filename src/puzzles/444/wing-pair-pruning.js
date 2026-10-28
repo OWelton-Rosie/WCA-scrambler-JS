@@ -173,11 +173,17 @@ export function getWingPairDistance(position, signature) {
   return distance;
 }
 
-/** Maximum exact single-pair distance; an admissible macro-depth lower bound. */
-export function estimateWingPairingMacroDepth(state) {
+/**
+ * Evaluate all 12 wing-pair coordinates.
+ *
+ * maxDistance is an admissible lower bound on macro depth. totalDistance is
+ * only a tie-breaker for search ordering; it is not claimed to be admissible.
+ */
+export function evaluateWingPairingHeuristic(state) {
   assertValidState(state);
   const positions = positionsBySignature(state);
-  let bound = 0;
+  let maxDistance = 0;
+  let totalDistance = 0;
 
   for (const signature of GOAL_SLOTS_BY_SIGNATURE.keys()) {
     const pair = positions.get(signature);
@@ -186,8 +192,15 @@ export function estimateWingPairingMacroDepth(state) {
         `Expected exactly two ${signature} wings; found ${pair.length}`
       );
     }
-    bound = Math.max(bound, getWingPairDistance(pair, signature));
+    const distance = getWingPairDistance(pair, signature);
+    maxDistance = Math.max(maxDistance, distance);
+    totalDistance += distance;
   }
 
-  return bound;
+  return { maxDistance, totalDistance };
+}
+
+/** Maximum exact single-pair distance; an admissible macro-depth lower bound. */
+export function estimateWingPairingMacroDepth(state) {
+  return evaluateWingPairingHeuristic(state).maxDistance;
 }
