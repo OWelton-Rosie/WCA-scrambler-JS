@@ -5,6 +5,7 @@ import { solvedState } from "../../puzzles/444/state.js";
 import { applyMoves } from "../../puzzles/444/moves.js";
 import { encodeCentreAxisMask, solvedCentreAxisMask } from "../../puzzles/444/centre-axis-coordinate.js";
 import { buildCentreAxisPruningTable, getCentreAxisDistance } from "../../puzzles/444/centre-axis-pruning.js";
+import { solve444CentresToAxisPairs } from "../../puzzles/444/centre-axis-solver.js";
 
 test("UD centre-axis BFS reaches the entire 8-of-24 coordinate space", () => {
   const result = buildCentreAxisPruningTable("UD");
@@ -29,7 +30,6 @@ test("centre-axis exact distances are admissible on legal outer/wide move sequen
   }
 });
 
-import { solve444CentresToAxisPairs } from "../../puzzles/444/centre-axis-solver.js";
 
 test("centre axis-pair solver reduces a short wide-turn scramble", () => {
   const scramble = ["Rw", "Uw'", "Fw2"];
