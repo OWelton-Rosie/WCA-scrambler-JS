@@ -63,3 +63,15 @@ test("bounded parity repair never reports success without a legal replayed state
     assert.equal(result.analysis.ollParity || result.analysis.pllParity, true);
   }
 });
+
+
+test("parity macro discovery caches results separately for each search budget", () => {
+  const zeroBudget = deriveReducedParityMacros({ maxCompositions: 0 });
+  const oneBudget = deriveReducedParityMacros({ maxCompositions: 1 });
+
+  assert.ok(Array.isArray(zeroBudget));
+  assert.ok(Array.isArray(oneBudget));
+  assert.notEqual(zeroBudget, oneBudget);
+  assert.equal(deriveReducedParityMacros({ maxCompositions: 0 }), zeroBudget);
+  assert.equal(deriveReducedParityMacros({ maxCompositions: 1 }), oneBudget);
+});
