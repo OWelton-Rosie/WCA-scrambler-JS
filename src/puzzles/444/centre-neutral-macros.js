@@ -126,8 +126,7 @@ let cachedMacros;
  * Derive short centre-preserving commutators from the local move model.
  *
  * Searches commutators of one-move and two-move sequences with a single move,
- * plus selected eight-move commutators whose first sequence contains three
- * outer turns on distinct faces.
+ * plus selected conjugates of useful six-move macros by an outer turn.
  * Candidate centre permutations are checked first, then promising candidates
  * are replayed through the complete facelet model and retained only when they
  * preserve centre colours and change wing stickers. Equivalent wing-slot
@@ -173,26 +172,21 @@ export function deriveCentreNeutralCommutators() {
     }
   }
 
-  // Eight-move commutators [A B C, D] broaden the action set beyond
-  // the one- and two-move A sequences above. Keep A's three outer turns on
-  // distinct faces to avoid an unnecessarily large duplicate-heavy search.
+  // Conjugate a bounded set of useful six-move macros by outer turns.
+  // Outer turns preserve centre colours, so conjugation preserves the
+  // centre-neutral invariant while exposing additional wing permutations.
+  // Limit the seed set to pairing-disrupting macros to keep branching growth
+  // controlled; addMacro still verifies every candidate and deduplicates its
+  // wing-slot permutation against shorter representatives.
   const outerMoves = MOVE_NAMES.filter((move) => /^[URFDLB](?:2|')?$/.test(move));
-  const nonOuterMoves = MOVE_NAMES.filter((move) => NON_OUTER_MOVES.has(move));
+  const conjugationSeeds = [...macrosByWingPermutation.values()]
+    .filter((macro) => macro.moves.length === 6 && macro.pairedEdges < 12)
+    .slice(0, 12);
 
-  for (const a of outerMoves) {
-    for (const b of outerMoves) {
-      if (a[0] === b[0]) continue;
-      for (const c of outerMoves) {
-        if (c[0] === a[0] || c[0] === b[0]) continue;
-        for (const d of nonOuterMoves) {
-          const moves = [
-            a, b, c, d,
-            ...invertMoves([a, b, c]),
-            ...invertMoves([d])
-          ];
-          addMacro(moves, solved, macrosByWingPermutation, seenSequences);
-        }
-      }
+  for (const macro of conjugationSeeds) {
+    for (const outer of outerMoves) {
+      const moves = [outer, ...macro.moves, ...invertMoves([outer])];
+      addMacro(moves, solved, macrosByWingPermutation, seenSequences);
     }
   }
 
