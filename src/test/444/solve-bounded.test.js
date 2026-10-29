@@ -191,6 +191,8 @@ test("end-to-end solver falls back to IDA when the beam depth is deliberately ze
 
   assert.equal(result.solved, true);
   assert.equal(result.stages.wings.strategy, "ida");
+  assert.equal(result.stages.wings.fallbackUsed, true);
+  assert.ok(result.stages.wings.beamNodesVisited > 0);
   assert.ok(isSolved(result.state));
   assert.deepEqual(applyMoves(start, result.moves), solvedState());
 });
