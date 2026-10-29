@@ -125,7 +125,9 @@ let cachedMacros;
 /**
  * Derive short centre-preserving commutators from the local move model.
  *
- * Searches commutators of one-move and two-move sequences with a single move.
+ * Searches commutators of one-move and two-move sequences with a single move,
+ * plus selected eight-move commutators whose first sequence contains three
+ * outer turns on distinct faces.
  * Candidate centre permutations are checked first, then promising candidates
  * are replayed through the complete facelet model and retained only when they
  * preserve centre colours and change wing stickers. Equivalent wing-slot
