@@ -48,21 +48,29 @@ function buildActions() {
       inverse[destination] = source;
     });
 
-    for (const [moves, permutation] of [
-      [macro.moves, direct],
-      [invertMoves(macro.moves), inverse]
+    const directStickers = [...macro.wingStickerDestinationBySource];
+    const inverseStickers = Array(directStickers.length);
+    directStickers.forEach((destination, source) => {
+      inverseStickers[destination] = source;
+    });
+
+    for (const [moves, permutation, stickerPermutation] of [
+      [macro.moves, direct, directStickers],
+      [invertMoves(macro.moves), inverse, inverseStickers]
     ]) {
-      const key = permutation.join(",");
+      // Wing slot permutations alone are insufficient: distinct actions can
+      // permute the same slots while placing their two stickers differently.
+      const key = stickerPermutation.join(",");
       if (actions.has(key)) continue;
-      const inverseOfPermutation = Array(permutation.length);
-      permutation.forEach((destination, source) => {
-        inverseOfPermutation[destination] = source;
+      const inverseOfStickerPermutation = Array(stickerPermutation.length);
+      stickerPermutation.forEach((destination, source) => {
+        inverseOfStickerPermutation[destination] = source;
       });
       actions.set(key, Object.freeze({
         moves: Object.freeze([...moves]),
         permutationKey: key,
         permutation: Object.freeze([...permutation]),
-        inversePermutationKey: inverseOfPermutation.join(",")
+        inversePermutationKey: inverseOfStickerPermutation.join(",")
       }));
     }
   }
