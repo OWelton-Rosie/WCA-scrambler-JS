@@ -39,6 +39,10 @@ test("derived centre-neutral commutators preserve centres and affect wings", () 
     macros.some((macro) => macro.pairedEdges < 12),
     "expected at least one centre-neutral macro that disrupts wing pairing"
   );
+  assert.ok(
+    macros.some((macro) => macro.moves.length === 8),
+    "expected the expanded search to discover at least one eight-move centre-neutral macro"
+  );
 });
 
 test("centre-neutral commutators also preserve centres after outer turns", () => {
