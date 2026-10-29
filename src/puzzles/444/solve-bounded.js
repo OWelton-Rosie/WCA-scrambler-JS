@@ -68,31 +68,62 @@ export async function solve444Bounded(
   const stages = {};
 
   try {
-    // First group each opposite-colour pair onto its correct axis, then solve
-    // the exact centre colours. Both phases are independently replay-verified.
-    const axisResult = solve444CentresToAxisPairs(current, {
-      maxDepth: centreMaxDepth,
-      maxNodes: centreMaxNodes
-    });
-    current = replayAndCompare(current, axisResult.moves, axisResult.state, "Centre axis-pair");
+    let twoPhaseError;
+    try {
+      // First group each opposite-colour pair onto its correct axis, then solve
+      // the exact centre colours. Both phases are independently replay-verified.
+      const axisResult = solve444CentresToAxisPairs(current, {
+        maxDepth: centreMaxDepth,
+        maxNodes: centreMaxNodes
+      });
+      current = replayAndCompare(current, axisResult.moves, axisResult.state, "Centre axis-pair");
 
-    const colourResult = solve444CentresWithPatternDatabase(current, {
-      maxDepth: centreMaxDepth,
-      maxNodes: centreMaxNodes
-    });
-    current = replayAndCompare(current, colourResult.moves, colourResult.state, "Centre colour");
+      const colourResult = solve444CentresWithPatternDatabase(current, {
+        maxDepth: centreMaxDepth,
+        maxNodes: centreMaxNodes
+      });
+      current = replayAndCompare(current, colourResult.moves, colourResult.state, "Centre colour");
 
-    if (!centresAreSolved(current)) {
-      throw new Error("Centre solver did not solve all 24 centre stickers");
+      if (!centresAreSolved(current)) {
+        throw new Error("Centre solver did not solve all 24 centre stickers");
+      }
+      stages.centres = {
+        moves: [...axisResult.moves, ...colourResult.moves],
+        nodesVisited: axisResult.nodesVisited + colourResult.nodesVisited,
+        strategy: "axis-pair+colour",
+        axisPairMoves: [...axisResult.moves],
+        axisPairNodesVisited: axisResult.nodesVisited,
+        colourMoves: [...colourResult.moves],
+        colourNodesVisited: colourResult.nodesVisited
+      };
+    } catch (error) {
+      // The axis-pair search is bounded and can miss states that the direct
+      // full-centre search can solve. Retry from the original state rather
+      // than making the experimental two-phase strategy a hard dependency.
+      twoPhaseError = error;
+      current = initial;
+      try {
+        const directResult = solve444CentresWithPatternDatabase(current, {
+          maxDepth: centreMaxDepth,
+          maxNodes: centreMaxNodes
+        });
+        current = replayAndCompare(current, directResult.moves, directResult.state, "Direct centre");
+        if (!centresAreSolved(current)) {
+          throw new Error("Direct centre solver did not solve all 24 centre stickers");
+        }
+        stages.centres = {
+          moves: [...directResult.moves],
+          nodesVisited: directResult.nodesVisited,
+          strategy: "direct-fallback",
+          fallbackReason: twoPhaseError.message
+        };
+      } catch (directError) {
+        throw new AggregateError(
+          [twoPhaseError, directError],
+          `two-phase search failed (${twoPhaseError.message}); direct fallback failed (${directError.message})`
+        );
+      }
     }
-    stages.centres = {
-      moves: [...axisResult.moves, ...colourResult.moves],
-      nodesVisited: axisResult.nodesVisited + colourResult.nodesVisited,
-      axisPairMoves: [...axisResult.moves],
-      axisPairNodesVisited: axisResult.nodesVisited,
-      colourMoves: [...colourResult.moves],
-      colourNodesVisited: colourResult.nodesVisited
-    };
   } catch (error) {
     throw new RangeError(`4x4 centre stage failed: ${error.message}`, { cause: error });
   }
