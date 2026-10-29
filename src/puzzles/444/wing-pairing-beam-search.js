@@ -282,7 +282,11 @@ export function searchWingPairingIdaBounded(
       const estimate = node.heuristic;
       if (estimate && estimate.maxDistance > remaining) return null;
 
-      const key = wingStateKey(current);
+      // The previous action affects which immediate inverse is pruned, so it
+      // is part of the search context and must be included in the transposition
+      // key. Omitting it can incorrectly discard a path with different legal
+      // continuations.
+      const key = `${wingStateKey(current)}|${previousPermutationKey ?? "start"}`;
       const previousRemaining = seen.get(key);
       if (previousRemaining !== undefined && previousRemaining >= remaining) return null;
       seen.set(key, remaining);
