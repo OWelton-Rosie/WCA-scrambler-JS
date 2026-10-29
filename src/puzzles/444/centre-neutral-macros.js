@@ -171,6 +171,29 @@ export function deriveCentreNeutralCommutators() {
     }
   }
 
+  // Eight-move commutators [A B C, D] broaden the action set beyond
+  // the one- and two-move A sequences above. Keep A's three outer turns on
+  // distinct faces to avoid an unnecessarily large duplicate-heavy search.
+  const outerMoves = MOVE_NAMES.filter((move) => /^[URFDLB](?:2|')?$/.test(move));
+  const nonOuterMoves = MOVE_NAMES.filter((move) => NON_OUTER_MOVES.has(move));
+
+  for (const a of outerMoves) {
+    for (const b of outerMoves) {
+      if (a[0] === b[0]) continue;
+      for (const c of outerMoves) {
+        if (c[0] === a[0] || c[0] === b[0]) continue;
+        for (const d of nonOuterMoves) {
+          const moves = [
+            a, b, c, d,
+            ...invertMoves([a, b, c]),
+            ...invertMoves([d])
+          ];
+          addMacro(moves, solved, macrosByWingPermutation, seenSequences);
+        }
+      }
+    }
+  }
+
   cachedMacros = Object.freeze([...macrosByWingPermutation.values()]);
   return cachedMacros;
 }
