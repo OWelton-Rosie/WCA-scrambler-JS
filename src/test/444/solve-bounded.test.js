@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { applyMoves } from "../../puzzles/444/moves.js";
 import { isSolved, solvedState } from "../../puzzles/444/state.js";
 import { solve444Bounded } from "../../puzzles/444/solve-bounded.js";
+import { deriveCentreNeutralCommutators } from "../../puzzles/444/centre-neutral-macros.js";
 
 test("bounded end-to-end pipeline solves reduced legal scrambles and verifies full replay", async () => {
   const scrambles = [
@@ -170,4 +171,26 @@ test("bounded pipeline survives a longer adversarial mixed wide/outer scramble",
   assert.deepEqual(applyMoves(start, result.moves), solvedState());
   assert.deepEqual(applyMoves(solvedState(), [...scramble, ...result.moves]), solvedState());
   assert.deepEqual(result.state, applyMoves(start, result.moves));
+});
+
+
+test("end-to-end solver falls back to IDA when the beam depth is deliberately zero", async () => {
+  const macro = (await deriveCentreNeutralCommutators()).find(
+    (candidate) => candidate.pairedEdges < 12
+  );
+  assert.ok(macro);
+
+  const start = applyMoves(solvedState(), macro.moves);
+  const result = await solve444Bounded(start, {
+    wingMaxMacroDepth: 0,
+    wingMaxNodes: 100,
+    wingBeamWidth: 10,
+    wingFallbackMaxMacroDepth: 1,
+    wingFallbackMaxNodes: 50000
+  });
+
+  assert.equal(result.solved, true);
+  assert.equal(result.stages.wings.strategy, "ida");
+  assert.ok(isSolved(result.state));
+  assert.deepEqual(applyMoves(start, result.moves), solvedState());
 });
