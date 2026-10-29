@@ -53,7 +53,10 @@ export async function solve444Bounded(
       state: initial,
       stages: {
         centres: { moves: [], nodesVisited: 0 },
-        wings: { moves: [], nodesVisited: 0 },
+        wings: {
+          moves: [], nodesVisited: 0, beamNodesVisited: 0,
+          fallbackUsed: false, strategy: "beam"
+        },
         parity: { moves: [], steps: 0 },
         reduced3x3: { moves: [] }
       }
@@ -106,6 +109,8 @@ export async function solve444Bounded(
     stages.wings = {
       moves: [...result.moves],
       nodesVisited: result.nodesVisited,
+      beamNodesVisited: beamResult.nodesVisited,
+      fallbackUsed: !beamResult.solved,
       macroDepth: result.depth,
       strategy: result.strategy ?? "beam"
     };
