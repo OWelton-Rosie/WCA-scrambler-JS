@@ -26,9 +26,10 @@ function replayAndCompare(input, moves, expected, stage) {
  * Attempt a bounded, end-to-end 4x4 solve using the current experimental
  * reduction stages.
  *
- * The function fails explicitly if centre search, wing pairing, or reduced
- * 3x3 legality checks cannot complete. It does not repair OLL/PLL parity and
- * is not a complete solver for arbitrary legal 4x4 states.
+ * The function fails explicitly if centre search, wing pairing, bounded parity
+ * repair, or reduced 3x3 solving cannot complete. Parity repair is experimental
+ * and may find no applicable gadget; this is not a complete solver for arbitrary
+ * legal 4x4 states.
  */
 export async function solve444Bounded(
   state,
