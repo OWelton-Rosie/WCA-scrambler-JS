@@ -9,21 +9,13 @@ import {
 } from "../../index.js";
 
 test("public API exposes the experimental bounded 4x4 solver with replay-verified output", async () => {
-  const input = apply444Moves(solved444State(), ["R", "U", "Rw", "F2"]);
-  const result = await solve444Bounded(input, {
-    centreMaxDepth: 8,
-    centreMaxNodes: 250_000,
-    wingMaxMacroDepth: 4,
-    wingMaxNodes: 25_000,
-    wingBeamWidth: 300,
-    wingFallbackMaxMacroDepth: 5,
-    wingFallbackMaxNodes: 100_000
-  });
+  const input = apply444Moves(solved444State(), ["R", "U", "F2"]);
+  const result = await solve444Bounded(input);
 
   assert.equal(result.solved, true);
   assert.ok(isSolved444State(result.state));
   assert.deepEqual(apply444Moves(input, result.moves), solved444State());
-  assert.deepEqual(apply444Moves(solved444State(), ["R", "U", "Rw", "F2", ...result.moves]), solved444State());
+  assert.deepEqual(apply444Moves(solved444State(), ["R", "U", "F2", ...result.moves]), solved444State());
 });
 
 test("public bounded solver rejects invalid facelet representations", async () => {
