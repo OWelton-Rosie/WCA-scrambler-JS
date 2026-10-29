@@ -159,14 +159,17 @@ function inspectCandidate(solved, moves, permutation, found) {
 const cachedMacroResults = new Map();
 
 /**
- * Discover parity gadgets by composing the local centre-neutral commutators.
- * A candidate must preserve the centre colours and the pairing structure for
- * every reduced state, and its solved-state fixture must exhibit the declared
- * OLL/PLL parity under the independent reduced-state analyser.
+ * Discover parity gadgets using known reduction algorithms plus locally
+ * derived centre-neutral commutators. Every candidate must preserve the centre
+ * colours and wing-pair structure for every reduced state, and its solved-state
+ * fixture must exhibit OLL/PLL parity under the independent reduced-state
+ * analyser.
  *
- * Searches one macro and then at most maxCompositions ordered two-macro
- * compositions. It may still find no gadget; that is an explicit unsupported
- * case, not proof that no longer parity algorithm exists.
+ * The local search checks one macro and then at most maxCompositions ordered
+ * two-macro compositions. The known algorithms are validated by this same
+ * path rather than trusted by name or notation. If no verified gadget is
+ * available, that is an explicit unsupported case, not proof that no longer
+ * parity algorithm exists.
  */
 export function deriveReducedParityMacros({ maxCompositions = 100_000 } = {}) {
   if (!Number.isSafeInteger(maxCompositions) || maxCompositions < 0) {
