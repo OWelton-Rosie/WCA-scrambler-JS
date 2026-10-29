@@ -108,7 +108,7 @@ function inspectCandidate(solved, moves, permutation, found) {
   }
 }
 
-let cachedMacros;
+const cachedMacroResults = new Map();
 
 /**
  * Discover parity gadgets by composing the local centre-neutral commutators.
@@ -124,7 +124,9 @@ export function deriveReducedParityMacros({ maxCompositions = 100_000 } = {}) {
   if (!Number.isSafeInteger(maxCompositions) || maxCompositions < 0) {
     throw new RangeError("maxCompositions must be a non-negative integer");
   }
-  if (cachedMacros) return cachedMacros;
+  if (cachedMacroResults.has(maxCompositions)) {
+    return cachedMacroResults.get(maxCompositions);
+  }
 
   const solved = solvedState();
   const actions = buildActions();
@@ -155,8 +157,9 @@ export function deriveReducedParityMacros({ maxCompositions = 100_000 } = {}) {
     }
   }
 
-  cachedMacros = Object.freeze([...found.values()]);
-  return cachedMacros;
+  const macros = Object.freeze([...found.values()]);
+  cachedMacroResults.set(maxCompositions, macros);
+  return macros;
 }
 
 /**
