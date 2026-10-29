@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { applyMoves } from "../../puzzles/444/moves.js";
+import { applyMoves, invertMoves } from "../../puzzles/444/moves.js";
 import { FACELETS, solvedState } from "../../puzzles/444/state.js";
 import { CENTRE_SLOTS } from "../../puzzles/444/centres.js";
 import { deriveCentreNeutralCommutators } from "../../puzzles/444/centre-neutral-macros.js";
@@ -71,11 +71,7 @@ test("wing-pair lower bounds remain admissible across a seeded multi-macro state
 
     assert.ok(centresAreSolved(state), `sample ${sample}: centre colours changed`);
     assert.deepEqual(
-      applyMoves(state, scramble.slice().reverse().map((move) => {
-        if (move.endsWith("2")) return move;
-        if (move.endsWith("'")) return move.slice(0, -1);
-        return `${move}'`;
-      })),
+      applyMoves(state, invertMoves(scramble)),
       solved,
       `sample ${sample}: inverse replay failed`
     );
