@@ -81,3 +81,43 @@ test("full-centre IDA* solves a short wide-turn scramble", () => {
     );
   }
 });
+
+
+test("full-centre solver replay-verifies a deterministic batch of mixed legal scrambles", () => {
+  const movePool = [
+    "U", "U'", "U2", "R", "R'", "R2", "F", "F'", "F2",
+    "D", "D'", "D2", "L", "L'", "L2", "B", "B'", "B2",
+    "Uw", "Uw'", "Uw2", "Rw", "Rw'", "Rw2", "Fw", "Fw'", "Fw2",
+    "Dw", "Dw'", "Dw2", "Lw", "Lw'", "Lw2", "Bw", "Bw'", "Bw2"
+  ];
+  let seed = 0x6d2b79f5;
+  const random = () => {
+    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+    return seed / 0x1_0000_0000;
+  };
+
+  for (let sample = 0; sample < 8; sample++) {
+    const scramble = [];
+    while (scramble.length < 4) {
+      const move = movePool[Math.floor(random() * movePool.length)];
+      const family = move.replace(/['2]$/, "");
+      const previousFamily = scramble.at(-1)?.replace(/['2]$/, "");
+      if (family !== previousFamily) scramble.push(move);
+    }
+
+    const start = applyMoves(solvedState(), scramble);
+    const result = solve444CentresWithPatternDatabase(start, {
+      maxDepth: 5,
+      maxNodes: 150000
+    });
+
+    assert.deepEqual(result.state, applyMoves(start, result.moves), scramble.join(" "));
+    for (const colour of CENTRE_COLOUR_NAMES) {
+      assert.equal(
+        encodeCentreColourMask(result.state, colour),
+        solvedCentreColourMask(colour),
+        `sample ${sample} (${scramble.join(" ")}): ${colour} centres`
+      );
+    }
+  }
+});
