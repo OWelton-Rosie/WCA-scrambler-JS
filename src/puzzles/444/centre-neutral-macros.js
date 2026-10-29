@@ -1,4 +1,4 @@
-import { FACELETS, FACELET_COUNT, solvedState } from "./state.js";
+import { FACELETS, solvedState } from "./state.js";
 import { applyMoves, getMovePermutation, invertMoves, MOVE_NAMES } from "./moves.js";
 import { CENTRE_SLOTS } from "./centres.js";
 import { WING_SLOTS } from "./wings.js";
