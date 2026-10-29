@@ -126,7 +126,7 @@ let cachedMacros;
  * Derive short centre-preserving commutators from the local move model.
  *
  * Searches commutators of one-move and two-move sequences with a single move,
- * plus selected conjugates of useful six-move macros by an outer turn.
+ * plus selected conjugates of useful six-move macros by outer turns.
  * Candidate centre permutations are checked first, then promising candidates
  * are replayed through the complete facelet model and retained only when they
  * preserve centre colours and change wing stickers. Equivalent wing-slot
@@ -172,16 +172,16 @@ export function deriveCentreNeutralCommutators() {
     }
   }
 
-  // Conjugate a bounded set of useful six-move macros by outer turns.
+  // Conjugate a broader, deliberately ranked set of useful six-move macros.
   // Outer turns preserve centre colours, so conjugation preserves the
   // centre-neutral invariant while exposing additional wing permutations.
-  // Limit the seed set to pairing-disrupting macros to keep branching growth
-  // controlled; addMacro still verifies every candidate and deduplicates its
-  // wing-slot permutation against shorter representatives.
+  // Prefer macros that disrupt more paired edges, then use notation as a stable
+  // tie-breaker. Each candidate is still replay-verified and deduplicated.
   const outerMoves = MOVE_NAMES.filter((move) => /^[URFDLB](?:2|')?$/.test(move));
   const conjugationSeeds = [...macrosByWingPermutation.values()]
     .filter((macro) => macro.moves.length === 6 && macro.pairedEdges < 12)
-    .slice(0, 12);
+    .sort((a, b) => a.pairedEdges - b.pairedEdges || a.notation.localeCompare(b.notation))
+    .slice(0, 24);
 
   for (const macro of conjugationSeeds) {
     for (const outer of outerMoves) {
