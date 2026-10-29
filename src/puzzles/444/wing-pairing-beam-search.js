@@ -54,11 +54,15 @@ function buildActions() {
     ]) {
       const key = permutation.join(",");
       if (actions.has(key)) continue;
+      const inverseOfPermutation = Array(permutation.length);
+      permutation.forEach((destination, source) => {
+        inverseOfPermutation[destination] = source;
+      });
       actions.set(key, Object.freeze({
         moves: Object.freeze([...moves]),
         permutationKey: key,
         permutation: Object.freeze([...permutation]),
-        inversePermutationKey: [...inverse].join(",")
+        inversePermutationKey: inverseOfPermutation.join(",")
       }));
     }
   }
@@ -246,6 +250,9 @@ export function searchWingPairingIdaBounded(
   }
 
   const actions = getActions();
+  const actionByPermutation = new Map(
+    actions.map((action) => [action.permutationKey, action])
+  );
   const startHeuristic = tryEvaluateHeuristic(initial);
   const firstLimit = startHeuristic?.maxDistance ?? 0;
   let nodesVisited = 0;
@@ -263,7 +270,7 @@ export function searchWingPairingIdaBounded(
       }
       nodesVisited++;
 
-      const node = evaluate(current, [...path], nodesVisited, path.length);
+      const node = evaluate(current, [...path], nodesVisited, depthLimit - remaining);
       if (compareNodes(node, best) < 0) best = node;
       if (isFullyReduced(current)) return [...path];
       if (remaining === 0) return null;
@@ -280,9 +287,7 @@ export function searchWingPairingIdaBounded(
         // Avoid immediately undoing the previous macro. The action set is
         // deduplicated by wing permutation, so equal keys imply equal effects.
         if (previousPermutationKey) {
-          const previous = actions.find((candidate) =>
-            candidate.permutationKey === previousPermutationKey
-          );
+          const previous = actionByPermutation.get(previousPermutationKey);
           if (previous?.inversePermutationKey === action.permutationKey) continue;
         }
 
