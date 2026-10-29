@@ -151,3 +151,23 @@ test("bounded pipeline handles a mixed outer/wide sequence beyond a single commu
   assert.deepEqual(applyMoves(start, result.moves), solvedState());
   assert.deepEqual(applyMoves(solvedState(), [...scramble, ...result.moves]), solvedState());
 });
+
+
+test("bounded pipeline survives a longer adversarial mixed wide/outer scramble", async () => {
+  const scramble = ["Rw", "U", "Rw'", "Fw", "U'"];
+  const start = applyMoves(solvedState(), scramble);
+  const result = await solve444Bounded(start, {
+    centreMaxDepth: 10,
+    centreMaxNodes: 300000,
+    wingMaxMacroDepth: 6,
+    wingMaxNodes: 50000,
+    wingBeamWidth: 500,
+    parityMaxSteps: 3
+  });
+
+  assert.equal(result.solved, true, scramble.join(" "));
+  assert.ok(isSolved(result.state));
+  assert.deepEqual(applyMoves(start, result.moves), solvedState());
+  assert.deepEqual(applyMoves(solvedState(), [...scramble, ...result.moves]), solvedState());
+  assert.deepEqual(result.state, applyMoves(start, result.moves));
+});
