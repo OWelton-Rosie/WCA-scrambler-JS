@@ -307,7 +307,17 @@ export function searchWingPairingIdaBounded(
             const previous = actionByPermutation.get(previousPermutationKey);
             if (previous?.inversePermutationKey === action.permutationKey) continue;
           }
+          // These terminal children are checked inline instead of recursing;
+          // count them explicitly so the node budget still bounds this loop.
+          if (nodesVisited >= maxNodes) {
+            budgetExhausted = true;
+            return null;
+          }
+          nodesVisited++;
           const nextState = applyMoves(current, action.moves);
+          if (!areCentresSolved(nextState)) {
+            throw new Error("A discovered centre-neutral macro changed centre colours");
+          }
           if (countPairedEdges(nextState) === 12 && isFullyReduced(nextState)) {
             return [...path, ...action.moves];
           }
