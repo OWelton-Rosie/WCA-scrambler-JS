@@ -116,11 +116,14 @@ let cachedMacros;
  * every reduced state, and its solved-state fixture must exhibit the declared
  * OLL/PLL parity under the independent reduced-state analyser.
  *
- * Searches one macro and then ordered two-macro compositions. It may still
- * find no gadget; that is an explicit unsupported case, not proof that no
- * longer parity algorithm exists.
+ * Searches one macro and then at most maxCompositions ordered two-macro
+ * compositions. It may still find no gadget; that is an explicit unsupported
+ * case, not proof that no longer parity algorithm exists.
  */
-export function deriveReducedParityMacros() {
+export function deriveReducedParityMacros({ maxCompositions = 100_000 } = {}) {
+  if (!Number.isSafeInteger(maxCompositions) || maxCompositions < 0) {
+    throw new RangeError("maxCompositions must be a non-negative integer");
+  }
   if (cachedMacros) return cachedMacros;
 
   const solved = solvedState();
@@ -132,9 +135,12 @@ export function deriveReducedParityMacros() {
     if (found.has("OLL") && found.has("PLL")) break;
   }
 
+  let compositionsChecked = 0;
   if (!(found.has("OLL") && found.has("PLL"))) {
     outer: for (const first of actions) {
       for (const second of actions) {
+        if (compositionsChecked >= maxCompositions) break outer;
+        compositionsChecked++;
         if (!preservesCompositionPairing(first, second)) continue;
         const permutation = combinedPermutation(first.permutation, second.permutation);
 
