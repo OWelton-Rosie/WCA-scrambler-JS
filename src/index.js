@@ -2,8 +2,10 @@ import { generate333 } from "./puzzles/333/scramble.js";
 import { generate222 } from "./puzzles/222/scramble.js";
 import { generatePyram } from "./puzzles/pyram/scramble.js";
 import { generate444Scramble } from "./puzzles/444/scramble.js";
+import { solve444Bounded } from "./puzzles/444/solve-bounded.js";
 import { generateMinx } from "./puzzles/minx/scramble.js";
 export { prepare444Scrambler } from "./puzzles/444/scramble.js";
+export { solve444Bounded };
 
 import {
   solvedState as solved444State,
