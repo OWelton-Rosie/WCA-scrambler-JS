@@ -56,7 +56,9 @@ function buildActions() {
       if (actions.has(key)) continue;
       actions.set(key, Object.freeze({
         moves: Object.freeze([...moves]),
-        permutationKey: key
+        permutationKey: key,
+        permutation: Object.freeze([...permutation]),
+        inversePermutationKey: [...inverse].join(",")
       }));
     }
   }
@@ -205,5 +207,124 @@ export function searchWingPairingBounded(
     pairedEdges: best.pairedEdges,
     estimatedMacroDepth: best.estimatedMacroDepth,
     nodesVisited
+  };
+}
+
+
+/**
+ * Iterative-deepening depth-first search over the same verified centre-neutral
+ * macro set. Unlike the beam search, this does not discard a promising branch
+ * merely because it falls outside a fixed-width frontier. It remains bounded
+ * by maxMacroDepth and maxNodes, so exhaustion is not proof of impossibility.
+ *
+ * The max single-pair distance is used only when every pair coordinate is in
+ * the exact pattern-database orbit. Outside that orbit the search remains
+ * correct but loses this pruning advantage.
+ */
+export function searchWingPairingIdaBounded(
+  state,
+  { maxMacroDepth = 3, maxNodes = 100_000 } = {}
+) {
+  assertValidState(state);
+  if (!areCentresSolved(state)) {
+    throw new RangeError("Wing-pairing search requires solved centre colours");
+  }
+  if (!Number.isSafeInteger(maxMacroDepth) || maxMacroDepth < 0) {
+    throw new RangeError("maxMacroDepth must be a non-negative integer");
+  }
+  if (!Number.isSafeInteger(maxNodes) || maxNodes < 1) {
+    throw new RangeError("maxNodes must be a positive integer");
+  }
+
+  const initial = [...state];
+  if (isFullyReduced(initial)) {
+    return {
+      solved: true, moves: [], state: initial, depth: 0,
+      primitiveMoveCount: 0, pairedEdges: countPairedEdges(initial),
+      estimatedMacroDepth: 0, nodesVisited: 0, strategy: "ida"
+    };
+  }
+
+  const actions = getActions();
+  const startHeuristic = tryEvaluateHeuristic(initial);
+  const firstLimit = startHeuristic?.maxDistance ?? 0;
+  let nodesVisited = 0;
+  let budgetExhausted = false;
+  let best = evaluate(initial, [], 0, 0);
+
+  for (let depthLimit = firstLimit; depthLimit <= maxMacroDepth; depthLimit++) {
+    const path = [];
+    const seen = new Map();
+
+    function search(current, remaining, previousPermutationKey) {
+      if (nodesVisited >= maxNodes) {
+        budgetExhausted = true;
+        return null;
+      }
+      nodesVisited++;
+
+      const node = evaluate(current, [...path], nodesVisited, path.length);
+      if (compareNodes(node, best) < 0) best = node;
+      if (isFullyReduced(current)) return [...path];
+      if (remaining === 0) return null;
+
+      const estimate = tryEvaluateHeuristic(current);
+      if (estimate && estimate.maxDistance > remaining) return null;
+
+      const key = wingStateKey(current);
+      const previousRemaining = seen.get(key);
+      if (previousRemaining !== undefined && previousRemaining >= remaining) return null;
+      seen.set(key, remaining);
+
+      for (const action of actions) {
+        // Avoid immediately undoing the previous macro. The action set is
+        // deduplicated by wing permutation, so equal keys imply equal effects.
+        if (previousPermutationKey) {
+          const previous = actions.find((candidate) =>
+            candidate.permutationKey === previousPermutationKey
+          );
+          if (previous?.inversePermutationKey === action.permutationKey) continue;
+        }
+
+        const nextState = applyMoves(current, action.moves);
+        if (!areCentresSolved(nextState)) {
+          throw new Error("A discovered centre-neutral macro changed centre colours");
+        }
+
+        path.push(...action.moves);
+        const result = search(nextState, remaining - 1, action.permutationKey);
+        if (result !== null) return result;
+        path.splice(path.length - action.moves.length, action.moves.length);
+        if (budgetExhausted) return null;
+      }
+      return null;
+    }
+
+    const moves = search(initial, depthLimit, null);
+    if (moves !== null) {
+      const finalState = applyMoves(initial, moves);
+      if (!isFullyReduced(finalState)) {
+        throw new Error("Wing-pair IDA search returned an unverified result");
+      }
+      return {
+        solved: true, moves, state: finalState, depth: depthLimit,
+        primitiveMoveCount: moves.length, pairedEdges: countPairedEdges(finalState),
+        estimatedMacroDepth: 0, nodesVisited, strategy: "ida"
+      };
+    }
+    if (budgetExhausted) break;
+  }
+
+  return {
+    solved: false,
+    moves: [...best.moves],
+    state: [...best.state],
+    depth: best.macroDepth,
+    primitiveMoveCount: best.moves.length,
+    pairedEdges: best.pairedEdges,
+    estimatedMacroDepth: best.estimatedMacroDepth,
+    nodesVisited,
+    budgetExhausted,
+    strategy: "ida"
   };
 }
