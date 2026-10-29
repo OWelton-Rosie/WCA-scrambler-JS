@@ -3,7 +3,7 @@ import { applyMoves } from "./moves.js";
 import { CENTRE_SLOTS } from "./centres.js";
 import { FACELETS } from "./state.js";
 import { solve444CentresWithPatternDatabase } from "./centre-colour-solver.js";
-import { searchWingPairingBounded } from "./wing-pairing-beam-search.js";
+import { searchWingPairingBounded, searchWingPairingIdaBounded } from "./wing-pairing-beam-search.js";
 import { solveReduced3x3 } from "./reduced-solver.js";
 import { repairReducedParityBounded } from "./parity-macros.js";
 import { toReduced3x3Facelets } from "./reduced.js";
