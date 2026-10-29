@@ -1,4 +1,4 @@
-import { FACELETS, solvedState } from "./state.js";
+import { FACELETS, FACELET_COUNT, solvedState } from "./state.js";
 import { applyMoves, getMovePermutation, invertMoves, MOVE_NAMES } from "./moves.js";
 import { CENTRE_SLOTS } from "./centres.js";
 import { WING_SLOTS } from "./wings.js";
@@ -6,6 +6,9 @@ import { countPairedEdges } from "./wing-pairing.js";
 
 const CENTRE_FACELET_INDICES = CENTRE_SLOTS.map(({ faceletIndex }) => faceletIndex);
 const WING_FACELET_INDICES = WING_SLOTS.flatMap(({ faceletIndices }) => faceletIndices);
+const WING_STICKER_INDEX = new Map(
+  WING_FACELET_INDICES.map((faceletIndex, index) => [faceletIndex, index])
+);
 const NON_OUTER_MOVES = new Set(
   MOVE_NAMES.filter((move) => move.startsWith("2") || /^[URFDLB]w(?:2|')?$/.test(move))
 );
@@ -80,6 +83,32 @@ function wingPermutationForMoves(moves) {
   return destinationBySource;
 }
 
+/**
+ * Map every individual wing sticker position, not just the 24 wing slots.
+ * Two algorithms can have the same slot permutation but flip stickers within
+ * slots differently; those actions are not interchangeable in a facelet solver.
+ */
+function wingStickerPermutationForMoves(moves) {
+  let destinationBySource = WING_FACELET_INDICES.map((_, index) => index);
+
+  for (const move of moves) {
+    const faceletPermutation = getMovePermutation(move);
+    const moveDestination = WING_FACELET_INDICES.map((faceletIndex) => {
+      const destinationFacelet = faceletPermutation[faceletIndex];
+      const destinationWingIndex = WING_STICKER_INDEX.get(destinationFacelet);
+      if (destinationWingIndex === undefined) {
+        throw new Error(`Move ${move} sent a wing sticker outside wing positions`);
+      }
+      return destinationWingIndex;
+    });
+    destinationBySource = destinationBySource.map(
+      (currentDestination) => moveDestination[currentDestination]
+    );
+  }
+
+  return destinationBySource;
+}
+
 function changedWingStickerCount(state, solved) {
   let changed = 0;
   for (const index of WING_FACELET_INDICES) {
@@ -88,15 +117,17 @@ function changedWingStickerCount(state, solved) {
   return changed;
 }
 
-function addMacro(moves, solved, macrosByWingPermutation, seenSequences) {
+function addMacro(moves, solved, macrosByWingAction, seenSequences) {
   const sequenceKey = moves.join(" ");
   if (seenSequences.has(sequenceKey) || !preservesCentreColours(moves)) return;
 
   const wingDestinationBySource = wingPermutationForMoves(moves);
   const wingPermutationKey = wingDestinationBySource.join(",");
-  // The same wing-slot permutation has the same pairing effect. Keep the
-  // first (shortest) representative; four-move candidates are enumerated first.
-  if (macrosByWingPermutation.has(wingPermutationKey)) {
+  const wingStickerDestinationBySource = wingStickerPermutationForMoves(moves);
+  const wingStickerPermutationKey = wingStickerDestinationBySource.join(",");
+  // Slot-equivalent actions can still differ in sticker orientation. Only
+  // deduplicate when the complete wing-sticker permutation is equivalent.
+  if (macrosByWingAction.has(wingStickerPermutationKey)) {
     seenSequences.add(sequenceKey);
     return;
   }
@@ -110,13 +141,15 @@ function addMacro(moves, solved, macrosByWingPermutation, seenSequences) {
   const changedWingStickers = changedWingStickerCount(result, solved);
   if (changedWingStickers === 0) return;
 
-  macrosByWingPermutation.set(wingPermutationKey, Object.freeze({
+  macrosByWingAction.set(wingStickerPermutationKey, Object.freeze({
     moves: Object.freeze(moves),
     notation: sequenceKey,
     changedWingStickers,
     pairedEdges: countPairedEdges(result),
     wingPermutationKey,
-    wingDestinationBySource: Object.freeze(wingDestinationBySource)
+    wingDestinationBySource: Object.freeze(wingDestinationBySource),
+    wingStickerPermutationKey,
+    wingStickerDestinationBySource: Object.freeze(wingStickerDestinationBySource)
   }));
 }
 
@@ -129,9 +162,8 @@ let cachedMacros;
  * plus selected conjugates of useful six-move macros by outer turns.
  * Candidate centre permutations are checked first, then promising candidates
  * are replayed through the complete facelet model and retained only when they
- * preserve centre colours and change wing stickers. Equivalent wing-slot
- * permutations are deduplicated so later pairing searches can use a smaller
- * set of distinct actions.
+ * preserve centre colours and change wing stickers. Actions are deduplicated
+ * by their full 48-sticker wing permutation, not merely the 24-slot permutation.
  *
  * This is a macro-discovery primitive for wing-pairing research, not a complete
  * wing-pairing algorithm. It does not claim that the macros connect every
@@ -141,7 +173,7 @@ export function deriveCentreNeutralCommutators() {
   if (cachedMacros) return cachedMacros;
 
   const solved = solvedState();
-  const macrosByWingPermutation = new Map();
+  const macrosByWingAction = new Map();
   const seenSequences = new Set();
 
   // Four-move commutators [A, B], where A and B are individual moves.
@@ -153,7 +185,7 @@ export function deriveCentreNeutralCommutators() {
       addMacro(
         [a, b, ...invertMoves([a]), ...invertMoves([b])],
         solved,
-        macrosByWingPermutation,
+        macrosByWingAction,
         seenSequences
       );
     }
@@ -167,7 +199,7 @@ export function deriveCentreNeutralCommutators() {
           continue;
         }
         const moves = [a, b, c, ...invertMoves([a, b]), ...invertMoves([c])];
-        addMacro(moves, solved, macrosByWingPermutation, seenSequences);
+        addMacro(moves, solved, macrosByWingAction, seenSequences);
       }
     }
   }
@@ -175,10 +207,8 @@ export function deriveCentreNeutralCommutators() {
   // Conjugate a broader, deliberately ranked set of useful six-move macros.
   // Outer turns preserve centre colours, so conjugation preserves the
   // centre-neutral invariant while exposing additional wing permutations.
-  // Prefer macros that disrupt more paired edges, then use notation as a stable
-  // tie-breaker. Each candidate is still replay-verified and deduplicated.
   const outerMoves = MOVE_NAMES.filter((move) => /^[URFDLB](?:2|')?$/.test(move));
-  const conjugationSeeds = [...macrosByWingPermutation.values()]
+  const conjugationSeeds = [...macrosByWingAction.values()]
     .filter((macro) => macro.moves.length === 6 && macro.pairedEdges < 12)
     .sort((a, b) => a.pairedEdges - b.pairedEdges || a.notation.localeCompare(b.notation))
     .slice(0, 24);
@@ -186,10 +216,10 @@ export function deriveCentreNeutralCommutators() {
   for (const macro of conjugationSeeds) {
     for (const outer of outerMoves) {
       const moves = [outer, ...macro.moves, ...invertMoves([outer])];
-      addMacro(moves, solved, macrosByWingPermutation, seenSequences);
+      addMacro(moves, solved, macrosByWingAction, seenSequences);
     }
   }
 
-  cachedMacros = Object.freeze([...macrosByWingPermutation.values()]);
+  cachedMacros = Object.freeze([...macrosByWingAction.values()]);
   return cachedMacros;
 }
