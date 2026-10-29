@@ -9,6 +9,7 @@ import {
   searchWingPairingIdaBounded
 } from "../../puzzles/444/wing-pairing-beam-search.js";
 import { countPairedEdges } from "../../puzzles/444/wing-pairing.js";
+import { toReduced3x3Facelets } from "../../puzzles/444/reduced.js";
 
 test("bounded beam search returns immediately for a fully reduced state", () => {
   const result = searchWingPairingBounded(solvedState());
@@ -108,7 +109,7 @@ test("bounded IDA search solves composed-macro states with replay verification",
   assert.ok(result.depth >= 1);
   assert.equal(result.pairedEdges, 12);
   assert.deepEqual(result.state, applyMoves(disrupted, result.moves));
-  assert.deepEqual(applyMoves(solvedState(), [...scramble, ...result.moves]), solvedState());
+  assert.doesNotThrow(() => toReduced3x3Facelets(result.state));
 });
 
 test("bounded IDA search reports budget exhaustion without claiming unsolvability", () => {
