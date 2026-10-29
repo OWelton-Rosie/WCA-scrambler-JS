@@ -1,0 +1,58 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+
+import { FACELETS, solvedState } from "../../puzzles/444/state.js";
+import { applyMoves } from "../../puzzles/444/moves.js";
+import { CENTRE_SLOTS } from "../../puzzles/444/centres.js";
+import { deriveCentreNeutralCommutators } from "../../puzzles/444/centre-neutral-macros.js";
+
+function centresAreSolved(state) {
+  return CENTRE_SLOTS.every(
+    ({ faceletIndex }) => state[faceletIndex] === FACELETS[faceletIndex].face
+  );
+}
+
+test("derived centre-neutral commutators preserve centres and affect wings", () => {
+  const solved = solvedState();
+  const macros = deriveCentreNeutralCommutators();
+
+  assert.ok(macros.length > 0, "expected at least one non-trivial centre-neutral commutator");
+  assert.equal(
+    new Set(macros.map((macro) => macro.wingStickerPermutationKey)).size,
+    macros.length,
+    "full wing-sticker-equivalent macros should be deduplicated"
+  );
+
+  for (const macro of macros) {
+    assert.equal(centresAreSolved(applyMoves(solved, macro.moves)), true, macro.notation);
+    assert.ok(macro.changedWingStickers > 0, macro.notation);
+    assert.ok(macro.pairedEdges >= 0 && macro.pairedEdges <= 12, macro.notation);
+    assert.equal(macro.wingDestinationBySource.length, 24, macro.notation);
+    assert.equal(new Set(macro.wingDestinationBySource).size, 24, macro.notation);
+    assert.equal(macro.wingStickerDestinationBySource.length, 48, macro.notation);
+    assert.equal(new Set(macro.wingStickerDestinationBySource).size, 48, macro.notation);
+    assert.ok(
+      macro.moves.some((move) => move.startsWith("2") || /^[URFDLB]w(?:2|')?$/.test(move)),
+      macro.notation
+    );
+  }
+
+  assert.ok(
+    macros.some((macro) => macro.pairedEdges < 12),
+    "expected at least one centre-neutral macro that disrupts wing pairing"
+  );
+  assert.ok(
+    macros.some((macro) => macro.moves.length === 8),
+    "expected the expanded search to discover at least one eight-move centre-neutral macro"
+  );
+});
+
+test("centre-neutral commutators also preserve centres after outer turns", () => {
+  const outerScramble = applyMoves(solvedState(), "R U F L2 D' B");
+  assert.equal(centresAreSolved(outerScramble), true);
+
+  for (const macro of deriveCentreNeutralCommutators().slice(0, 20)) {
+    const result = applyMoves(outerScramble, macro.moves);
+    assert.equal(centresAreSolved(result), true, macro.notation);
+  }
+});

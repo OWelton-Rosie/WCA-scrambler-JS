@@ -33,6 +33,28 @@ This is a pragmatic backend integration, not a claim that this repository indepe
 
 For reproducible tests, `generate("444", { seed: "your-seed" })` accepts a seed. The 4×4 backend does not support the local `randomWord` injection: reducing that source to a 32-bit seed would not preserve the backend's random-state distribution.
 
+### Experimental native 4×4 solver API
+
+The repository also exposes a native facelet-state reduction pipeline for solver development:
+
+```javascript
+import {
+  solved444State,
+  apply444Moves,
+  solve444Bounded
+} from "./src/index.js";
+
+const state = apply444Moves(solved444State(), ["R", "U", "Rw", "F2"]);
+const result = await solve444Bounded(state);
+
+console.log(result.moves); // solution moves
+console.log(result.solved); // true only after full replay verification
+```
+
+This API is intentionally named `solve444Bounded`: its centre search, wing-pairing search and parity repair have explicit depth/node budgets and are not complete for every legal 4×4 state. It throws a stage-specific error when a budget is exhausted or a verified reduction cannot be found. Such a failure does not mean the state is illegal or unsolvable. Successful results are replayed through the local 96-facelet move model and must solve the full state.
+
+**The public `generate("444")` path continues to use `@cubesmith/scrambler`.** The native bounded solver is not yet a replacement for the random-state backend: its search coverage is incomplete, and changing the generator before proving coverage and sampling properties would be a regression. The native API is for controlled experiments and states within its current search coverage, not a random-state sampler.
+
 ### Official competition use
 
 **This project is not an official WCA scrambling program and is not approved for generating scrambles for official WCA competitions.**

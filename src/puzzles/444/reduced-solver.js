@@ -104,8 +104,8 @@ export function analyzeReduced444State(state) {
 /**
  * Solve the final 3x3 stage of a reduced 4x4.
  *
- * This deliberately refuses states with OLL or PLL parity.
- * A future 4x4 reduction stage must resolve those cases first.
+ * This deliberately refuses states with OLL or PLL parity. The 4x4
+ * orchestrator must resolve those cases before calling this stage.
  */
 export async function solveReduced3x3(state) {
   const analysis = analyzeReduced444State(state);
