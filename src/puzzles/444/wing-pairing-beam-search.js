@@ -78,8 +78,10 @@ function getActions() {
   return cachedActions;
 }
 
-function evaluate(state, moves, nodesVisited, macroDepth = 0) {
-  const heuristic = tryEvaluateHeuristic(state);
+function evaluate(state, moves, nodesVisited, macroDepth = 0, knownHeuristic = undefined) {
+  const heuristic = knownHeuristic === undefined
+    ? tryEvaluateHeuristic(state)
+    : knownHeuristic;
   return {
     state,
     moves,
@@ -263,19 +265,21 @@ export function searchWingPairingIdaBounded(
     const path = [];
     const seen = new Map();
 
-    function search(current, remaining, previousPermutationKey) {
+    function search(current, remaining, previousPermutationKey, knownHeuristic = undefined) {
       if (nodesVisited >= maxNodes) {
         budgetExhausted = true;
         return null;
       }
       nodesVisited++;
 
-      const node = evaluate(current, [...path], nodesVisited, depthLimit - remaining);
+      const node = evaluate(
+        current, [...path], nodesVisited, depthLimit - remaining, knownHeuristic
+      );
       if (compareNodes(node, best) < 0) best = node;
       if (isFullyReduced(current)) return [...path];
       if (remaining === 0) return null;
 
-      const estimate = tryEvaluateHeuristic(current);
+      const estimate = node.heuristic;
       if (estimate && estimate.maxDistance > remaining) return null;
 
       const key = wingStateKey(current);
@@ -283,9 +287,8 @@ export function searchWingPairingIdaBounded(
       if (previousRemaining !== undefined && previousRemaining >= remaining) return null;
       seen.set(key, remaining);
 
+      const candidates = [];
       for (const action of actions) {
-        // Avoid immediately undoing the previous macro. The action set is
-        // deduplicated by wing permutation, so equal keys imply equal effects.
         if (previousPermutationKey) {
           const previous = actionByPermutation.get(previousPermutationKey);
           if (previous?.inversePermutationKey === action.permutationKey) continue;
@@ -295,9 +298,37 @@ export function searchWingPairingIdaBounded(
         if (!areCentresSolved(nextState)) {
           throw new Error("A discovered centre-neutral macro changed centre colours");
         }
+        candidates.push({
+          action,
+          state: nextState,
+          heuristic: tryEvaluateHeuristic(nextState),
+          pairedEdges: countPairedEdges(nextState)
+        });
+      }
 
+      candidates.sort((a, b) => {
+        if (a.heuristic && b.heuristic) {
+          if (a.heuristic.maxDistance !== b.heuristic.maxDistance) {
+            return a.heuristic.maxDistance - b.heuristic.maxDistance;
+          }
+          if (a.heuristic.totalDistance !== b.heuristic.totalDistance) {
+            return a.heuristic.totalDistance - b.heuristic.totalDistance;
+          }
+        } else if (a.heuristic) {
+          return -1;
+        } else if (b.heuristic) {
+          return 1;
+        }
+        if (a.pairedEdges !== b.pairedEdges) return b.pairedEdges - a.pairedEdges;
+        return a.action.moves.length - b.action.moves.length;
+      });
+
+      for (const candidate of candidates) {
+        const { action, state: nextState } = candidate;
         path.push(...action.moves);
-        const result = search(nextState, remaining - 1, action.permutationKey);
+        const result = search(
+          nextState, remaining - 1, action.permutationKey, candidate.heuristic
+        );
         if (result !== null) return result;
         path.splice(path.length - action.moves.length, action.moves.length);
         if (budgetExhausted) return null;
