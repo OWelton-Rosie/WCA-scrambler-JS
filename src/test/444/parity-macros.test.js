@@ -36,6 +36,11 @@ function makeSingleEdgeFlipProjection() {
 test("every discovered parity gadget, if any, is independently verified", () => {
   const macros = deriveReducedParityMacros();
   assert.ok(Array.isArray(macros));
+  assert.deepEqual(
+    new Set(macros.map((macro) => macro.parity)),
+    new Set(["OLL", "PLL"]),
+    "both standard reduction parity cases should have a verified gadget"
+  );
 
   for (const macro of macros) {
     const state = applyMoves(solvedState(), macro.moves);
