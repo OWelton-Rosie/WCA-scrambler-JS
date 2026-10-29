@@ -10,7 +10,7 @@
     "test": "node --test",
     "dev": "vite",
     "benchmark:444": "node scripts/benchmark-444.js",
-    "benchmark:444:pipeline": "node scripts/benchmark-444-pipeline.js"
+    "benchmark:444:pipeline": "node scripts/benchmark-444-pipeline.js",
     "profile:444": "node scripts/profile-444.js"
   },
   "dependencies": {
