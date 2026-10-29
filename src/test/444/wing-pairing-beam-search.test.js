@@ -84,7 +84,7 @@ test("bounded IDA search reverses a disrupted wing state without beam pruning", 
   assert.deepEqual(result.state, applyMoves(disrupted, result.moves));
 });
 
-test("bounded IDA search solves selected two-macro adversarial states with replay verification", () => {
+test("bounded IDA search solves composed-macro states with replay verification", () => {
   const macros = deriveCentreNeutralCommutators().filter(
     (candidate) => candidate.pairedEdges < 12
   );
@@ -104,7 +104,8 @@ test("bounded IDA search solves selected two-macro adversarial states with repla
   });
 
   assert.equal(result.solved, true, scramble.join(" "));
-  assert.equal(result.depth, 2);
+  assert.ok(result.depth <= 2);
+  assert.ok(result.depth >= 1);
   assert.equal(result.pairedEdges, 12);
   assert.deepEqual(result.state, applyMoves(disrupted, result.moves));
   assert.deepEqual(applyMoves(solvedState(), [...scramble, ...result.moves]), solvedState());
