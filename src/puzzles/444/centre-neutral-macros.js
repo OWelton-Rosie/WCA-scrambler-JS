@@ -208,9 +208,17 @@ export function deriveCentreNeutralCommutators() {
   // Outer turns preserve centre colours, so conjugation preserves the
   // centre-neutral invariant while exposing additional wing permutations.
   const outerMoves = MOVE_NAMES.filter((move) => /^[URFDLB](?:2|')?$/.test(move));
+  const seenSeedPermutations = new Set();
   const conjugationSeeds = [...macrosByWingAction.values()]
     .filter((macro) => macro.moves.length === 6 && macro.pairedEdges < 12)
     .sort((a, b) => a.pairedEdges - b.pairedEdges || a.notation.localeCompare(b.notation))
+    .filter((macro) => {
+      // Keep seed diversity by slot action: sticker-orientation variants of
+      // one slot permutation should not consume the entire conjugation budget.
+      if (seenSeedPermutations.has(macro.wingPermutationKey)) return false;
+      seenSeedPermutations.add(macro.wingPermutationKey);
+      return true;
+    })
     .slice(0, 24);
 
   for (const macro of conjugationSeeds) {
