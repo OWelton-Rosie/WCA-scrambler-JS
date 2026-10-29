@@ -22,23 +22,38 @@ function inversePermutation(destinationBySource) {
   return inverse;
 }
 
-function preservesWingPairingStructure(destinationBySource) {
-  const sourceByDestination = inversePermutation(destinationBySource);
-  const edgeByWingSlot = Array(24);
-
+const EDGE_BY_WING_SLOT = (() => {
+  const result = Array(24);
   for (const edge of EDGE_SLOTS) {
-    for (const slotIndex of edge.wingSlotIndices) {
-      edgeByWingSlot[slotIndex] = edge.index;
-    }
+    for (const slotIndex of edge.wingSlotIndices) result[slotIndex] = edge.index;
   }
+  return Object.freeze(result);
+})();
 
+function preservesWingPairingStructure(destinationBySource, sourceByDestination = null) {
+  const inverse = sourceByDestination ?? inversePermutation(destinationBySource);
   // A macro that maps each destination edge's two slots back to the same
   // source edge preserves pairing for every reduced state, not just solved.
-  return EDGE_SLOTS.every((edge) => {
+  for (const edge of EDGE_SLOTS) {
     const [first, second] = edge.wingSlotIndices;
-    return edgeByWingSlot[sourceByDestination[first]] ===
-      edgeByWingSlot[sourceByDestination[second]];
-  });
+    if (EDGE_BY_WING_SLOT[inverse[first]] !== EDGE_BY_WING_SLOT[inverse[second]]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function preservesCompositionPairing(first, second) {
+  // The composed move is second(first(source)); its inverse is
+  // first^-1(second^-1(destination)). Avoid allocating a 24-slot permutation
+  // for every candidate pair in the quadratic discovery loop.
+  for (const edge of EDGE_SLOTS) {
+    const [firstSlot, secondSlot] = edge.wingSlotIndices;
+    const sourceA = first.inverse[second.inverse[firstSlot]];
+    const sourceB = first.inverse[second.inverse[secondSlot]];
+    if (EDGE_BY_WING_SLOT[sourceA] !== EDGE_BY_WING_SLOT[sourceB]) return false;
+  }
+  return true;
 }
 
 function buildActions() {
@@ -58,7 +73,8 @@ function buildActions() {
       seen.add(key);
       actions.push(Object.freeze({
         moves: Object.freeze([...moves]),
-        permutation: Object.freeze([...permutation])
+        permutation: Object.freeze([...permutation]),
+        inverse: Object.freeze(inversePermutation(permutation))
       }));
     }
   }
@@ -119,8 +135,8 @@ export function deriveReducedParityMacros() {
   if (!(found.has("OLL") && found.has("PLL"))) {
     outer: for (const first of actions) {
       for (const second of actions) {
+        if (!preservesCompositionPairing(first, second)) continue;
         const permutation = combinedPermutation(first.permutation, second.permutation);
-        if (!preservesWingPairingStructure(permutation)) continue;
 
         inspectCandidate(
           solved,
