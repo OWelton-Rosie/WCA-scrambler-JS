@@ -126,3 +126,34 @@ test("bounded IDA search reports budget exhaustion without claiming unsolvabilit
   assert.equal(result.budgetExhausted, true);
   assert.equal(result.nodesVisited, 1);
 });
+
+
+test("IDA search replay-verifies a deterministic batch of multi-macro states", () => {
+  const macros = deriveCentreNeutralCommutators().filter(
+    (candidate) => candidate.pairedEdges < 12
+  );
+  assert.ok(macros.length >= 4);
+
+  let seed = 0x1b873593;
+  const random = (limit) => {
+    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+    return seed % limit;
+  };
+
+  for (let sample = 0; sample < 6; sample++) {
+    const macroCount = 2 + (sample % 2);
+    const selected = Array.from({ length: macroCount }, () => macros[random(macros.length)]);
+    const scramble = selected.flatMap((macro) => macro.moves);
+    const disrupted = applyMoves(solvedState(), scramble);
+
+    const result = searchWingPairingIdaBounded(disrupted, {
+      maxMacroDepth: macroCount,
+      maxNodes: 150000
+    });
+
+    assert.equal(result.solved, true, `sample ${sample}, ${macroCount} macros`);
+    assert.ok(result.depth <= macroCount, `sample ${sample}`);
+    assert.deepEqual(result.state, applyMoves(disrupted, result.moves), `sample ${sample} replay`);
+    assert.doesNotThrow(() => toReduced3x3Facelets(result.state), `sample ${sample} reduced`);
+  }
+});
