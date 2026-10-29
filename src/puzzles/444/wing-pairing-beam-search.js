@@ -287,6 +287,22 @@ export function searchWingPairingIdaBounded(
       if (previousRemaining !== undefined && previousRemaining >= remaining) return null;
       seen.set(key, remaining);
 
+      // At the final ply, check actions directly rather than constructing and
+      // sorting a complete child frontier.
+      if (remaining === 1) {
+        for (const action of actions) {
+          if (previousPermutationKey) {
+            const previous = actionByPermutation.get(previousPermutationKey);
+            if (previous?.inversePermutationKey === action.permutationKey) continue;
+          }
+          const nextState = applyMoves(current, action.moves);
+          if (countPairedEdges(nextState) === 12 && isFullyReduced(nextState)) {
+            return [...path, ...action.moves];
+          }
+        }
+        return null;
+      }
+
       const candidates = [];
       for (const action of actions) {
         if (previousPermutationKey) {
