@@ -3,6 +3,7 @@ import { applyMoves } from "./moves.js";
 import { CENTRE_SLOTS } from "./centres.js";
 import { FACELETS } from "./state.js";
 import { solve444CentresWithPatternDatabase } from "./centre-colour-solver.js";
+import { solve444CentresToAxisPairs } from "./centre-axis-solver.js";
 import { searchWingPairingBounded, searchWingPairingIdaBounded } from "./wing-pairing-beam-search.js";
 import { solveReduced3x3 } from "./reduced-solver.js";
 import { repairReducedParityBounded } from "./parity-macros.js";
@@ -67,17 +68,30 @@ export async function solve444Bounded(
   const stages = {};
 
   try {
-    const result = solve444CentresWithPatternDatabase(current, {
+    // First group each opposite-colour pair onto its correct axis, then solve
+    // the exact centre colours. Both phases are independently replay-verified.
+    const axisResult = solve444CentresToAxisPairs(current, {
       maxDepth: centreMaxDepth,
       maxNodes: centreMaxNodes
     });
-    current = replayAndCompare(current, result.moves, result.state, "Centre");
+    current = replayAndCompare(current, axisResult.moves, axisResult.state, "Centre axis-pair");
+
+    const colourResult = solve444CentresWithPatternDatabase(current, {
+      maxDepth: centreMaxDepth,
+      maxNodes: centreMaxNodes
+    });
+    current = replayAndCompare(current, colourResult.moves, colourResult.state, "Centre colour");
+
     if (!centresAreSolved(current)) {
       throw new Error("Centre solver did not solve all 24 centre stickers");
     }
     stages.centres = {
-      moves: [...result.moves],
-      nodesVisited: result.nodesVisited
+      moves: [...axisResult.moves, ...colourResult.moves],
+      nodesVisited: axisResult.nodesVisited + colourResult.nodesVisited,
+      axisPairMoves: [...axisResult.moves],
+      axisPairNodesVisited: axisResult.nodesVisited,
+      colourMoves: [...colourResult.moves],
+      colourNodesVisited: colourResult.nodesVisited
     };
   } catch (error) {
     throw new RangeError(`4x4 centre stage failed: ${error.message}`, { cause: error });
