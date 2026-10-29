@@ -298,37 +298,25 @@ export function searchWingPairingIdaBounded(
         if (!areCentresSolved(nextState)) {
           throw new Error("A discovered centre-neutral macro changed centre colours");
         }
-        candidates.push({
-          action,
-          state: nextState,
-          heuristic: tryEvaluateHeuristic(nextState),
-          pairedEdges: countPairedEdges(nextState)
-        });
+        const pairedEdges = countPairedEdges(nextState);
+        if (pairedEdges === 12 && isFullyReduced(nextState)) {
+          return [...path, ...action.moves];
+        }
+        candidates.push({ action, state: nextState, pairedEdges });
       }
 
       candidates.sort((a, b) => {
-        if (a.heuristic && b.heuristic) {
-          if (a.heuristic.maxDistance !== b.heuristic.maxDistance) {
-            return a.heuristic.maxDistance - b.heuristic.maxDistance;
-          }
-          if (a.heuristic.totalDistance !== b.heuristic.totalDistance) {
-            return a.heuristic.totalDistance - b.heuristic.totalDistance;
-          }
-        } else if (a.heuristic) {
-          return -1;
-        } else if (b.heuristic) {
-          return 1;
-        }
         if (a.pairedEdges !== b.pairedEdges) return b.pairedEdges - a.pairedEdges;
-        return a.action.moves.length - b.action.moves.length;
+        if (a.action.moves.length !== b.action.moves.length) {
+          return a.action.moves.length - b.action.moves.length;
+        }
+        return a.action.permutationKey.localeCompare(b.action.permutationKey);
       });
 
       for (const candidate of candidates) {
         const { action, state: nextState } = candidate;
         path.push(...action.moves);
-        const result = search(
-          nextState, remaining - 1, action.permutationKey, candidate.heuristic
-        );
+        const result = search(nextState, remaining - 1, action.permutationKey);
         if (result !== null) return result;
         path.splice(path.length - action.moves.length, action.moves.length);
         if (budgetExhausted) return null;
