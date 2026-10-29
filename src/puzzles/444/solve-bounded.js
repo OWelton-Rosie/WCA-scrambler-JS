@@ -39,6 +39,8 @@ export async function solve444Bounded(
     wingMaxMacroDepth = 3,
     wingMaxNodes = 20_000,
     wingBeamWidth = 100,
+    wingFallbackMaxMacroDepth = Math.max(wingMaxMacroDepth, 4),
+    wingFallbackMaxNodes = 100_000,
     parityMaxSteps = 2
   } = {}
 ) {
@@ -79,15 +81,21 @@ export async function solve444Bounded(
   }
 
   try {
-    const result = searchWingPairingBounded(current, {
+    const beamResult = searchWingPairingBounded(current, {
       maxMacroDepth: wingMaxMacroDepth,
       maxNodes: wingMaxNodes,
       beamWidth: wingBeamWidth
     });
+    const result = beamResult.solved
+      ? beamResult
+      : searchWingPairingIdaBounded(current, {
+          maxMacroDepth: wingFallbackMaxMacroDepth,
+          maxNodes: wingFallbackMaxNodes
+        });
     current = replayAndCompare(current, result.moves, result.state, "Wing-pairing");
     if (!result.solved) {
       throw new RangeError(
-        `bounded wing search exhausted its budget (paired edges: ${result.pairedEdges}, nodes: ${result.nodesVisited})`
+        `bounded wing searches exhausted their budgets (paired edges: ${result.pairedEdges}, beam nodes: ${beamResult.nodesVisited}, IDA nodes: ${result.nodesVisited})`
       );
     }
     if (!centresAreSolved(current)) {
@@ -98,7 +106,8 @@ export async function solve444Bounded(
     stages.wings = {
       moves: [...result.moves],
       nodesVisited: result.nodesVisited,
-      macroDepth: result.depth
+      macroDepth: result.depth,
+      strategy: result.strategy ?? "beam"
     };
   } catch (error) {
     throw new RangeError(`4x4 wing-pairing stage failed: ${error.message}`, { cause: error });
