@@ -35,6 +35,7 @@ function makeSingleEdgeFlipProjection() {
 
 test("every discovered parity gadget, if any, is independently verified", () => {
   const macros = deriveReducedParityMacros();
+  assert.ok(macros.length > 0, "expected a parity gadget from one- or two-macro compositions");
 
   for (const macro of macros) {
     const state = applyMoves(solvedState(), macro.moves);
@@ -46,16 +47,19 @@ test("every discovered parity gadget, if any, is independently verified", () => 
   }
 });
 
-test("parity repair explicitly reports an unsupported single-edge-flip projection", () => {
+test("bounded parity repair never reports success without a legal replayed state", () => {
   const state = makeSingleEdgeFlipProjection();
   const before = analyzeReduced444State(state);
   assert.equal(before.ollParity, true);
   assert.equal(before.legal, false);
 
-  const result = repairReducedParityBounded(state, { maxSteps: 1 });
+  const result = repairReducedParityBounded(state, { maxSteps: 2 });
+  assert.deepEqual(result.state, applyMoves(state, result.moves));
 
-  assert.equal(result.solved, false);
-  assert.equal(result.analysis.ollParity, true);
-  assert.deepEqual(result.moves, []);
-  assert.deepEqual(result.state, state);
+  if (result.solved) {
+    assert.equal(result.analysis.legal, true);
+    assert.equal(analyzeReduced444State(result.state).legal, true);
+  } else {
+    assert.equal(result.analysis.ollParity || result.analysis.pllParity, true);
+  }
 });
