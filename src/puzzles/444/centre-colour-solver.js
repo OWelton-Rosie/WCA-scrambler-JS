@@ -22,14 +22,19 @@ function isGoal(masks) {
 }
 
 function heuristic(masks) {
-  let bound = 0;
+  let maxDistance = 0;
+  let distanceSum = 0;
+
   for (let i = 0; i < CENTRE_COLOUR_NAMES.length; i++) {
-    bound = Math.max(
-      bound,
-      getCentreColourDistance(masks[i], CENTRE_COLOUR_NAMES[i])
-    );
+    const distance = getCentreColourDistance(masks[i], CENTRE_COLOUR_NAMES[i]);
+    maxDistance = Math.max(maxDistance, distance);
+    distanceSum += distance;
   }
-  return bound;
+
+  // A wide turn can change the positions of centres of at most four colours;
+  // each individual pattern distance changes by at most one per move. Thus
+  // ceil(sum / 4) is also admissible, and can be stronger than max(distance).
+  return Math.max(maxDistance, Math.ceil(distanceSum / 4));
 }
 
 /**
