@@ -303,6 +303,22 @@ export function searchWingPairingIdaBounded(
         return null;
       }
 
+      if (remaining < depthLimit && remaining > 1) {
+        for (const action of actions) {
+          if (previousPermutationKey) {
+            const previous = actionByPermutation.get(previousPermutationKey);
+            if (previous?.inversePermutationKey === action.permutationKey) continue;
+          }
+          const nextState = applyMoves(current, action.moves);
+          path.push(...action.moves);
+          const result = search(nextState, remaining - 1, action.permutationKey);
+          if (result !== null) return result;
+          path.splice(path.length - action.moves.length, action.moves.length);
+          if (budgetExhausted) return null;
+        }
+        return null;
+      }
+
       const candidates = [];
       for (const action of actions) {
         if (previousPermutationKey) {
