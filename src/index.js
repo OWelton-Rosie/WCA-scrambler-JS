@@ -3,9 +3,10 @@ import { generate222 } from "./puzzles/222/scramble.js";
 import { generatePyram } from "./puzzles/pyram/scramble.js";
 import { generate444Scramble } from "./puzzles/444/scramble.js";
 import { solve444Bounded } from "./puzzles/444/solve-bounded.js";
+import { applyMoves as apply444Moves } from "./puzzles/444/moves.js";
 import { generateMinx } from "./puzzles/minx/scramble.js";
 export { prepare444Scrambler } from "./puzzles/444/scramble.js";
-export { solve444Bounded };
+export { solve444Bounded, apply444Moves };
 
 import {
   solvedState as solved444State,
