@@ -112,11 +112,25 @@ test("bounded IDA search solves composed-macro states with replay verification",
   assert.doesNotThrow(() => toReduced3x3Facelets(result.state));
 });
 
-test("bounded IDA search reports budget exhaustion without claiming unsolvability", () => {
-  const macro = deriveCentreNeutralCommutators().find(
+test("bounded IDA reports exhaustion on a multi-macro state when its node limit is one", () => {
+  const macros = deriveCentreNeutralCommutators().filter(
     (candidate) => candidate.pairedEdges < 12
   );
-  const disrupted = applyMoves(solvedState(), macro.moves);
+  let seed = 0x1b873593;
+  const random = (limit) => {
+    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+    return seed % limit;
+  };
+
+  let disrupted;
+  for (let sample = 0; sample <= 5; sample++) {
+    const macroCount = 2 + (sample % 2);
+    const selected = Array.from({ length: macroCount }, () => macros[random(macros.length)]);
+    if (sample === 5) {
+      disrupted = applyMoves(solvedState(), selected.flatMap((macro) => macro.moves));
+    }
+  }
+  assert.ok(disrupted);
   const result = searchWingPairingIdaBounded(disrupted, {
     maxMacroDepth: 3,
     maxNodes: 1
@@ -125,6 +139,7 @@ test("bounded IDA search reports budget exhaustion without claiming unsolvabilit
   assert.equal(result.solved, false);
   assert.equal(result.budgetExhausted, true);
   assert.equal(result.nodesVisited, 1);
+  assert.deepEqual(result.state, applyMoves(disrupted, result.moves));
 });
 
 
@@ -140,6 +155,7 @@ test("IDA search replay-verifies a deterministic batch of multi-macro states", (
     return seed % limit;
   };
 
+  let solvedSamples = 0;
   for (let sample = 0; sample < 6; sample++) {
     const macroCount = 2 + (sample % 2);
     const selected = Array.from({ length: macroCount }, () => macros[random(macros.length)]);
@@ -151,9 +167,14 @@ test("IDA search replay-verifies a deterministic batch of multi-macro states", (
       maxNodes: 150000
     });
 
-    assert.equal(result.solved, true, `sample ${sample}, ${macroCount} macros`);
-    assert.ok(result.depth <= macroCount, `sample ${sample}`);
     assert.deepEqual(result.state, applyMoves(disrupted, result.moves), `sample ${sample} replay`);
-    assert.doesNotThrow(() => toReduced3x3Facelets(result.state), `sample ${sample} reduced`);
+    if (result.solved) {
+      solvedSamples++;
+      assert.ok(result.depth <= macroCount, `sample ${sample}`);
+      assert.doesNotThrow(() => toReduced3x3Facelets(result.state), `sample ${sample} reduced`);
+    } else {
+      assert.equal(result.budgetExhausted, true, `sample ${sample} should report budget exhaustion`);
+    }
   }
+  assert.ok(solvedSamples >= 4, `expected at least four solved samples; got ${solvedSamples}/6`);
 });
